@@ -1,0 +1,13 @@
+.data/*
+target/*
+src/templates/*
+out/*
+classes/*
+data/*
+.classpath
+.idea/*
+.project
+.settings/*
+test/*
+*.iml
+*.war
