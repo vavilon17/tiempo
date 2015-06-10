@@ -1,5 +1,6 @@
-package com.tiempo
+package com.tiempo.last
 
+import com.tiempo.last.WeatherForecast
 import grails.transaction.Transactional
 
 /**

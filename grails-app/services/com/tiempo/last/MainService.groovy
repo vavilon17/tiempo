@@ -1,4 +1,7 @@
-package com.tiempo
+package com.tiempo.last
+
+import com.tiempo.last.City
+import com.tiempo.last.WeatherForecast
 
 class MainService {
 
