@@ -59,6 +59,14 @@ grails {
     }
 }
 
+meteoprog {
+    api {
+        base = "http://www.meteoprog.ua/es/api"
+        main = "${base}/list"
+        city = "${base}/city"
+        token = "b9b3e3d337d48a25debfc42f36ba83dab19b7c89"
+    }
+}
 
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
