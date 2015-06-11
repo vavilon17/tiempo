@@ -2,6 +2,8 @@ package com.tiempo
 
 class Country {
 
+    static mapWith = "none"
+
     String nativeName
     String urlName
     String code
