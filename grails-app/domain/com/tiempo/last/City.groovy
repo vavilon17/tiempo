@@ -1,18 +1,39 @@
 package com.tiempo.last
 
+import com.tiempo.Region
+
 class City {
 
     String printName
+    String urlName
     City basic
     float lat
     float lon
+    Region region
+    String code
+
+    boolean isActive
+
+    static transients = ['lookupTitle']
 
     static mapping = {
         id column: 'id', type: 'long'
-        printName unique: true, index: 'printName_idx'
+        isActive defaultValue: true
+//        printName unique: true, index: 'printName_idx'
     }
 
     static constraints = {
         basic nullable: true
+        urlName nullable: true
+        region nullable: true
+        code nullable: true
+    }
+
+    String getLookupTitle() {
+        StringBuilder sb = new StringBuilder(printName)
+        if (region) {
+            sb.append(", ").append(region.nativeName)
+        }
+        sb.toString()
     }
 }

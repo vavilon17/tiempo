@@ -2,7 +2,7 @@ package com.tiempo
 
 class Country {
 
-    static mapWith = "none"
+//    static mapWith = "none"
 
     String nativeName
     String urlName
@@ -18,6 +18,5 @@ class Country {
     }
 
     static constraints = {
-
     }
 }

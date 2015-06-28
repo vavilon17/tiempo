@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.meteoprog.result.CommonGeoObjResult
 import com.meteoprog.result.CountriesResult
 import com.meteoprog.result.WeatherResult
+import com.tiempo.last.City
 import grails.converters.JSON
 import grails.plugins.rest.client.RestBuilder
 import grails.transaction.Transactional
@@ -16,10 +17,12 @@ class RestBridgeService {
 
     def grailsApplication
 
-    private final static Set COUNTRIES = ["Argentina", "Chili", "Uruguay", "Paraguay", "Brazil", "Bolivia", "Peru", "Ecuador",
+    /*private final static Set COUNTRIES = ["Argentina", "Chili", "Uruguay", "Paraguay", "Brazil", "Bolivia", "Peru", "Ecuador",
                                       "Colombia", "Venezuela", "Guyana", "Suriname", "Panama", "CostaRica", "PuertoRico",
                                       "DominicanRepublic", "Cuba", "Nicaragua", "Honduras", "ElSalvador", "Belize", "Guatemala",
-                                      "Mexico", "Jamaica", "Haiti", "Grenada", "TrinidadAndTobago", "Barbados", "Dominica"]
+                                      "Mexico", "Jamaica", "Haiti", "Grenada", "TrinidadAndTobago", "Barbados", "Dominica"]*/
+
+    private final static Set COUNTRIES = ["Argentina"]
 
     private static RestBuilder rest = new RestBuilder()
 
@@ -76,11 +79,11 @@ class RestBridgeService {
                                 for (GeoObjectInfo cityInfo : citiesRes.data) {
                                     City city = City.findByUrlNameAndRegion(cityInfo.url, region)
                                     if (!city) {
-                                        city = new City(nativeName: cityInfo.name, urlName: cityInfo.url, region: region)
+                                        city = new City(printName: cityInfo.name, urlName: cityInfo.url, region: region)
                                     } else {
-                                        city.nativeName = cityInfo.name
+                                        city.printName = cityInfo.name
                                     }
-                                    city.save()
+                                    city.save(failOnError: true)
                                 }
                             }
                         }
@@ -95,5 +98,15 @@ class RestBridgeService {
             header 'Token', "${grailsApplication.config.meteoprog.api.token}"
         }
         return new Gson().fromJson(resp.responseEntity.body, WeatherResult.class)
+    }
+
+    def fillCoordinates() {
+        City.list().each { city ->
+            WeatherResult res = provideWeather(city.urlName)
+            city.lat = res.data.lat
+            city.lon = res.data.lon
+            city.save(failOnError: true)
+        }
+        City.first().save(flush: true)
     }
 }

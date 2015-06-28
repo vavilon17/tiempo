@@ -9,8 +9,8 @@ class Weather {
     String name
     float lat
     float lon
-    int height
+    float height
     Object vmo
-    int offset
+    Integer offset
     Map<String, ForecastBody> weather
 }

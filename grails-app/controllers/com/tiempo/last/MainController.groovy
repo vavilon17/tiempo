@@ -1,5 +1,6 @@
 package com.tiempo.last
 
+import com.tiempo.last.wwo.Day
 import grails.converters.JSON
 
 class MainController {
@@ -8,11 +9,22 @@ class MainController {
     def importService
 
     def index() {
-        render('hello')
     }
 
     def runImport() {
         importService.runForecastImport()
+    }
+
+    def del() {
+        importService.convert(null)
+        String dd = "sadasdasda"
+    }
+
+    def delDay() {
+        Day day = Day.findByDate("2015-06-29")
+        WeatherForecast f = WeatherForecast.findById(1l)
+        f.removeFromForecast(day)
+        f.save(flush: true) // id = 191, h: 183-190
     }
 
     def weather(String city) {
@@ -26,5 +38,10 @@ class MainController {
         } else {
             render(['err': 'City is empty'] as JSON)
         }
+    }
+
+    def weatherResults(Long cityId) {
+        City city = City.findById(cityId)
+        render(template: "weather_results", model: [forecast: mainService.weather(city.printName)])
     }
 }

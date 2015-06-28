@@ -1,11 +1,22 @@
 package com.tiempo.last
 
+import com.tiempo.last.wwo.Day
+
 class WeatherForecast {
 
     City city
-    String content
+    Day currentDay
+
+    List<Day> forecast
+    static hasMany = [forecast: Day]
+
+    static mapping = {
+        currentDay cascade: 'delete'
+        forecast cascade: 'all-delete-orphan'
+    }
 
     static constraints = {
-        content nullable: true
+        currentDay nullable: true
+        forecast nullable: true, empty: true
     }
 }

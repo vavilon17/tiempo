@@ -9,4 +9,8 @@ class AdminController {
     def fillData() {
         restBridgeService.syncData()
     }
+
+    def fillCoord() {
+        restBridgeService.fillCoordinates()
+    }
 }
