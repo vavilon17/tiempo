@@ -7,9 +7,9 @@ th, td {
     padding: 5px;
 }
 </style>
-<g:if test="${forecast}">
-    <g:render template="day_block" model="[day: forecast.currentDay]"/>
-    <g:each in="${forecast.forecast}" var="day">
+<g:if test="${weather}">
+    <h3>Weather in ${weather.city.fullRepresentation}</h3>
+    <g:each in="${weather.forecast}" var="day">
         <g:render template="day_block" model="[day: day]"/>
     </g:each>
 </g:if>

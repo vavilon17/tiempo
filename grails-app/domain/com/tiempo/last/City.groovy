@@ -14,7 +14,7 @@ class City {
 
     boolean isActive
 
-    static transients = ['lookupTitle']
+    static transients = ['lookupTitle, fullRepresentation']
 
     static mapping = {
         id column: 'id', type: 'long'
@@ -33,6 +33,14 @@ class City {
         StringBuilder sb = new StringBuilder(printName)
         if (region) {
             sb.append(", ").append(region.nativeName)
+        }
+        sb.toString()
+    }
+
+    String getFullRepresentation() {
+        StringBuilder sb = new StringBuilder(printName)
+        if (region) {
+            sb.append(", ").append(region.country.nativeName).append(" (").append(region.nativeName).append(")")
         }
         sb.toString()
     }

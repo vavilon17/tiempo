@@ -1,14 +1,19 @@
 package com.tiempo.last
 
-import com.tiempo.last.City
-import com.tiempo.last.WeatherForecast
+import com.tiempo.last.wwo.Day
+import com.tiempo.last.wwo.Hourly
+
+import java.sql.Timestamp
 
 class MainService {
 
-    static transactional = false
+    static class WeatherView {
+        City city
+        Hourly current
+        List<Day> forecast
+    }
 
-    static final float LON_LAT_COEF = 82.2f;
-    static final float LIMIT_DIST_KM = 15f;
+    static transactional = false
 
     WeatherForecast weather(String cityName) {
         City city = City.findByPrintName(cityName)
@@ -17,6 +22,13 @@ class MainService {
             return null
         }
         return WeatherForecast.findByCity(city.basic ?: city)
+    }
+
+    WeatherView weatherView(Long cityId, Timestamp time) {
+        City city = City.findById(cityId)
+        WeatherForecast forecast = WeatherForecast.findByCity(city)
+        Hourly current = forecast.getClientDay(time).getNearestHourly(time)
+        new WeatherView(city: city, forecast: forecast.forecast, current: current)
     }
 
 }
