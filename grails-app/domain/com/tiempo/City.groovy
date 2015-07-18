@@ -1,7 +1,4 @@
-package com.tiempo.last
-
-import com.tiempo.Country
-import com.tiempo.Region
+package com.tiempo
 
 class City {
 

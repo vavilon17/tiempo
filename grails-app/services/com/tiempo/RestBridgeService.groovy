@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.meteoprog.result.CommonGeoObjResult
 import com.meteoprog.result.CountriesResult
 import com.meteoprog.result.WeatherResult
-import com.tiempo.last.City
 import grails.converters.JSON
 import grails.plugins.rest.client.RestBuilder
 import grails.transaction.Transactional

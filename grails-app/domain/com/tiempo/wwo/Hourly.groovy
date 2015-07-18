@@ -1,4 +1,4 @@
-package com.tiempo.last.wwo
+package com.tiempo.wwo
 
 import java.sql.Timestamp
 

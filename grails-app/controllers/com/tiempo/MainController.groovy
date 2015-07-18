@@ -1,7 +1,7 @@
-package com.tiempo.last
+package com.tiempo
 
-import com.tiempo.last.wwo.Day
-import grails.converters.JSON
+import com.tiempo.wwo.Day
+import com.tiempo.wwo.WeatherForecast
 
 class MainController {
 
@@ -12,6 +12,7 @@ class MainController {
     }
 
     def runImport() {
+        log.info("Run import")
         importService.runForecastImport()
     }
 
@@ -25,19 +26,6 @@ class MainController {
         WeatherForecast f = WeatherForecast.findById(1l)
         f.removeFromForecast(day)
         f.save(flush: true) // id = 191, h: 183-190
-    }
-
-    def weather(String city) {
-        if (city != null && !city.isEmpty()) {
-            WeatherForecast forecast = mainService.weather(city)
-            if (forecast == null) {
-                render(['err': 'Forecast not found'] as JSON)
-            } else {
-                render([result: forecast] as JSON)
-            }
-        } else {
-            render(['err': 'City is empty'] as JSON)
-        }
     }
 
     def weatherResults(Long cityId) {

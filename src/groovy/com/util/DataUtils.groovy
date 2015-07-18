@@ -1,6 +1,6 @@
 package com.util
 
-import com.tiempo.last.wwo.Day
+import com.tiempo.wwo.Day
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 

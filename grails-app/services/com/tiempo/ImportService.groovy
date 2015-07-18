@@ -1,7 +1,8 @@
-package com.tiempo.last
+package com.tiempo
 
 import com.dto.wwo.Root
 import com.google.gson.Gson
+import com.tiempo.wwo.WeatherForecast
 import grails.transaction.Transactional
 
 /**
@@ -16,15 +17,18 @@ class ImportService {
     def essentialConverterService
 
     def runForecastImport() {
-        //City.findAllByIsActive(true).each {
-        City it = City.first()
+        City.findAllByIsActive(true).each {
+//        City it = City.first()
+            log.info("Starting import for the city ${it.printName}")
             WeatherForecast forecast = WeatherForecast.findByCity(it)
             if (!forecast) {
+                log.info("Have not found forecast for ${it.printName}. Will be creating new")
                 forecast = new WeatherForecast(city: it)
                 forecast.save()
             }
             performCityForecast(forecast)
-//        }
+            log.info("End import for the city ${it.printName}")
+        }
     }
 
     @Transactional
@@ -34,7 +38,6 @@ class ImportService {
         Root root = new Gson().fromJson(content, Root.class)
         essentialConverterService.refillForecast(forecast, root.data)
         forecast.save(failOnError: true)
-        log.info("result = ${content}")
     }
 
     private String prepareUrl(WeatherForecast forecast) {

@@ -1,7 +1,7 @@
-package com.tiempo.last
+package com.tiempo.wwo
 
+import com.tiempo.City
 import com.tiempo.exception.ForecastNotFoundException
-import com.tiempo.last.wwo.Day
 import com.util.DataUtils
 import org.joda.time.DateTime
 

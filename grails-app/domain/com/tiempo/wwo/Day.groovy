@@ -1,6 +1,5 @@
-package com.tiempo.last.wwo
+package com.tiempo.wwo
 
-import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 
 import java.sql.Timestamp

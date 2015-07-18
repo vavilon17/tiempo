@@ -1,8 +1,9 @@
-package com.tiempo.last
+package com.tiempo
 
 import com.tiempo.exception.ForecastNotFoundException
-import com.tiempo.last.wwo.Day
-import com.tiempo.last.wwo.Hourly
+import com.tiempo.wwo.Day
+import com.tiempo.wwo.Hourly
+import com.tiempo.wwo.WeatherForecast
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
@@ -16,15 +17,6 @@ class MainService {
     }
 
     static transactional = false
-
-    WeatherForecast weather(String cityName) {
-        City city = City.findByPrintName(cityName)
-        if (city == null) {
-            log.warn("City ${cityName} has not been found in the DB")
-            return null
-        }
-        return WeatherForecast.findByCity(city.basic ?: city)
-    }
 
     WeatherView weatherView(Long cityId) {
         City city = City.findById(cityId)

@@ -1,12 +1,13 @@
-package com.tiempo.last
+package com.tiempo
 
 import com.dto.wwo.ForecastData
 import com.dto.wwo.Weather
 import com.dto.wwo.essential.DayEssential
 import com.dto.wwo.essential.ForecastDataEssential
 import com.dto.wwo.essential.HourlyEssential
-import com.tiempo.last.wwo.Day
-import com.tiempo.last.wwo.Hourly
+import com.tiempo.wwo.Day
+import com.tiempo.wwo.Hourly
+import com.tiempo.wwo.WeatherForecast
 import com.util.DataUtils
 
 class EssentialConverterService {
