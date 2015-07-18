@@ -56,6 +56,7 @@ grails.project.dependency.resolution = {
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
 
         compile "commons-beanutils:commons-beanutils:1.8.3"
+        compile 'joda-time:joda-time:2.8.1'
     }
 
     plugins {

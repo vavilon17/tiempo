@@ -1,9 +1,9 @@
 package com.tiempo.last
 
+import com.tiempo.exception.ForecastNotFoundException
 import com.tiempo.last.wwo.Day
-
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
+import com.util.DataUtils
+import org.joda.time.DateTime
 
 class WeatherForecast {
 
@@ -22,14 +22,13 @@ class WeatherForecast {
         forecast nullable: true, empty: true
     }
 
-    Day getClientDay(Timestamp timestamp) {
-        SimpleDateFormat sdf = EssentialConverterService.yyyyMMdd
-        Date inputDate = sdf.parse(sdf.format(new Date(timestamp.getTime())))
-
+    Day getClientDay(DateTime inputDateTime) throws ForecastNotFoundException {
+        String inputDateStr = inputDateTime.toString(DataUtils.yyyyMMdd_dt_formatter);
         for (Day d : forecast) {
-            if (String.valueOf(d.date.getTime()).equals(String.valueOf(inputDate.getTime()))) {
+            if (DataUtils.yyyyMMdd.format(d.date).equals(inputDateStr)) {
                 return d
             }
         }
+        throw new ForecastNotFoundException()
     }
 }

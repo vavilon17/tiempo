@@ -7,10 +7,7 @@
 <body>
 
 Choose city: <g:select name="city" from="${com.tiempo.last.City.listOrderByPrintName()}" optionKey="id" optionValue="lookupTitle"/>
-Local time (hh:mm)*: <g:textField name="time"/>
 <button name="show" onclick="showWeatherV2();">Show</button>
-<br>
-* if empty - local browser time will be used
 <br>
 <div id="weather_results">
 
@@ -30,9 +27,8 @@ Local time (hh:mm)*: <g:textField name="time"/>
 
     function showWeatherV2() {
         var cityId = document.getElementById('city').value;
-        var time = new Date().getTime();
         var ajax = new XMLHttpRequest();
-        ajax.open("GET", "${createLink(controller: 'main', action: 'weatherResults')}?cityId=" + cityId + "&time=" + time, true);
+        ajax.open("GET", "${createLink(controller: 'main', action: 'weatherResults')}?cityId=" + cityId, true);
         ajax.onreadystatechange = function() {
             if (ajax.readyState == 4 && ajax.status == 200) {
                 document.getElementById('weather_results').innerHTML = ajax.responseText;

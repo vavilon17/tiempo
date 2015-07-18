@@ -3,8 +3,6 @@ package com.tiempo.last
 import com.tiempo.last.wwo.Day
 import grails.converters.JSON
 
-import java.sql.Timestamp
-
 class MainController {
 
     def mainService
@@ -42,9 +40,8 @@ class MainController {
         }
     }
 
-    def weatherResults(Long cityId, Long time) {
-        MainService.WeatherView ww = mainService.weatherView(cityId, new Timestamp(time))
+    def weatherResults(Long cityId) {
+        MainService.WeatherView ww = mainService.weatherView(cityId)
         render(template: "weather_results", model: [weather: ww])
-
     }
 }

@@ -1,5 +1,6 @@
 package com.tiempo.last
 
+import com.tiempo.Country
 import com.tiempo.Region
 
 class City {
@@ -11,7 +12,7 @@ class City {
     float lon
     Region region
     String code
-
+    Integer population
     boolean isActive
 
     static transients = ['lookupTitle, fullRepresentation']
@@ -27,6 +28,7 @@ class City {
         urlName nullable: true
         region nullable: true
         code nullable: true
+        population nullable: true
     }
 
     String getLookupTitle() {

@@ -7,16 +7,11 @@ import com.dto.wwo.essential.ForecastDataEssential
 import com.dto.wwo.essential.HourlyEssential
 import com.tiempo.last.wwo.Day
 import com.tiempo.last.wwo.Hourly
-
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
+import com.util.DataUtils
 
 class EssentialConverterService {
 
     static transactional = true
-
-    static final SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd")
-    static final MILLS_IN_HOUR = 1000*60*60
 
     ForecastDataEssential convert(ForecastData forecastData) {
         ForecastDataEssential esForecastData = new ForecastDataEssential()
@@ -57,7 +52,7 @@ class EssentialConverterService {
                 dayVar = new Day(hours: new ArrayList<Hourly>())
                 forecast.addToForecast(dayVar)
             }
-            dayVar.date = yyyyMMdd.parse(w.date)
+            dayVar.date = DataUtils.yyyyMMdd.parse(w.date)
             dayVar.minC = w.mintempC
             dayVar.maxC = w.maxtempC
             refillHourly(dayVar, w)
@@ -86,8 +81,8 @@ class EssentialConverterService {
                 currentHourly = new Hourly()
                 day.addToHours(currentHourly)
             }
-            currentHourly.time = prepareTime(h.time)
-            currentHourly.timestamp = prepareTimestamp(h.time, day)
+            currentHourly.time = DataUtils.prepareTime(h.time)
+            currentHourly.timestamp = DataUtils.prepareTimestamp(h.time, day)
             currentHourly.tempC = h.tempC
             currentHourly.hum = h.humidity
             currentHourly.precip = h.precipMM
@@ -107,21 +102,5 @@ class EssentialConverterService {
                 day.removeFromHours(it)
             }
         }
-    }
-
-    private String prepareTime(String timeFromWs) {
-        if (timeFromWs == '0') {
-            return "00:00"
-        }
-        return timeFromWs.substring(0, timeFromWs.indexOf("00")) + ":00"
-    }
-
-    private Timestamp prepareTimestamp(String timeFromWs, Day day) {
-        long base = day.date.getTime()
-        long offset = 0
-        if (timeFromWs != '0') {
-            offset = Long.parseLong(timeFromWs.substring(0, timeFromWs.indexOf("00"))) * MILLS_IN_HOUR
-        }
-        new Timestamp(base + offset)
     }
 }
