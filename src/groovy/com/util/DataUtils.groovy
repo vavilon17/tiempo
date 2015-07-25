@@ -32,4 +32,20 @@ class DataUtils {
         }
         new Timestamp(base + offset)
     }
+
+    static float weightedFloatAverage(float first, float second, double delta, int precision) {
+        int factor = (int) Math.pow(10, precision)
+        (float) Math.round(weightedAverage(first, second, delta) * factor) / factor
+    }
+
+    static int weightedIntAverage(int first, int second, double delta) {
+        Math.round(weightedAverage(first, second, delta))
+    }
+
+    private static def weightedAverage(def first, def second, double delta) {
+        if (first == second) {
+            return first
+        }
+        (double) (first + (delta * (double) (second - first)))
+    }
 }

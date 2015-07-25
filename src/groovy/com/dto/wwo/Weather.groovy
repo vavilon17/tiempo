@@ -6,7 +6,7 @@ package com.dto.wwo
 class Weather {
 
     List<Astronomy> astronomy
-    List<Hourly> hourly
+    List<HourlyDto> hourly
     String date
     Integer mintempC
     Integer maxtempC

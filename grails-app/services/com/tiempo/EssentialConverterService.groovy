@@ -1,10 +1,8 @@
 package com.tiempo
 
 import com.dto.wwo.ForecastData
+import com.dto.wwo.HourlyDto
 import com.dto.wwo.Weather
-import com.dto.wwo.essential.DayEssential
-import com.dto.wwo.essential.ForecastDataEssential
-import com.dto.wwo.essential.HourlyEssential
 import com.tiempo.wwo.Day
 import com.tiempo.wwo.Hourly
 import com.tiempo.wwo.WeatherForecast
@@ -14,33 +12,7 @@ class EssentialConverterService {
 
     static transactional = true
 
-    ForecastDataEssential convert(ForecastData forecastData) {
-        ForecastDataEssential esForecastData = new ForecastDataEssential()
-        esForecastData.days = new ArrayList<>(forecastData.weather.size())
-        forecastData.weather.each { w ->
-            DayEssential esDay = new DayEssential()
-            esDay.date = w.date
-            esDay.minC = w.mintempC
-            esDay.maxC = w.maxtempC
-            esDay.hours = new ArrayList<>(w.hourly.size())
-            w.hourly.each { h ->
-                HourlyEssential esHourly = new HourlyEssential()
-                esHourly.time = h.time
-                esHourly.tempC = h.tempC
-                esHourly.hum = h.humidity
-                esHourly.precip = h.precipMM
-                esHourly.pres = h.pressure
-//                esHourly.windMs = h?.windspeedMeterSec
-                esDay.hours.add(esHourly)
-            }
-            esForecastData.days.add(esDay)
-        }
-        esForecastData
-    }
-
     void refillForecast(WeatherForecast forecast, ForecastData forecastData) {
-//        boolean first = true
-//        Day current = forecast.currentDay // the day with current date
         List<Day> existingForecast = forecast.forecast
         Iterator<Day> iteratorDay = existingForecast.iterator()
         Day dayVar // temp variable to iterate over days forecast
@@ -53,9 +25,7 @@ class EssentialConverterService {
                 dayVar = new Day(hours: new ArrayList<Hourly>())
                 forecast.addToForecast(dayVar)
             }
-            dayVar.date = DataUtils.yyyyMMdd.parse(w.date)
-            dayVar.minC = w.mintempC
-            dayVar.maxC = w.maxtempC
+            mapWeatherDtoToDay(w, dayVar)
             refillHourly(dayVar, w)
             dayVar.save()
         }
@@ -82,15 +52,7 @@ class EssentialConverterService {
                 currentHourly = new Hourly()
                 day.addToHours(currentHourly)
             }
-            currentHourly.time = DataUtils.prepareTime(h.time)
-            currentHourly.timestamp = DataUtils.prepareTimestamp(h.time, day)
-            currentHourly.tempC = h.tempC
-            currentHourly.hum = h.humidity
-            currentHourly.precip = h.precipMM
-            currentHourly.pres = h.pressure
-            currentHourly.cloud = h.cloudcover
-            currentHourly.rainChance = h.chanceofrain
-//            currentHourly.windMs = h?.windspeedMeterSec
+            mapHourlyDtoToHourly(h, currentHourly, day)
             currentHourly.save()
         }
         // if we have more dat than in the forecast received - we just remove them
@@ -103,5 +65,40 @@ class EssentialConverterService {
                 day.removeFromHours(it)
             }
         }
+    }
+
+    private static mapWeatherDtoToDay(Weather weather, Day day) {
+        day.date = DataUtils.yyyyMMdd.parse(weather.date)
+        day.minC = weather.mintempC
+        day.maxC = weather.maxtempC
+    }
+
+    private static mapHourlyDtoToHourly(HourlyDto hourlyDto, Hourly hourly, Day day) {
+        hourly.time = DataUtils.prepareTime(hourlyDto.time)
+        hourly.timestamp = DataUtils.prepareTimestamp(hourlyDto.time, day)
+        hourly.tempC = hourlyDto.tempC
+        hourly.hum = hourlyDto.humidity
+        hourly.precip = hourlyDto.precipMM
+        hourly.pres = hourlyDto.pressure
+        hourly.cloud = hourlyDto.cloudcover
+        hourly.rainChance = hourlyDto.chanceofrain
+        hourly.windMs = calcWindSpeed(hourlyDto)
+    }
+
+    private static int calcWindSpeed(HourlyDto hourlyDto) {
+        int res = 0
+        try {
+            res = hourlyDto.windspeedMeterSec
+        } catch (Exception e) {
+//            log.warn("Failed retrieving windspeedMeterSec ${e.getMessage()}. Will try windspeedKmph")
+            try {
+                if (hourlyDto.windspeedKmph) {
+                    res = Math.round((hourlyDto.windspeedKmph * 1000) / 3600)
+                }
+            } catch (Exception ex) {
+//                log.error("Cant retrieve wind speed: ${ex.getMessage()}")
+            }
+        }
+        res
     }
 }

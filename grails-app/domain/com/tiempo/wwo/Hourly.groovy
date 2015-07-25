@@ -14,6 +14,10 @@ class Hourly {
     int cloud
     int rainChance
 
+    static mapping = {
+        timestamp unique: true, index: 'hourly_timestamp_idx'
+    }
+
     static constraints = {
         timestamp nullable: true
         windMs empty: true

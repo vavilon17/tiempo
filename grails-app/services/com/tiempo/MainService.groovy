@@ -23,13 +23,15 @@ class MainService {
         WeatherForecast forecast = WeatherForecast.findByCity(city)
         if (forecast) {
             DateTime currDateTime = new DateTime(DateTimeZone.forOffsetHours(city.region.country.tzOffset))
+//            currDateTime = currDateTime.plusHours(1)
             Hourly nearest
             List<Day> forecastToShow
             try {
                 Day day = forecast.getClientDay(currDateTime)
-                nearest = day.getNearestHourly(currDateTime.toLocalDateTime())
+                nearest = forecast.provideCurrentHourly(currDateTime)
                 forecastToShow = eliminateForecastToShow(day, forecast.forecast)
                 return new WeatherView(city: city, forecast: forecastToShow, current: nearest, localDt: currDateTime)
+                //return new WeatherView(city: city, forecast: forecast.forecast, current: nearest, localDt: currDateTime)
             } catch (ForecastNotFoundException e) {
                 log.error(e)
                 return null
@@ -42,7 +44,7 @@ class MainService {
     private static List<Day> eliminateForecastToShow(Day dayToEliminate, List<Day> forecast) {
         List<Day> forecastToShow = new ArrayList<>(forecast.size())
         for (Day forecastDay : forecast) {
-            if (!forecastDay.date.equals(dayToEliminate.date)) {
+            if (forecastDay.date.compareTo(dayToEliminate.date) > 0) {
                 forecastToShow.add(forecastDay)
             }
         }
