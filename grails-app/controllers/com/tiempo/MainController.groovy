@@ -11,6 +11,9 @@ class MainController {
     def index() {
     }
 
+    def index2() {
+    }
+
     def runImport() {
         log.info("Run import")
         importService.runForecastImport()
