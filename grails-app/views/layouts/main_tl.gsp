@@ -12,6 +12,7 @@
     <g:layoutHead/>
 </head>
 <body>
+<g:render template="/main/templates/config"/>
 <g:layoutBody/>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <asset:javascript src="slick.min.js"/>

@@ -16,48 +16,48 @@
                     </div>
                 </div>
                 <div class="header-search-rezults">
-                    <div class="header-search-rezults__value">Presion in Chillie manana</div>
+                    %{--<div class="header-search-rezults__value">Presion in Chillie manana</div>
                     <div class="header-search-rezults__value">Chillie Humedad</div>
-                    <div class="header-search-rezults__value">Presion in Chillie</div>
+                    <div class="header-search-rezults__value">Presion in Chillie</div>--}%
                 </div>
             </div>
         </div>
         <div class="header-bottom row">
             <div class="header-bottom-place">
-                <strong>Tiempo en Santiago</strong>
-                Chillie
+                <strong>Tiempo en ${city.printName}</strong>
+                ${city?.region?.country?.nativeName}
             </div>
             <div class="header-bottom-circle">
-                <input value="60" data-displayprevious="false" data-min="0" data-readOnly=true data-height="279" data-width="279" data-max="100" data-thickness=".05" data-bgColor="transparent" data-fgcolor="#86d1c1" class="knob tictac">
+                <input value="${percent}" data-displayprevious="false" data-min="0" data-readOnly=true data-height="279" data-width="279" data-max="100" data-thickness=".05" data-bgColor="transparent" data-fgcolor="#86d1c1" class="knob tictac">
                 <span class="icon icon_1"></span>
-                <span class="value"><span>15</span></span>
+                <span class="value"><span>${current.tempC}</span></span>
             </div>
             <div class="header-bottom-circle-mob">
-                <input value="60" data-displayprevious="false" data-min="0" data-readOnly=true data-height="200" data-width="200" data-max="100" data-thickness=".05" data-bgColor="transparent" data-fgcolor="#86d1c1" class="knob tictac">
+                <input value="${percent}" data-displayprevious="false" data-min="0" data-readOnly=true data-height="200" data-width="200" data-max="100" data-thickness=".05" data-bgColor="transparent" data-fgcolor="#86d1c1" class="knob tictac">
                 <span class="icon icon_1"></span>
-                <span class="value"><span>15</span></span>
+                <span class="value"><span>${current.tempC}</span></span>
             </div>
             <div class="header-bottom-info">
-                <div class="header-bottom-info__title">CHANCE OF THE RAIN <strong>35%</strong></div>
+                <div class="header-bottom-info__title">CHANCE OF THE RAIN <strong>${current.rainChance}%</strong></div>
                 <div class="header-bottom-table">
                     <div class="header-bottom-table__cell">Humedad</div>
                     <div class="header-bottom-table__cell header-bottom-table__cell_dotts"></div>
-                    <div class="header-bottom-table__cell">65%</div>
+                    <div class="header-bottom-table__cell">${current.hum}%</div>
                 </div>
                 <div class="header-bottom-table">
-                    <div class="header-bottom-table__cell">Presion <strong>753</strong>mmHg</div>
+                    <div class="header-bottom-table__cell">Presion %{--<strong>753</strong>mmHg--}%</div>
                     <div class="header-bottom-table__cell header-bottom-table__cell_dotts"></div>
-                    <div class="header-bottom-table__cell">45%</div>
+                    <div class="header-bottom-table__cell">${current.pres}mmHg</div>
                 </div>
                 <div class="header-bottom-table">
                     <div class="header-bottom-table__cell">Viento</div>
                     <div class="header-bottom-table__cell header-bottom-table__cell_dotts"></div>
-                    <div class="header-bottom-table__cell">7<span>m/s</span></div>
+                    <div class="header-bottom-table__cell">${current.windMs}<span>m/s</span></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="mainslider">
+    %{--<div class="mainslider">
         <div class="container">
             <div class="mainslider-block">
                 <div class="mainslider-item">
@@ -112,5 +112,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}%
 </header>

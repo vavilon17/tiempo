@@ -168,7 +168,7 @@ header.bg-1 {
     padding: 5px 20px
 }
 
-.header-search-rezults__value {
+.header-search-rezults__value  {
     cursor: pointer;
     color: #414141;
     font-size: 13px;
@@ -177,11 +177,21 @@ header.bg-1 {
     border-bottom: 1px solid #dcdcdc
 }
 
+.header-search-rezults__value a  {
+    text-decoration: none;
+    color: #414141;
+}
+
+.header-search-rezults__value a:visited  {
+    color: #414141;
+}
+
 .header-search-rezults__value:last-child {
     border-bottom: none
 }
 
 .header-bottom {
+    position: relative;
     position: relative;
     z-index: 1;
     display: table;

@@ -4,16 +4,21 @@ import com.tiempo.exception.ForecastNotFoundException
 import com.tiempo.wwo.Day
 import com.tiempo.wwo.Hourly
 import com.tiempo.wwo.WeatherForecast
+import org.apache.log4j.Logger
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
 class MainService {
 
+    private static final log = Logger.getLogger(MainService.class)
+
+    static final int HALF_DAY_MINS = 24 * 60 / 2
+
     static class WeatherView {
         City city
         Hourly current
         List<Day> forecast
-        DateTime localDt
+        int halfDayPercent
     }
 
     static transactional = false
@@ -30,7 +35,7 @@ class MainService {
                 Day day = forecast.getClientDay(currDateTime)
                 nearest = forecast.provideCurrentHourly(currDateTime)
                 forecastToShow = eliminateForecastToShow(day, forecast.forecast)
-                return new WeatherView(city: city, forecast: forecastToShow, current: nearest, localDt: currDateTime)
+                return new WeatherView(city: city, forecast: forecastToShow, current: nearest, halfDayPercent: calcHalfDayPercent(currDateTime))
                 //return new WeatherView(city: city, forecast: forecast.forecast, current: nearest, localDt: currDateTime)
             } catch (ForecastNotFoundException e) {
                 log.error(e)
@@ -49,5 +54,14 @@ class MainService {
             }
         }
         forecastToShow
+    }
+
+    private static int calcHalfDayPercent(DateTime dateTime) {
+        int minsOfDay = dateTime.getMinuteOfDay()
+        if (minsOfDay <= HALF_DAY_MINS) {
+            return Math.round(minsOfDay * 100 /HALF_DAY_MINS)
+        } else {
+            return Math.round((minsOfDay - HALF_DAY_MINS) * 100 / HALF_DAY_MINS)
+        }
     }
 }
