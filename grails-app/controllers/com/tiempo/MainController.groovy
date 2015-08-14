@@ -17,6 +17,10 @@ class MainController {
         redirect(action: 'weather')
     }
 
+    def index2() {
+        render(view: 'index2')
+    }
+
     def runImport() {
         log.info("Run import")
         importService.runForecastImport()

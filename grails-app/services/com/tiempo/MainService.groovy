@@ -36,7 +36,7 @@ class MainService {
                 Day day = forecast.getClientDay(currDateTime)
                 nearest = forecast.provideCurrentHourly(currDateTime)
                 forecastToShow = eliminateForecastToShow(day, forecast.forecast)
-                return new WeatherView(city: city, forecast: forecastToShow, current: nearest, halfDayPercent: calcHalfDayPercent(currDateTime))
+                return new WeatherView(city: city, forecast: forecastToShow, current: nearest, todayHourlyList: day.hours, halfDayPercent: calcHalfDayPercent(currDateTime))
                 //return new WeatherView(city: city, forecast: forecast.forecast, current: nearest, localDt: currDateTime)
             } catch (ForecastNotFoundException e) {
                 log.error(e)

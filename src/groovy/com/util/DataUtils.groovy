@@ -14,8 +14,11 @@ class DataUtils {
 
     static final SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd")
     static final SimpleDateFormat yyyyMMdd_hhmm_a = new SimpleDateFormat("yyyy-MM-dd hh:mm a")
+    static final SimpleDateFormat ddMM = new SimpleDateFormat("dd.MM")
+
     static final DateTimeFormatter yyyyMMdd_dt_formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
     static final DateTimeFormatter hhmm_dt_formatter = DateTimeFormat.forPattern("hh:mm")
+
     static final MILLS_IN_HOUR = 1000*60*60
 
     static String prepareTime(String timeFromWs) {

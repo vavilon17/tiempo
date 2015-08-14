@@ -10,6 +10,15 @@ class Day {
     byte minC
     byte maxC
 
+    // aggregated part
+    byte maxDayTempC
+    byte minNightTempC
+    int maxPressure
+    int maxHumidity
+    int maxWindMs
+    float sumPrecipMm
+    int maxRainChance
+
     Timestamp sunrise
     Timestamp sunset
 
@@ -24,8 +33,6 @@ class Day {
 
     static constraints = {
         hours nullable: true, empty: true
-        sunrise nullable: true
-        sunset nullable: true
     }
 
     Hourly getNearestHourly(LocalDateTime localDateTime) {

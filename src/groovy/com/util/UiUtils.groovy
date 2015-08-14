@@ -2,20 +2,7 @@ package com.util
 
 import com.tiempo.WeatherType
 
-import static com.tiempo.WeatherType.CLOUD
-import static com.tiempo.WeatherType.CLOUD_BIG_RAIN
-import static com.tiempo.WeatherType.CLOUD_LIGHTNING
-import static com.tiempo.WeatherType.CLOUD_MIST
-import static com.tiempo.WeatherType.CLOUD_MIST_WET
-import static com.tiempo.WeatherType.CLOUD_RAIN
-import static com.tiempo.WeatherType.MOON
-import static com.tiempo.WeatherType.MOON_CLOUD
-import static com.tiempo.WeatherType.MOON_CLOUD_RAIN
-import static com.tiempo.WeatherType.SNOW
-import static com.tiempo.WeatherType.SUN
-import static com.tiempo.WeatherType.SUN_CLOUD
-import static com.tiempo.WeatherType.SUN_CLOUD_RAIN
-
+import static com.tiempo.WeatherType.*
 
 class UiUtils {
 
@@ -48,5 +35,29 @@ class UiUtils {
             case MOON_CLOUD:
                 return "icon_13"
         }
+    }
+
+    // todo cache this
+    public static String dayOfWeekShortName(Date date) {
+        Calendar c = Calendar.getInstance()
+        c.setTime(date)
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
+        switch (dayOfWeek) {
+            case 1:
+                return "Do"
+            case 2:
+                return "Lu"
+            case 3:
+                return "Ma"
+            case 4:
+                return "Mi"
+            case 5:
+                return "Ju"
+            case 6:
+                return "Vi"
+            case 7:
+                return "Sa"
+        }
+        return ""
     }
 }

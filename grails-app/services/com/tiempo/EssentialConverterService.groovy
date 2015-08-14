@@ -4,6 +4,7 @@ import com.dto.wwo.Astronomy
 import com.dto.wwo.ForecastData
 import com.dto.wwo.HourlyDto
 import com.dto.wwo.Weather
+import com.tiempo.dto.DayAggregatedData
 import com.tiempo.wwo.Day
 import com.tiempo.wwo.Hourly
 import com.tiempo.wwo.WeatherForecast
@@ -12,6 +13,9 @@ import com.util.DataUtils
 import java.sql.Timestamp
 
 class EssentialConverterService {
+
+    private static final String DAY = "yes"
+    private static final String NIGHT = "no"
 
     static transactional = true
 
@@ -78,6 +82,15 @@ class EssentialConverterService {
         Astronomy astronomy = weather.astronomy.get(0)
         day.sunrise = new Timestamp(DataUtils.yyyyMMdd_hhmm_a.parse(weather.date + " " + astronomy.sunrise).getTime())
         day.sunset = new Timestamp(DataUtils.yyyyMMdd_hhmm_a.parse(weather.date + " " + astronomy.sunset).getTime())
+
+        DayAggregatedData dayAggrData = calcAggregatedData(weather)
+        day.maxDayTempC = dayAggrData.maxDayTempC
+        day.minNightTempC = dayAggrData.minNightTempC
+        day.maxPressure = dayAggrData.maxPressure
+        day.maxHumidity = dayAggrData.maxHumidity
+        day.maxWindMs = dayAggrData.maxWindMs
+        day.sumPrecipMm = dayAggrData.sumPrecipMm
+        day.maxRainChance = dayAggrData.maxRainChance
     }
 
     private static mapHourlyDtoToHourly(HourlyDto hourlyDto, Hourly hourly, Day day) {
@@ -108,6 +121,44 @@ class EssentialConverterService {
             }
         }
         res
+    }
+
+    private static DayAggregatedData calcAggregatedData(Weather dayWeather) {
+        DayAggregatedData aggrData = new DayAggregatedData()
+        int tmpWindSpeed
+        for (HourlyDto h : dayWeather.hourly) {
+            // temperature edges
+            if (h.isdaytime.equalsIgnoreCase(DAY)) {
+                if (aggrData.maxDayTempC < h.tempC) {
+                    aggrData.maxDayTempC = h.tempC
+                }
+            } else {
+                if (aggrData.minNightTempC > h.tempC) {
+                    aggrData.minNightTempC = h.tempC
+                }
+            }
+
+            // pressure, humidity, chance of rain
+            if (aggrData.maxPressure < h.pressure) {
+                aggrData.maxPressure = h.pressure
+            }
+            if (aggrData.maxHumidity < h.humidity) {
+                aggrData.maxHumidity = h.humidity
+            }
+            if (aggrData.maxRainChance < h.chanceofrain) {
+                aggrData.maxRainChance = h.chanceofrain
+            }
+
+            // summary precipitations
+            aggrData.sumPrecipMm += h.precipMM
+
+            // wind speed, m/sec
+            tmpWindSpeed = calcWindSpeed(h)
+            if (aggrData.maxWindMs < tmpWindSpeed) {
+                aggrData.maxWindMs = tmpWindSpeed
+            }
+        }
+        aggrData
     }
 
     private static boolean calcIsDay(HourlyDto hourlyDto) {
