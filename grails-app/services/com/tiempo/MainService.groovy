@@ -17,6 +17,7 @@ class MainService {
     static class WeatherView {
         City city
         Hourly current
+        List<Hourly> todayHourlyList
         List<Day> forecast
         int halfDayPercent
     }

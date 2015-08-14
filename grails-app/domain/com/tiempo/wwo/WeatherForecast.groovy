@@ -56,11 +56,13 @@ class WeatherForecast {
                 if (i == 0) {
                     return hourlyIter
                 } else {
-                    return generateAverageByHourly(currentDay.hours.get(i-1), hourlyIter, inputTime)
+                    boolean isDay = (inputTime.after(currentDay.sunrise) && inputTime.before(currentDay.sunset))
+                    return generateAverageByHourly(currentDay.hours.get(i-1), hourlyIter, inputTime, isDay)
                 }
             } else {
                 if (i == currentDay.hours.size()-1) {
-                    return generateAverageByHourly(hourlyIter, nextDay.hours.get(0), inputTime)
+                    boolean isDay = (inputTime.before(currentDay.sunset) || inputTime.after(nextDay.sunrise))
+                    return generateAverageByHourly(hourlyIter, nextDay.hours.get(0), inputTime, isDay)
                 }
             }
         }
@@ -68,9 +70,10 @@ class WeatherForecast {
                 "${nextDay.date.toString()}] and input datetime=${currentLocalDateTime.toString()}, city=${city.printName}")
     }
 
-    private static Hourly generateAverageByHourly(Hourly before, Hourly after, Timestamp inputTimestamp) {
+    private static Hourly generateAverageByHourly(Hourly before, Hourly after, Timestamp inputTimestamp, boolean isDay) {
         Hourly hourlyDto = new Hourly()
         double delta = (inputTimestamp.getTime() - before.timestamp.getTime()) / (after.timestamp.getTime() - before.timestamp.getTime())
+        hourlyDto.timestamp = inputTimestamp
         hourlyDto.tempC = DataUtils.weightedIntAverage(before.tempC, after.tempC, delta)
         hourlyDto.hum = DataUtils.weightedIntAverage(before.hum, after.hum, delta)
         hourlyDto.precip = DataUtils.weightedFloatAverage(before.precip, after.precip, delta, 1)
@@ -78,6 +81,7 @@ class WeatherForecast {
         hourlyDto.windMs = DataUtils.weightedIntAverage(before.windMs, after.windMs, delta)
         hourlyDto.cloud = DataUtils.weightedIntAverage(before.cloud, after.cloud, delta)
         hourlyDto.rainChance = DataUtils.weightedIntAverage(before.rainChance, after.rainChance, delta)
+        hourlyDto.isDay = isDay
         hourlyDto
     }
 }

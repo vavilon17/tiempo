@@ -21,7 +21,7 @@ class RestBridgeService {
                                       "DominicanRepublic", "Cuba", "Nicaragua", "Honduras", "ElSalvador", "Belize", "Guatemala",
                                       "Mexico", "Jamaica", "Haiti", "Grenada", "TrinidadAndTobago", "Barbados", "Dominica"]*/
 
-    private final static Set COUNTRIES = ["Argentina"]
+    private final static Set COUNTRIES = ["Argentina", "Chili"]
 
     private static RestBuilder rest = new RestBuilder()
 

@@ -41,4 +41,6 @@ class HourlyDto {
     Integer chanceoffog
     Integer chanceofsnow
     Integer chanceofthunder
+
+    String isdaytime
 }

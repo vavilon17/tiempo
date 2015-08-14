@@ -10,6 +10,9 @@ class Day {
     byte minC
     byte maxC
 
+    Timestamp sunrise
+    Timestamp sunset
+
     List<Hourly> hours
     static hasMany = [hours: Hourly]
 
@@ -21,6 +24,8 @@ class Day {
 
     static constraints = {
         hours nullable: true, empty: true
+        sunrise nullable: true
+        sunset nullable: true
     }
 
     Hourly getNearestHourly(LocalDateTime localDateTime) {

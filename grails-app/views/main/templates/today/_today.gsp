@@ -27,14 +27,15 @@
                 <strong>Tiempo en ${city.printName}</strong>
                 ${city?.region?.country?.nativeName}
             </div>
+            <g:set var="mainIco" value="${com.util.UiUtils.provideIconClass(current.getWeatherType())}"/>
             <div class="header-bottom-circle">
                 <input value="${percent}" data-displayprevious="false" data-min="0" data-readOnly=true data-height="279" data-width="279" data-max="100" data-thickness=".05" data-bgColor="transparent" data-fgcolor="#86d1c1" class="knob tictac">
-                <span class="icon icon_1"></span>
+                <span class="icon ${mainIco}"></span>
                 <span class="value"><span>${current.tempC}</span></span>
             </div>
             <div class="header-bottom-circle-mob">
                 <input value="${percent}" data-displayprevious="false" data-min="0" data-readOnly=true data-height="200" data-width="200" data-max="100" data-thickness=".05" data-bgColor="transparent" data-fgcolor="#86d1c1" class="knob tictac">
-                <span class="icon icon_1"></span>
+                <span class="icon ${mainIco}"></span>
                 <span class="value"><span>${current.tempC}</span></span>
             </div>
             <div class="header-bottom-info">

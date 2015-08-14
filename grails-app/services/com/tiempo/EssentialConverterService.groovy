@@ -1,5 +1,6 @@
 package com.tiempo
 
+import com.dto.wwo.Astronomy
 import com.dto.wwo.ForecastData
 import com.dto.wwo.HourlyDto
 import com.dto.wwo.Weather
@@ -7,6 +8,8 @@ import com.tiempo.wwo.Day
 import com.tiempo.wwo.Hourly
 import com.tiempo.wwo.WeatherForecast
 import com.util.DataUtils
+
+import java.sql.Timestamp
 
 class EssentialConverterService {
 
@@ -71,11 +74,15 @@ class EssentialConverterService {
         day.date = DataUtils.yyyyMMdd.parse(weather.date)
         day.minC = weather.mintempC
         day.maxC = weather.maxtempC
+
+        Astronomy astronomy = weather.astronomy.get(0)
+        day.sunrise = new Timestamp(DataUtils.yyyyMMdd_hhmm_a.parse(weather.date + " " + astronomy.sunrise).getTime())
+        day.sunset = new Timestamp(DataUtils.yyyyMMdd_hhmm_a.parse(weather.date + " " + astronomy.sunset).getTime())
     }
 
     private static mapHourlyDtoToHourly(HourlyDto hourlyDto, Hourly hourly, Day day) {
         hourly.time = DataUtils.prepareTime(hourlyDto.time)
-        hourly.timestamp = DataUtils.prepareTimestamp(hourlyDto.time, day)
+        hourly.timestamp = DataUtils.prepareDayTimestamp(hourlyDto.time, day)
         hourly.tempC = hourlyDto.tempC
         hourly.hum = hourlyDto.humidity
         hourly.precip = hourlyDto.precipMM
@@ -83,6 +90,7 @@ class EssentialConverterService {
         hourly.cloud = hourlyDto.cloudcover
         hourly.rainChance = hourlyDto.chanceofrain
         hourly.windMs = calcWindSpeed(hourlyDto)
+        hourly.isDay = calcIsDay(hourlyDto)
     }
 
     private static int calcWindSpeed(HourlyDto hourlyDto) {
@@ -100,5 +108,17 @@ class EssentialConverterService {
             }
         }
         res
+    }
+
+    private static boolean calcIsDay(HourlyDto hourlyDto) {
+        try {
+            if (hourlyDto.isdaytime) {
+                return hourlyDto.isdaytime.equalsIgnoreCase("yes")
+            } else {
+                return true
+            }
+        } catch (Exception e) {
+            return true
+        }
     }
 }

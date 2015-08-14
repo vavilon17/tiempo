@@ -17,9 +17,6 @@ class MainController {
         redirect(action: 'weather')
     }
 
-    def index2() {
-    }
-
     def runImport() {
         log.info("Run import")
         importService.runForecastImport()
@@ -34,7 +31,7 @@ class MainController {
         Day day = Day.findByDate("2015-06-29")
         WeatherForecast f = WeatherForecast.findById(1l)
         f.removeFromForecast(day)
-        f.save(flush: true) // id = 191, h: 183-190
+        f.save(flush: true)
     }
 
     def weather() {
