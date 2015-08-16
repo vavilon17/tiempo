@@ -6,7 +6,7 @@ import static com.tiempo.WeatherType.*
 
 class UiUtils {
 
-    public static String provideIconClass(WeatherType weatherType) {
+    public static String provideIconClassMain(WeatherType weatherType) {
         switch (weatherType) {
             case CLOUD_BIG_RAIN:
                 return "icon_1"
@@ -35,6 +35,58 @@ class UiUtils {
             case MOON_CLOUD:
                 return "icon_13"
         }
+    }
+
+    public static String provideIconClassForecastDay(WeatherType weatherType) {
+        switch (weatherType) {
+            case SUN_CLOUD:
+                return "icon_1"
+            case SUN:
+                return "icon_2"
+            case SUN_CLOUD_RAIN:
+                return "icon_3"
+            case CLOUD:
+                return "icon_4"
+            case CLOUD_RAIN:
+                return "icon_5"
+            case SNOW:
+                return "icon_6"
+            case CLOUD_MIST_WET:
+                return "icon_7"
+            case CLOUD_BIG_RAIN:
+                return "icon_8"
+            case CLOUD_MIST:
+                return "icon_9"
+            case CLOUD_LIGHTNING:
+                return "icon_10"
+        }
+        return SUN_CLOUD
+    }
+
+    public static String provideIconClassForecastNight(WeatherType weatherType) {
+        switch (weatherType) {
+            case MOON_CLOUD:
+                return "icon_1"
+            case MOON:
+                return "icon_2"
+            case MOON_CLOUD_RAIN:
+                return "icon_3"
+            case CLOUD:
+                return "icon_4"
+            case CLOUD_RAIN:
+                return "icon_5"
+            case SNOW:
+                return "icon_6"
+            case CLOUD_MIST_WET:
+                return "icon_7"
+            case CLOUD_BIG_RAIN:
+                return "icon_8"
+            case CLOUD_MIST:
+                return "icon_9"
+            case CLOUD_LIGHTNING:
+                return "icon_10"
+        }
+        return MOON_CLOUD
     }
 
     // todo cache this

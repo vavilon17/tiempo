@@ -10,8 +10,8 @@
     <g:render template="/main/templates/forecast/delimiter" model="[count: weather_results.forecast.size()]"/>
     <g:render template="/main/templates/forecast/core" model="[forecast: weather_results.forecast]"/>
     %{--<g:render template="/main/templates/forecast/mob"/>--}%
-    %{--<g:render template="/main/templates/footer_banner"/>--}%
-    %{--<g:render template="/main/templates/footer"/>--}%
+    <g:render template="/main/templates/footer_banner"/>
+    <g:render template="/main/templates/footer"/>
 </div>
 </body>
 </html>

@@ -18,6 +18,5 @@
 <asset:javascript src="slick.min.js"/>
 <asset:javascript src="jquery.knob.js"/>
 <asset:javascript src="script.js"/>
-<asset:javascript src="script_old.js"/>
 </body>
 </html>

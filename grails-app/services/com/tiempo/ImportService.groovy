@@ -20,8 +20,8 @@ class ImportService {
     def essentialConverterService
 
     def runForecastImport() {
-//        City.findAllByIsActive(true).each {
-        City it = City.first() //{
+        City.findAllByIsActive(true).each {
+//        City it = City.first() //{
             log.info("Starting import for the city ${it.printName}")
             WeatherForecast forecast = WeatherForecast.findByCity(it)
             if (!forecast) {
@@ -31,7 +31,7 @@ class ImportService {
             }
             performCityForecast(forecast)
             log.info("End import for the city ${it.printName}")
-        //}
+        }
     }
 
     @Transactional
@@ -44,7 +44,7 @@ class ImportService {
     }
 
     private String prepareUrl(WeatherForecast forecast) {
-        String url = "https://api.worldweatheronline.com/free/v2/weather.ashx?key=${API_KEY}&format=json&tp=3&num_of_days=5&extra=isDayTime&cc=no&q="
+        String url = "https://api.worldweatheronline.com/free/v2/weather.ashx?key=${API_KEY}&format=json&tp=3&num_of_days=8&extra=isDayTime&cc=no&q="
         String locStr = "${forecast.city.lat}".replaceAll(",", ".") + "," + "${forecast.city.lon}".replaceAll(",", ".")
         url + locStr
     }

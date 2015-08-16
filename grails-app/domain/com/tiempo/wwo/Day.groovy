@@ -1,5 +1,6 @@
 package com.tiempo.wwo
 
+import com.tiempo.WeatherType
 import org.joda.time.LocalDateTime
 
 import java.sql.Timestamp
@@ -19,6 +20,9 @@ class Day {
     float sumPrecipMm
     int maxRainChance
 
+    WeatherType avgDayWeatherType
+    WeatherType avgNightWeatherType
+
     Timestamp sunrise
     Timestamp sunset
 
@@ -33,6 +37,8 @@ class Day {
 
     static constraints = {
         hours nullable: true, empty: true
+        avgDayWeatherType nullable: true
+        avgNightWeatherType nullable: true
     }
 
     Hourly getNearestHourly(LocalDateTime localDateTime) {

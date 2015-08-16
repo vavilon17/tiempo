@@ -1,5 +1,6 @@
 package com.util
 
+import com.tiempo.WeatherType
 import com.tiempo.wwo.Day
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
@@ -51,5 +52,46 @@ class DataUtils {
             return first
         }
         (double) (first + (delta * (double) (second - first)))
+    }
+
+    static WeatherType calcWeatherType(boolean isDay, float precip, byte tempC, int cloud) {
+        boolean isRain = precip >= 0.1
+        if (isDay) {
+            if (isRain) {
+                if (tempC < 0) {
+                    return WeatherType.SNOW
+                } else {
+                    if (cloud < 80) {
+                        return WeatherType.SUN_CLOUD_RAIN
+                    } else {
+                        if (precip >= 2) {
+                            return WeatherType.CLOUD_BIG_RAIN
+                        } else {
+                            return WeatherType.CLOUD_RAIN
+                        }
+                    }
+                }
+            } else {
+                if (cloud < 20) {
+                    return WeatherType.SUN
+                } else if (cloud < 80) {
+                    return WeatherType.SUN_CLOUD
+                } else {
+                    return WeatherType.CLOUD
+                }
+            }
+        } else {
+            if (isRain) {
+                return WeatherType.MOON_CLOUD_RAIN
+            } else {
+                if (cloud < 20) {
+                    return WeatherType.MOON
+                } else if (cloud < 80) {
+                    return WeatherType.MOON_CLOUD
+                } else {
+                    return WeatherType.CLOUD
+                }
+            }
+        }
     }
 }

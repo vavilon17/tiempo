@@ -1,6 +1,7 @@
 package com.tiempo.wwo
 
 import com.tiempo.WeatherType
+import com.util.DataUtils
 
 import java.sql.Timestamp
 
@@ -34,43 +35,6 @@ class Hourly {
     }
 
     WeatherType getWeatherType() {
-        boolean isRain = precip >= 0.1
-        if (isDay) {
-            if (isRain) {
-                if (tempC < 0) {
-                    return WeatherType.SNOW
-                } else {
-                    if (cloud < 80) {
-                        return WeatherType.SUN_CLOUD_RAIN
-                    } else {
-                        if (precip >= 2) {
-                            return WeatherType.CLOUD_BIG_RAIN
-                        } else {
-                            return WeatherType.CLOUD_RAIN
-                        }
-                    }
-                }
-            } else {
-                if (cloud < 20) {
-                    return WeatherType.SUN
-                } else if (cloud < 80) {
-                    return WeatherType.SUN_CLOUD
-                } else {
-                    return WeatherType.CLOUD
-                }
-            }
-        } else {
-            if (isRain) {
-                return WeatherType.MOON_CLOUD_RAIN
-            } else {
-                if (cloud < 20) {
-                    return WeatherType.MOON
-                } else if (cloud < 80) {
-                    return WeatherType.MOON_CLOUD
-                } else {
-                    return WeatherType.CLOUD
-                }
-            }
-        }
+        DataUtils.calcWeatherType(isDay, precip, tempC, cloud)
     }
 }

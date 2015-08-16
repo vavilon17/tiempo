@@ -1,5 +1,7 @@
 package com.tiempo.dto
 
+import com.tiempo.WeatherType
+
 
 class DayAggregatedData {
 
@@ -11,5 +13,8 @@ class DayAggregatedData {
     int maxWindMs = 0
     float sumPrecipMm = 0.00
     int maxRainChance = 0
+
+    WeatherType dayWeatherType
+    WeatherType nightWeatherType
 
 }

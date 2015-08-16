@@ -91,6 +91,8 @@ class EssentialConverterService {
         day.maxWindMs = dayAggrData.maxWindMs
         day.sumPrecipMm = dayAggrData.sumPrecipMm
         day.maxRainChance = dayAggrData.maxRainChance
+        day.avgDayWeatherType = dayAggrData.dayWeatherType
+        day.avgNightWeatherType = dayAggrData.nightWeatherType
     }
 
     private static mapHourlyDtoToHourly(HourlyDto hourlyDto, Hourly hourly, Day day) {
@@ -126,16 +128,27 @@ class EssentialConverterService {
     private static DayAggregatedData calcAggregatedData(Weather dayWeather) {
         DayAggregatedData aggrData = new DayAggregatedData()
         int tmpWindSpeed
+
+        int sumCloudVover = 0
+        byte sumDayTempC = 0
+        int dayCount = 0
+        byte sumNightTempC = 0
+
         for (HourlyDto h : dayWeather.hourly) {
             // temperature edges
             if (h.isdaytime.equalsIgnoreCase(DAY)) {
                 if (aggrData.maxDayTempC < h.tempC) {
                     aggrData.maxDayTempC = h.tempC
                 }
+                // for day weather type
+                sumDayTempC += h.tempC
+                dayCount++
             } else {
                 if (aggrData.minNightTempC > h.tempC) {
                     aggrData.minNightTempC = h.tempC
                 }
+                // for night weather type
+                sumNightTempC += h.tempC
             }
 
             // pressure, humidity, chance of rain
@@ -157,7 +170,12 @@ class EssentialConverterService {
             if (aggrData.maxWindMs < tmpWindSpeed) {
                 aggrData.maxWindMs = tmpWindSpeed
             }
+
+            sumCloudVover += h.cloudcover
         }
+        int avgCloudCover = (int) Math.round(sumCloudVover*1.0/dayWeather.hourly.size())
+        aggrData.dayWeatherType = DataUtils.calcWeatherType(true, aggrData.sumPrecipMm, (byte) Math.round(sumDayTempC*1.0/dayCount), avgCloudCover)
+        aggrData.nightWeatherType = DataUtils.calcWeatherType(false, aggrData.sumPrecipMm, (byte) Math.round(sumNightTempC*1.0/(dayWeather.hourly.size() - dayCount)), avgCloudCover)
         aggrData
     }
 
