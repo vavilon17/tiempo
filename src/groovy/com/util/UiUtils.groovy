@@ -6,7 +6,7 @@ import static com.tiempo.WeatherType.*
 
 class UiUtils {
 
-    public static String provideIconClassMain(WeatherType weatherType) {
+    public static String provideIconClassBig(WeatherType weatherType) {
         switch (weatherType) {
             case CLOUD_BIG_RAIN:
                 return "icon_1"
@@ -37,6 +37,32 @@ class UiUtils {
         }
     }
 
+    public static String provideIconClassSmall(WeatherType weatherType) {
+        switch (weatherType) {
+            case SUN_CLOUD:
+                return "icon_1"
+            case SUN:
+                return "icon_2"
+            case SUN_CLOUD_RAIN:
+                return "icon_3"
+            case CLOUD:
+                return "icon_4"
+            case CLOUD_RAIN:
+                return "icon_5"
+            case SNOW:
+                return "icon_6"
+            case CLOUD_MIST_WET:
+                return "icon_7"
+            case CLOUD_BIG_RAIN:
+                return "icon_8"
+            case CLOUD_MIST:
+                return "icon_9"
+            case CLOUD_LIGHTNING:
+                return "icon_10"
+        }
+        return CLOUD
+    }
+
     public static String provideIconClassForecastDay(WeatherType weatherType) {
         switch (weatherType) {
             case SUN_CLOUD:
@@ -60,7 +86,7 @@ class UiUtils {
             case CLOUD_LIGHTNING:
                 return "icon_10"
         }
-        return SUN_CLOUD
+        return CLOUD
     }
 
     public static String provideIconClassForecastNight(WeatherType weatherType) {
@@ -86,7 +112,7 @@ class UiUtils {
             case CLOUD_LIGHTNING:
                 return "icon_10"
         }
-        return MOON_CLOUD
+        return CLOUD
     }
 
     // todo cache this
@@ -111,5 +137,70 @@ class UiUtils {
                 return "Sa"
         }
         return ""
+    }
+
+    // todo cache this
+    public static String dayOfWeekFullName(Date date) {
+        Calendar c = Calendar.getInstance()
+        c.setTime(date)
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
+        switch (dayOfWeek) {
+            case 1:
+                return "Domingo"
+            case 2:
+                return "Lunes"
+            case 3:
+                return "Martes"
+            case 4:
+                return "Miercoles"
+            case 5:
+                return "Jueves"
+            case 6:
+                return "Viernes"
+            case 7:
+                return "Sabado"
+        }
+        return ""
+    }
+
+    // todo cache this
+    public static int dayOfMonth(Date date) {
+        Calendar c = Calendar.getInstance()
+        c.setTime(date)
+        c.get(Calendar.DAY_OF_MONTH)
+    }
+
+    // todo cache this
+    public static String monthShort(Date date) {
+        Calendar c = Calendar.getInstance()
+        c.setTime(date)
+        int month = c.get(Calendar.MONTH)
+        switch (month) {
+            case 0:
+                return "enero"
+            case 1:
+                return "feb"
+            case 2:
+                return "marzo"
+            case 3:
+                return "abr"
+            case 4:
+                return "mayo"
+            case 5:
+                return "jun"
+            case 6:
+                return "jul"
+            case 7:
+                return "agosto"
+            case 8:
+                return "sept"
+            case 9:
+                return "oct"
+            case 10:
+                return "nov"
+            case 11:
+                return "dec"
+        }
+        ""
     }
 }
