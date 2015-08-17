@@ -56,41 +56,40 @@ class DataUtils {
 
     static WeatherType calcWeatherType(boolean isDay, float precip, byte tempC, int cloud) {
         boolean isRain = precip >= 0.1
-        if (isDay) {
-            if (isRain) {
-                if (tempC < 0) {
-                    return WeatherType.SNOW
-                } else {
-                    if (cloud < 80) {
+
+        if (isRain) {
+            if (tempC < 0) {
+                return WeatherType.SNOW
+            } else {
+                if (cloud < 80) {
+                    if (isDay) {
                         return WeatherType.SUN_CLOUD_RAIN
                     } else {
-                        if (precip >= 2) {
-                            return WeatherType.CLOUD_BIG_RAIN
-                        } else {
-                            return WeatherType.CLOUD_RAIN
-                        }
+                        return WeatherType.MOON_CLOUD_RAIN
                     }
-                }
-            } else {
-                if (cloud < 20) {
-                    return WeatherType.SUN
-                } else if (cloud < 80) {
-                    return WeatherType.SUN_CLOUD
                 } else {
-                    return WeatherType.CLOUD
+                    if (precip >= 2) {
+                        return WeatherType.CLOUD_BIG_RAIN
+                    } else {
+                        return WeatherType.CLOUD_RAIN
+                    }
                 }
             }
         } else {
-            if (isRain) {
-                return WeatherType.MOON_CLOUD_RAIN
-            } else {
-                if (cloud < 20) {
-                    return WeatherType.MOON
-                } else if (cloud < 80) {
-                    return WeatherType.MOON_CLOUD
+            if (cloud < 20) {
+                if (isDay) {
+                    return WeatherType.SUN
                 } else {
-                    return WeatherType.CLOUD
+                    WeatherType.MOON
                 }
+            } else if (cloud < 80) {
+                if (isDay) {
+                    return WeatherType.SUN_CLOUD
+                } else {
+                    return WeatherType.MOON_CLOUD
+                }
+            } else {
+                return WeatherType.CLOUD
             }
         }
     }

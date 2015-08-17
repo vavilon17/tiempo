@@ -1,7 +1,5 @@
 package com.tiempo
 
-import com.tiempo.wwo.Day
-import com.tiempo.wwo.WeatherForecast
 import org.apache.log4j.Logger
 
 class MainController {
@@ -24,18 +22,6 @@ class MainController {
     def runImport() {
         log.info("Run import")
         importService.runForecastImport()
-    }
-
-    def del() {
-        importService.convert(null)
-        String dd = "sadasdasda"
-    }
-
-    def delDay() {
-        Day day = Day.findByDate("2015-06-29")
-        WeatherForecast f = WeatherForecast.findById(1l)
-        f.removeFromForecast(day)
-        f.save(flush: true)
     }
 
     def weather() {
