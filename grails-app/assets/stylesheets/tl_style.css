@@ -949,7 +949,8 @@ header.bg-1 {
 }
 
 .tempoblock-element_day_1 {
-    top: 143px
+    /*top: 143px*/
+    top: 100px;
 }
 
 .tempoblock-element_day_1 .tempoblock-element__icon {
@@ -982,7 +983,8 @@ header.bg-1 {
 }
 
 .tempoblock-element_night_1 {
-    top: 274px
+    /*top: 274px*/
+    top: 200px;
 }
 
 .tempoblock-element_night_1 .tempoblock-element__linefirst {
