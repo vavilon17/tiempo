@@ -20,6 +20,9 @@ class MainService {
         List<Hourly> todayHourlyList
         List<Day> forecast
         int halfDayPercent
+
+        byte todayMaxDay
+        byte todayMinNight
     }
 
     static transactional = false
@@ -36,7 +39,8 @@ class MainService {
                 Day day = forecast.getClientDay(currDateTime)
                 nearest = forecast.provideCurrentHourly(currDateTime)
                 forecastToShow = eliminateForecastToShow(day, forecast.forecast)
-                return new WeatherView(city: city, forecast: forecastToShow, current: nearest, todayHourlyList: day.hours, halfDayPercent: calcHalfDayPercent(currDateTime))
+                return new WeatherView(city: city, forecast: forecastToShow, current: nearest, todayHourlyList: day.hours,
+                        halfDayPercent: calcHalfDayPercent(currDateTime), todayMaxDay: day.maxDayTempC, todayMinNight: day.minNightTempC)
                 //return new WeatherView(city: city, forecast: forecast.forecast, current: nearest, localDt: currDateTime)
             } catch (ForecastNotFoundException e) {
                 log.error(e)

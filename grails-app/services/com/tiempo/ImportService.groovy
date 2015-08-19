@@ -20,8 +20,8 @@ class ImportService {
     def essentialConverterService
 
     def runForecastImport() {
-//        City.findAllByIsActive(true).each {
-        City it = City.first() //{
+        City.findAllByIsActive(true).each {
+//        City it = City.first() //{
             log.info("Starting import for the city ${it.printName}")
             WeatherForecast forecast = WeatherForecast.findByCity(it)
             if (!forecast) {
@@ -31,7 +31,7 @@ class ImportService {
             }
             performCityForecast(forecast)
             log.info("End import for the city ${it.printName}")
-//        }
+        }
     }
 
     @Transactional

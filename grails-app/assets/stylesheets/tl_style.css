@@ -890,6 +890,18 @@ header.bg-1 {
     right: -150%
 }
 
+.tempoblock-element__line_new {
+    height: 3px;
+    position: absolute;
+    width: 100px;
+    background-color: #f0c313;
+    display: none;
+}
+
+.tempoblock-element__line_new.night {
+    background-color: #cacaca;
+}
+
 .tempoblock-element_night .tempoblock-element__value {
     font-size: 18px
 }
@@ -944,9 +956,9 @@ header.bg-1 {
     background-position: -460px 0px
 }
 
-.tempoblock-element_night .tempoblock-element__line {
+/*.tempoblock-element_night .tempoblock-element__line {
     background-color: #cacaca
-}
+}*/
 
 .tempoblock-element_day_1 {
     /*top: 143px*/
@@ -969,18 +981,20 @@ header.bg-1 {
     -ms-transform: rotate(-20deg);
     -webkit-transform: rotate(-20deg);
     -o-transform: rotate(-20deg);
-    transform: rotate(-20deg)
+    transform: rotate(-20deg);
 }
 
-.tempoblock-element_day_1 .tempoblock-element__line {
+/*.tempoblock-element_day_1 .tempoblock-element__line {
     bottom: 65px;
     -moz-transform: rotate(-28deg);
     -ms-transform: rotate(-28deg);
     -webkit-transform: rotate(-28deg);
     -o-transform: rotate(-28deg);
     transform: rotate(-28deg);
-    background-color: #f0c313
-}
+    background-color: #f0c313;
+
+    display: none;
+}*/
 
 .tempoblock-element_night_1 {
     /*top: 274px*/
@@ -1002,14 +1016,14 @@ header.bg-1 {
     bottom: 10px
 }
 
-.tempoblock-element_night_1 .tempoblock-element__line {
+/*.tempoblock-element_night_1 .tempoblock-element__line {
     bottom: 70px;
     -moz-transform: rotate(-30deg);
     -ms-transform: rotate(-30deg);
     -webkit-transform: rotate(-30deg);
     -o-transform: rotate(-30deg);
     transform: rotate(-30deg)
-}
+}*/
 
 .tempoblock-element_day_2 {
     top: 64px
@@ -1019,7 +1033,7 @@ header.bg-1 {
     border: 1px solid #e5902d
 }
 
-.tempoblock-element_day_2 .tempoblock-element__line {
+/*.tempoblock-element_day_2 .tempoblock-element__line {
     bottom: -20px;
     -moz-transform: rotate(33deg);
     -ms-transform: rotate(33deg);
@@ -1027,20 +1041,20 @@ header.bg-1 {
     -o-transform: rotate(33deg);
     transform: rotate(33deg);
     background-color: #f0c313
-}
+}*/
 
 .tempoblock-element_night_2 {
     top: 191px
 }
 
-.tempoblock-element_night_2 .tempoblock-element__line {
+/*.tempoblock-element_night_2 .tempoblock-element__line {
     bottom: -20px;
     -moz-transform: rotate(35deg);
     -ms-transform: rotate(35deg);
     -webkit-transform: rotate(35deg);
     -o-transform: rotate(35deg);
     transform: rotate(35deg)
-}
+}*/
 
 .tempoblock-element_day_3 {
     top: 151px
@@ -1050,7 +1064,7 @@ header.bg-1 {
     border: 1px solid #e5902d
 }
 
-.tempoblock-element_day_3 .tempoblock-element__line {
+/*.tempoblock-element_day_3 .tempoblock-element__line {
     bottom: 35px;
     -moz-transform: rotate(-15deg);
     -ms-transform: rotate(-15deg);
@@ -1058,20 +1072,20 @@ header.bg-1 {
     -o-transform: rotate(-15deg);
     transform: rotate(-15deg);
     background-color: #f0c313
-}
+}*/
 
 .tempoblock-element_night_3 {
     top: 282px
 }
 
-.tempoblock-element_night_3 .tempoblock-element__line {
+/*.tempoblock-element_night_3 .tempoblock-element__line {
     bottom: 35px;
     -moz-transform: rotate(-15deg);
     -ms-transform: rotate(-15deg);
     -webkit-transform: rotate(-15deg);
     -o-transform: rotate(-15deg);
     transform: rotate(-15deg)
-}
+}*/
 
 .tempoblock-element_day_4 {
     top: 127px
@@ -1081,7 +1095,7 @@ header.bg-1 {
     border: 1px solid #82c8bb
 }
 
-.tempoblock-element_day_4 .tempoblock-element__line {
+/*.tempoblock-element_day_4 .tempoblock-element__line {
     bottom: 10px;
     -moz-transform: rotate(15deg);
     -ms-transform: rotate(15deg);
@@ -1089,20 +1103,20 @@ header.bg-1 {
     -o-transform: rotate(15deg);
     transform: rotate(15deg);
     background-color: #63cf8d
-}
+}*/
 
 .tempoblock-element_night_4 {
     top: 258px
 }
 
-.tempoblock-element_night_4 .tempoblock-element__line {
+/*.tempoblock-element_night_4 .tempoblock-element__line {
     bottom: 10px;
     -moz-transform: rotate(15deg);
     -ms-transform: rotate(15deg);
     -webkit-transform: rotate(15deg);
     -o-transform: rotate(15deg);
     transform: rotate(15deg)
-}
+}*/
 
 .tempoblock-element_day_5 {
     top: 156px
@@ -1112,7 +1126,7 @@ header.bg-1 {
     border: 1px solid #82c8bb
 }
 
-.tempoblock-element_day_5 .tempoblock-element__line {
+/*.tempoblock-element_day_5 .tempoblock-element__line {
     bottom: 10px;
     -moz-transform: rotate(5deg);
     -ms-transform: rotate(5deg);
@@ -1120,20 +1134,20 @@ header.bg-1 {
     -o-transform: rotate(5deg);
     transform: rotate(5deg);
     background-color: #3caba2
-}
+}*/
 
 .tempoblock-element_night_5 {
     top: 282px
 }
 
-.tempoblock-element_night_5 .tempoblock-element__line {
+/*.tempoblock-element_night_5 .tempoblock-element__line {
     bottom: 10px;
     -moz-transform: rotate(5deg);
     -ms-transform: rotate(5deg);
     -webkit-transform: rotate(5deg);
     -o-transform: rotate(5deg);
     transform: rotate(5deg)
-}
+}*/
 
 .tempoblock-element_day_6 {
     top: 170px
@@ -1143,7 +1157,7 @@ header.bg-1 {
     border: 1px solid #82c8bb
 }
 
-.tempoblock-element_day_6 .tempoblock-element__line {
+/*.tempoblock-element_day_6 .tempoblock-element__line {
     bottom: 50px;
     -moz-transform: rotate(-30deg);
     -ms-transform: rotate(-30deg);
@@ -1151,20 +1165,20 @@ header.bg-1 {
     -o-transform: rotate(-30deg);
     transform: rotate(-30deg);
     background-color: #188ab5
-}
+}*/
 
 .tempoblock-element_night_6 {
     top: 295px
 }
 
-.tempoblock-element_night_6 .tempoblock-element__line {
+/*.tempoblock-element_night_6 .tempoblock-element__line {
     bottom: 50px;
     -moz-transform: rotate(-30deg);
     -ms-transform: rotate(-30deg);
     -webkit-transform: rotate(-30deg);
     -o-transform: rotate(-30deg);
     transform: rotate(-30deg)
-}
+}*/
 
 .tempoblock-element_day_7 {
     top: 107px
@@ -1174,7 +1188,7 @@ header.bg-1 {
     border: 1px solid #e5902d
 }
 
-.tempoblock-element_day_7 .tempoblock-element__line {
+/*.tempoblock-element_day_7 .tempoblock-element__line {
     bottom: 0px;
     -moz-transform: rotate(30deg);
     -ms-transform: rotate(30deg);
@@ -1182,20 +1196,20 @@ header.bg-1 {
     -o-transform: rotate(30deg);
     transform: rotate(30deg);
     background-color: #f0c313
-}
+}*/
 
 .tempoblock-element_night_7 {
     top: 235px
 }
 
-.tempoblock-element_night_7 .tempoblock-element__line {
+/*.tempoblock-element_night_7 .tempoblock-element__line {
     bottom: 0px;
     -moz-transform: rotate(30deg);
     -ms-transform: rotate(30deg);
     -webkit-transform: rotate(30deg);
     -o-transform: rotate(30deg);
     transform: rotate(30deg)
-}
+}*/
 
 .tempoblock-footer {
     position: absolute;
@@ -1231,10 +1245,10 @@ header.bg-1 {
         max-width: 778px
     }
 
-    .tempoblock-element__line {
+    /*.tempoblock-element__line {
         width: 150%;
         right: -110%
-    }
+    }*/
 
     .tempoblock-footer-table__cell {
         display: block

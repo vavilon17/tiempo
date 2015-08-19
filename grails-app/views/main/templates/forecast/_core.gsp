@@ -2,19 +2,29 @@
 <div class="tempoblock">
     <div class="container">
         <div class="tempoblock-row row graph">
-            <g:each in="${forecast}" var="forecastDay">
+            <g:hiddenField name="todayMaxDay" value="${todayMaxDay}"/>
+            <g:hiddenField name="todayMinNight" value="${todayMinNight}"/>
+            <g:each in="${forecast}" var="forecastDay" status="i">
                 <div class="tempoblock-column">
                     <div class="tempoblock-data"><strong>${UiUtils.dayOfWeekShortName(forecastDay.date)}</strong> ${DataUtils.ddMM.format(forecastDay.date)}</div>
                     <div class="tempoblock-element tempoblock-element_day tempoblock-element_day_1">
-                        <div class="tempoblock-element__linefirst"></div>
-                        <div class="tempoblock-element__line"></div>
-                        <div class="tempoblock-element__value"><span class="maxDayTempC">${forecastDay.maxDayTempC}</span></div>
+                        <g:if test="${i == 0}">
+                            <div class="tempoblock-element__linefirst dayFirstLine"></div>
+                        </g:if>
+                        <g:if test="${i < forecast.size() - 1}">
+                            <div class="tempoblock-element__line_new"></div>
+                        </g:if>
+                        <div class="tempoblock-element__value"><span class="tempC maxDayTempC">${forecastDay.maxDayTempC}</span></div>
                         <div class="tempoblock-element__icon ${UiUtils.provideIconClassForecastDay(forecastDay.avgDayWeatherType)}"></div>
                     </div>
                     <div class="tempoblock-element tempoblock-element_night tempoblock-element_night_1">
-                        <div class="tempoblock-element__linefirst"></div>
-                        <div class="tempoblock-element__line"></div>
-                        <div class="tempoblock-element__value"><span class="minNightTempC">${forecastDay.minNightTempC}</span></div>
+                        <g:if test="${i == 0}">
+                            <div class="tempoblock-element__linefirst nightFirstLine"></div>
+                        </g:if>
+                        <g:if test="${i < forecast.size() - 1}">
+                            <div class="tempoblock-element__line_new night"></div>
+                        </g:if>
+                        <div class="tempoblock-element__value"><span class="tempC minNightTempC">${forecastDay.minNightTempC}</span></div>
                         <div class="tempoblock-element__icon ${UiUtils.provideIconClassForecastNight(forecastDay.avgNightWeatherType)}"></div>
                     </div>
                     <div class="tempoblock-footer">

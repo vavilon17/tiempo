@@ -8,7 +8,7 @@
 <div class="wrapper">
     <g:render template="/main/templates/today/today" model="[current: weather_results.current, hourlies: weather_results.todayHourlyList, city: weather_results.city, percent: weather_results.halfDayPercent]"/>
     <g:render template="/main/templates/forecast/delimiter" model="[count: weather_results.forecast.size()]"/>
-    <g:render template="/main/templates/forecast/core" model="[forecast: weather_results.forecast]"/>
+    <g:render template="/main/templates/forecast/core" model="[forecast: weather_results.forecast, todayMaxDay: weather_results.todayMaxDay, todayMinNight: weather_results.todayMinNight]"/>
     <g:render template="/main/templates/forecast/mob" model="[forecast: weather_results.forecast]"/>
     <g:render template="/main/templates/footer_banner"/>
     <g:render template="/main/templates/footer"/>
