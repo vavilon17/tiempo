@@ -6,7 +6,7 @@
             <div class="header-search__icon"></div>
             <div class="header-search">
                 <div class="header-search-form">
-                    <form action="#">
+                    <form>
                         <input data-value="search..." type="text" name="" class="header-search-form__inp" />
                         <button type="submit" class="header-search-form__btn"></button>
                     </form>

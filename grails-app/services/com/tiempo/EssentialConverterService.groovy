@@ -75,6 +75,7 @@ class EssentialConverterService {
     }
 
     private static mapWeatherDtoToDay(Weather weather, Day day) {
+        println("weather date = " + weather.date)
         day.date = DataUtils.yyyyMMdd.parse(weather.date)
         day.minC = weather.mintempC
         day.maxC = weather.maxtempC

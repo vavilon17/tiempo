@@ -165,7 +165,8 @@ header.bg-1 {
     position: absolute;
     width: 100%;
     background-color: #e5e5e5;
-    padding: 5px 20px
+    padding: 5px 20px;
+    z-index: 10;
 }
 
 .header-search-rezults__value  {
@@ -174,7 +175,18 @@ header.bg-1 {
     font-size: 13px;
     font-weight: 700;
     padding: 11px 0;
-    border-bottom: 1px solid #dcdcdc
+    border-bottom: 1px solid #dcdcdc;
+    z-index: 10;
+}
+
+.header-search-rezults__value.__focus a {
+    color: #C44040;
+    font-size: 14px;
+}
+
+.header-search-rezults__value a:hover {
+    color: #C44040;
+    font-size: 14px;
 }
 
 .header-search-rezults__value a  {
@@ -183,7 +195,7 @@ header.bg-1 {
 }
 
 .header-search-rezults__value a:visited  {
-    color: #414141;
+    /*color: #414141;*/
 }
 
 .header-search-rezults__value:last-child {
