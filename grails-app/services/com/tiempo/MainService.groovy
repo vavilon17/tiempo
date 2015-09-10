@@ -14,6 +14,8 @@ class MainService {
 
     static final int HALF_DAY_MINS = 24 * 60 / 2
 
+    static final Map<String, Long> TOP_SEARCHED_CITIES = new LinkedHashMap<>()
+
     static class WeatherView {
         City city
         Hourly current
@@ -23,6 +25,8 @@ class MainService {
 
         byte todayMaxDay
         byte todayMinNight
+
+        Map<String, Long> topCities
     }
 
     static transactional = false
@@ -40,7 +44,7 @@ class MainService {
                 nearest = forecast.provideCurrentHourly(currDateTime)
                 forecastToShow = eliminateForecastToShow(day, forecast.forecast)
                 return new WeatherView(city: city, forecast: forecastToShow, current: nearest, todayHourlyList: day.hours,
-                        halfDayPercent: calcHalfDayPercent(currDateTime), todayMaxDay: day.maxDayTempC, todayMinNight: day.minNightTempC)
+                        halfDayPercent: calcHalfDayPercent(currDateTime), todayMaxDay: day.maxDayTempC, todayMinNight: day.minNightTempC, topCities: topCities())
                 //return new WeatherView(city: city, forecast: forecast.forecast, current: nearest, localDt: currDateTime)
             } catch (ForecastNotFoundException e) {
                 log.error(e)
@@ -68,5 +72,14 @@ class MainService {
         } else {
             return Math.round((minsOfDay - HALF_DAY_MINS) * 100 / HALF_DAY_MINS)
         }
+    }
+
+    private static Map<String, Long> topCities() {
+        if (TOP_SEARCHED_CITIES.size() == 0) {
+            City.findAllByPopulationIsNotNull([max: 3, sort: "population", order: "desc"]).each {
+                TOP_SEARCHED_CITIES.put(it.printName, it.id)
+            }
+        }
+        TOP_SEARCHED_CITIES
     }
 }

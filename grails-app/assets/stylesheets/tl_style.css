@@ -259,6 +259,7 @@ header.bg-1 {
 }
 
 .header-bottom-circle .icon {
+    /*background: url('tl/icons/big_iconsfor_desktop.png') 0 0 no-repeat;*/
     background: url('tl/icons/big_iconsfor_desktop.png') 0 0 no-repeat;
     height: 140px;
     width: 140px;
@@ -674,7 +675,7 @@ header.bg-1 {
     height: 44px;
     border-radius: 50%;
     overflow: hidden;
-    background: #fff url('tl/icons/sprite_small_small_icons.png') 0 0 no-repeat;
+    background: #fff url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat;
     margin: 7px auto
 }
 
@@ -839,7 +840,7 @@ header.bg-1 {
     border-radius: 50%;
     overflow: hidden;
     margin: 0 auto;
-    background: #fff url('tl/icons/sprite_small_small_icons.png') 0 0 no-repeat
+    background: #fff url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat
 }
 
 .tempoblock-element__icon.icon_1 {
@@ -1324,7 +1325,7 @@ header.bg-1 {
     }
 
     .tempoblockmob-element-column_icon {
-        background: url('tl/icons/sprite_small_small_icons.png') 0 0 no-repeat;
+        background: url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat;
         width: 30px;
         height: 30px
     }
@@ -1438,7 +1439,7 @@ header.bg-1 {
         width: 30px;
         height: 30px;
         margin: 0 auto;
-        background: url('tl/icons/sprite_small_small_icons.png') 0 0 no-repeat;
+        background: url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat;
         width: 30px;
         height: 30px
     }

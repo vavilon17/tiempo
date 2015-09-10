@@ -11,9 +11,9 @@
                         <button type="submit" class="header-search-form__btn"></button>
                     </form>
                     <div class="header-search-form-examples">
-                        <a href="" class="header-search-form-examples__link">Santiago de Chile</a>
-                        <a href="" class="header-search-form-examples__link">Atacama</a>
-                        <a href="" class="header-search-form-examples__link">Valparaíso</a>
+                        <g:each in="${topCities}" var="topCityItem">
+                            <a href="${createLink(controller: 'main', action: 'weather')}?cityId=${topCityItem.value}" class="header-search-form-examples__link">${topCityItem.key}</a>
+                        </g:each>
                     </div>
                 </div>
                 <div class="header-search-rezults">
