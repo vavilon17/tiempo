@@ -590,7 +590,7 @@ header.bg-1 {
     }
 }
 
-.mainslider {
+/*.mainslider {
     background: url('tl/bg-slider.png') top no-repeat
 }
 
@@ -748,7 +748,176 @@ header.bg-1 {
     .mainslider-item {
         width: 80px
     }
+}*/
+
+
+/* NEW PART - START */
+.mainslider {
+    background: url('tl/bg-slider.png') top no-repeat
 }
+
+.mainslider-block {
+    height: 126px;
+    padding: 0px 40px;
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent
+}
+
+.mainslider-block .slick-track, .mainslider-block .slick-list {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0)
+}
+
+.mainslider-block .slick-list {
+    position: relative;
+    overflow: hidden;
+    width: 100%
+}
+
+.mainslider-block .slick-track {
+    position: relative;
+    width: 100%
+}
+
+.mainslider-block .slick-slide {
+    overflow: hidden;
+    float: left;
+    position: relative
+}
+
+.mainslider-block .slick-prev, .mainslider-block .slick-next {
+    position: absolute;
+    z-index: 50000;
+    top: 50%;
+    width: 40px;
+    height: 79px;
+    margin-top: -38px;
+    cursor: pointer;
+    text-indent: -100000px;
+    background-color: transparent
+}
+
+.mainslider-block .slick-next {
+    background: url('tl/icons/arrow-right.png') 0px center no-repeat;
+    right: 0
+}
+
+.mainslider-block .slick-prev {
+    background: url('tl/icons/arrow-left.png') 0px center no-repeat;
+    left: 0
+}
+
+.mainslider-item {
+    text-align: center;
+    width: 118px;
+    padding-top: 17px
+}
+
+.mainslider-item__hour {
+    color: #8fd6c7;
+    font-weight: 700
+}
+
+.mainslider-item__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #fff url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat;
+    margin: 7px auto
+}
+
+.mainslider-item__icon.icon_1 {
+    background-position: -3px 0
+}
+
+.mainslider-item__icon.icon_2 {
+    background-position: -39px 2px
+}
+
+.mainslider-item__icon.icon_3 {
+    background-position: -77px 0px
+}
+
+.mainslider-item__icon.icon_4 {
+    background-position: -113px 0px
+}
+
+.mainslider-item__icon.icon_5 {
+    background-position: -147px 0px
+}
+
+.mainslider-item__icon.icon_6 {
+    background-position: -182px 0px
+}
+
+.mainslider-item__icon.icon_7 {
+    background-position: -217px 0px
+}
+
+.mainslider-item__icon.icon_8 {
+    background-position: -252px 0px
+}
+
+.mainslider-item__icon.icon_9 {
+    background-position: -287px 0px
+}
+
+.mainslider-item__icon.icon_10 {
+    background-position: -320px 0px
+}
+
+.mainslider-item__value {
+    font-size: 25px;
+    color: #fff
+}
+
+.mainslider-item__value span {
+    background: url('tl/icons/cel-1.png') right no-repeat;
+    padding-right: 20px;
+    display: inline-block;
+    line-height: 22px;
+    padding-top: 2px
+}
+
+@media (max-width: 768px) {
+    .mainslider {
+        background: rgba(82, 78, 72, 0.7);
+        overflow: auto
+    }
+
+    .mainslider.container {
+        padding: 0
+    }
+
+    .mainslider-block {
+        padding: 0
+    }
+
+    .mainslider-block .slick-prev, .mainslider-block .slick-next {
+        display: none !important
+    }
+
+    .mainslider-item {
+        width: 80px;
+        float: left
+    }
+}
+/* NEW PART - END */
 
 .tempotittle {
     text-align: center;
@@ -807,16 +976,23 @@ header.bg-1 {
 }
 
 .tempoblock-row {
-    border-left: 1px solid #e3e3e3;
-    overflow: hidden
+overflow: hidden;
+    display: table;
+    width: 100%;
+    font-size: 0;
+    text-align: center
 }
 
 .tempoblock-column {
     position: relative;
     border-right: 1px solid #e3e3e3;
-    float: left;
     width: 14.2857%;
+    display: inline-block;
     height: 550px
+}
+
+.tempoblock-column:first-child {
+    border-left: 1px solid #e3e3e3;
 }
 
 .tempoblock-data {

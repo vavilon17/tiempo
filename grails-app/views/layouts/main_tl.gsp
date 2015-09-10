@@ -17,6 +17,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <asset:javascript src="slick.min.js"/>
 <asset:javascript src="jquery.knob.js"/>
+<asset:javascript src="jquery.nicescroll.js"/>
 <asset:javascript src="script.js"/>
 </body>
 </html>
