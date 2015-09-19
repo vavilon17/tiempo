@@ -17,9 +17,7 @@
                     </div>
                 </div>
                 <div class="header-search-rezults">
-                    %{--<div class="header-search-rezults__value">Presion in Chillie manana</div>
-                    <div class="header-search-rezults__value">Chillie Humedad</div>
-                    <div class="header-search-rezults__value">Presion in Chillie</div>--}%
+                    %{--content here is loaded asynchronously--}%
                 </div>
             </div>
         </div>

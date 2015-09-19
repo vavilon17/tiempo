@@ -259,7 +259,6 @@ header.bg-1 {
 }
 
 .header-bottom-circle .icon {
-    /*background: url('tl/icons/big_iconsfor_desktop.png') 0 0 no-repeat;*/
     background: url('tl/icons/big_iconsfor_desktop.png') 0 0 no-repeat;
     height: 140px;
     width: 140px;
@@ -590,167 +589,6 @@ header.bg-1 {
     }
 }
 
-/*.mainslider {
-    background: url('tl/bg-slider.png') top no-repeat
-}
-
-.mainslider-block {
-    height: 126px;
-    padding: 0px 40px;
-    position: relative;
-    display: block;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -ms-touch-action: pan-y;
-    touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent
-}
-
-.mainslider-block .slick-track, .mainslider-block .slick-list {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
-    -o-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0)
-}
-
-.mainslider-block .slick-list {
-    position: relative;
-    overflow: hidden;
-    width: 100%
-}
-
-.mainslider-block .slick-track {
-    position: relative;
-    width: 100%
-}
-
-.mainslider-block .slick-slide {
-    overflow: hidden;
-    float: left;
-    position: relative
-}
-
-.mainslider-block .slick-prev, .mainslider-block .slick-next {
-    position: absolute;
-    z-index: 50000;
-    top: 50%;
-    width: 40px;
-    height: 79px;
-    margin-top: -38px;
-    cursor: pointer;
-    text-indent: -100000px;
-    background-color: transparent
-}
-
-.mainslider-block .slick-next {
-    background: url('tl/icons/arrow-right.png') 0px center no-repeat;
-    right: 0
-}
-
-.mainslider-block .slick-prev {
-    background: url('tl/icons/arrow-left.png') 0px center no-repeat;
-    left: 0
-}
-
-.mainslider-item {
-    text-align: center;
-    width: 118px;
-    padding-top: 17px
-}
-
-.mainslider-item__hour {
-    color: #8fd6c7;
-    font-weight: 700
-}
-
-.mainslider-item__icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: #fff url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat;
-    margin: 7px auto
-}
-
-.mainslider-item__icon.icon_1 {
-    background-position: -3px 0
-}
-
-.mainslider-item__icon.icon_2 {
-    background-position: -39px 2px
-}
-
-.mainslider-item__icon.icon_3 {
-    background-position: -77px 0px
-}
-
-.mainslider-item__icon.icon_4 {
-    background-position: -113px 0px
-}
-
-.mainslider-item__icon.icon_5 {
-    background-position: -147px 0px
-}
-
-.mainslider-item__icon.icon_6 {
-    background-position: -182px 0px
-}
-
-.mainslider-item__icon.icon_7 {
-    background-position: -217px 0px
-}
-
-.mainslider-item__icon.icon_8 {
-    background-position: -252px 0px
-}
-
-.mainslider-item__icon.icon_9 {
-    background-position: -287px 0px
-}
-
-.mainslider-item__icon.icon_10 {
-    background-position: -320px 0px
-}
-
-.mainslider-item__value {
-    font-size: 25px;
-    color: #fff
-}
-
-.mainslider-item__value span {
-    background: url('tl/icons/cel-1.png') right no-repeat;
-    padding-right: 20px;
-    display: inline-block;
-    line-height: 22px;
-    padding-top: 2px
-}
-
-@media (max-width: 768px) {
-    .mainslider {
-        background: rgba(82, 78, 72, 0.7)
-    }
-
-    .mainslider-block {
-        padding: 0
-    }
-
-    .mainslider-block .slick-prev, .mainslider-block .slick-next {
-        display: none !important
-    }
-
-    .mainslider-item {
-        width: 80px
-    }
-}*/
-
-
 /* NEW PART - START */
 .mainslider {
     background: url('tl/bg-slider.png') top no-repeat
@@ -879,6 +717,18 @@ header.bg-1 {
 
 .mainslider-item__icon.icon_10 {
     background-position: -320px 0px
+}
+
+.mainslider-item__icon.icon_11 {
+    background-position: -355px 0px
+}
+
+.mainslider-item__icon.icon_12 {
+    background-position: -393px 0px
+}
+
+.mainslider-item__icon.icon_13 {
+    background-position: -425px 0px
 }
 
 .mainslider-item__value {
@@ -1145,10 +995,6 @@ overflow: hidden;
     background-position: -460px 0px
 }
 
-/*.tempoblock-element_night .tempoblock-element__line {
-    background-color: #cacaca
-}*/
-
 .tempoblock-element_day_1 {
     /*top: 143px*/
     top: 100px;
@@ -1173,18 +1019,6 @@ overflow: hidden;
     transform: rotate(-20deg);
 }
 
-/*.tempoblock-element_day_1 .tempoblock-element__line {
-    bottom: 65px;
-    -moz-transform: rotate(-28deg);
-    -ms-transform: rotate(-28deg);
-    -webkit-transform: rotate(-28deg);
-    -o-transform: rotate(-28deg);
-    transform: rotate(-28deg);
-    background-color: #f0c313;
-
-    display: none;
-}*/
-
 .tempoblock-element_night_1 {
     /*top: 274px*/
     top: 200px;
@@ -1205,15 +1039,6 @@ overflow: hidden;
     bottom: 10px
 }
 
-/*.tempoblock-element_night_1 .tempoblock-element__line {
-    bottom: 70px;
-    -moz-transform: rotate(-30deg);
-    -ms-transform: rotate(-30deg);
-    -webkit-transform: rotate(-30deg);
-    -o-transform: rotate(-30deg);
-    transform: rotate(-30deg)
-}*/
-
 .tempoblock-element_day_2 {
     top: 64px
 }
@@ -1222,28 +1047,9 @@ overflow: hidden;
     border: 1px solid #e5902d
 }
 
-/*.tempoblock-element_day_2 .tempoblock-element__line {
-    bottom: -20px;
-    -moz-transform: rotate(33deg);
-    -ms-transform: rotate(33deg);
-    -webkit-transform: rotate(33deg);
-    -o-transform: rotate(33deg);
-    transform: rotate(33deg);
-    background-color: #f0c313
-}*/
-
 .tempoblock-element_night_2 {
     top: 191px
 }
-
-/*.tempoblock-element_night_2 .tempoblock-element__line {
-    bottom: -20px;
-    -moz-transform: rotate(35deg);
-    -ms-transform: rotate(35deg);
-    -webkit-transform: rotate(35deg);
-    -o-transform: rotate(35deg);
-    transform: rotate(35deg)
-}*/
 
 .tempoblock-element_day_3 {
     top: 151px
@@ -1253,28 +1059,9 @@ overflow: hidden;
     border: 1px solid #e5902d
 }
 
-/*.tempoblock-element_day_3 .tempoblock-element__line {
-    bottom: 35px;
-    -moz-transform: rotate(-15deg);
-    -ms-transform: rotate(-15deg);
-    -webkit-transform: rotate(-15deg);
-    -o-transform: rotate(-15deg);
-    transform: rotate(-15deg);
-    background-color: #f0c313
-}*/
-
 .tempoblock-element_night_3 {
     top: 282px
 }
-
-/*.tempoblock-element_night_3 .tempoblock-element__line {
-    bottom: 35px;
-    -moz-transform: rotate(-15deg);
-    -ms-transform: rotate(-15deg);
-    -webkit-transform: rotate(-15deg);
-    -o-transform: rotate(-15deg);
-    transform: rotate(-15deg)
-}*/
 
 .tempoblock-element_day_4 {
     top: 127px
@@ -1284,28 +1071,9 @@ overflow: hidden;
     border: 1px solid #82c8bb
 }
 
-/*.tempoblock-element_day_4 .tempoblock-element__line {
-    bottom: 10px;
-    -moz-transform: rotate(15deg);
-    -ms-transform: rotate(15deg);
-    -webkit-transform: rotate(15deg);
-    -o-transform: rotate(15deg);
-    transform: rotate(15deg);
-    background-color: #63cf8d
-}*/
-
 .tempoblock-element_night_4 {
     top: 258px
 }
-
-/*.tempoblock-element_night_4 .tempoblock-element__line {
-    bottom: 10px;
-    -moz-transform: rotate(15deg);
-    -ms-transform: rotate(15deg);
-    -webkit-transform: rotate(15deg);
-    -o-transform: rotate(15deg);
-    transform: rotate(15deg)
-}*/
 
 .tempoblock-element_day_5 {
     top: 156px
@@ -1315,28 +1083,9 @@ overflow: hidden;
     border: 1px solid #82c8bb
 }
 
-/*.tempoblock-element_day_5 .tempoblock-element__line {
-    bottom: 10px;
-    -moz-transform: rotate(5deg);
-    -ms-transform: rotate(5deg);
-    -webkit-transform: rotate(5deg);
-    -o-transform: rotate(5deg);
-    transform: rotate(5deg);
-    background-color: #3caba2
-}*/
-
 .tempoblock-element_night_5 {
     top: 282px
 }
-
-/*.tempoblock-element_night_5 .tempoblock-element__line {
-    bottom: 10px;
-    -moz-transform: rotate(5deg);
-    -ms-transform: rotate(5deg);
-    -webkit-transform: rotate(5deg);
-    -o-transform: rotate(5deg);
-    transform: rotate(5deg)
-}*/
 
 .tempoblock-element_day_6 {
     top: 170px
@@ -1346,28 +1095,9 @@ overflow: hidden;
     border: 1px solid #82c8bb
 }
 
-/*.tempoblock-element_day_6 .tempoblock-element__line {
-    bottom: 50px;
-    -moz-transform: rotate(-30deg);
-    -ms-transform: rotate(-30deg);
-    -webkit-transform: rotate(-30deg);
-    -o-transform: rotate(-30deg);
-    transform: rotate(-30deg);
-    background-color: #188ab5
-}*/
-
 .tempoblock-element_night_6 {
     top: 295px
 }
-
-/*.tempoblock-element_night_6 .tempoblock-element__line {
-    bottom: 50px;
-    -moz-transform: rotate(-30deg);
-    -ms-transform: rotate(-30deg);
-    -webkit-transform: rotate(-30deg);
-    -o-transform: rotate(-30deg);
-    transform: rotate(-30deg)
-}*/
 
 .tempoblock-element_day_7 {
     top: 107px
@@ -1377,28 +1107,9 @@ overflow: hidden;
     border: 1px solid #e5902d
 }
 
-/*.tempoblock-element_day_7 .tempoblock-element__line {
-    bottom: 0px;
-    -moz-transform: rotate(30deg);
-    -ms-transform: rotate(30deg);
-    -webkit-transform: rotate(30deg);
-    -o-transform: rotate(30deg);
-    transform: rotate(30deg);
-    background-color: #f0c313
-}*/
-
 .tempoblock-element_night_7 {
     top: 235px
 }
-
-/*.tempoblock-element_night_7 .tempoblock-element__line {
-    bottom: 0px;
-    -moz-transform: rotate(30deg);
-    -ms-transform: rotate(30deg);
-    -webkit-transform: rotate(30deg);
-    -o-transform: rotate(30deg);
-    transform: rotate(30deg)
-}*/
 
 .tempoblock-footer {
     position: absolute;
@@ -1433,11 +1144,6 @@ overflow: hidden;
     .tempoblock .container {
         max-width: 778px
     }
-
-    /*.tempoblock-element__line {
-        width: 150%;
-        right: -110%
-    }*/
 
     .tempoblock-footer-table__cell {
         display: block
@@ -1658,6 +1364,18 @@ overflow: hidden;
 
     .tempoblockmob-element-block-element-left__icon.icon_10 {
         background-position: -326px -5px
+    }
+
+    .tempoblockmob-element-block-element-left__icon.icon_11 {
+        background-position: -364px -5px
+    }
+
+    .tempoblockmob-element-block-element-left__icon.icon_12 {
+        background-position: -399px -5px
+    }
+
+    .tempoblockmob-element-block-element-left__icon.icon_13 {
+        background-position: -434px -5px
     }
 
     .tempoblockmob-element-block-element-left__value {

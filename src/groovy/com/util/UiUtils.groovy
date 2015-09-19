@@ -35,6 +35,7 @@ class UiUtils {
             case MOON_CLOUD:
                 return "icon_13"
         }
+        return provideIconClassBig(CLOUD)
     }
 
     public static String provideIconClassSmall(WeatherType weatherType) {
@@ -59,8 +60,13 @@ class UiUtils {
                 return "icon_9"
             case CLOUD_LIGHTNING:
                 return "icon_10"
+            case MOON_CLOUD:
+                return "icon_11"
+            case MOON:
+                return "icon_12"
+            case MOON_CLOUD_RAIN:
+                return "icon_13"
         }
-        return CLOUD
     }
 
     public static String provideIconClassForecastDay(WeatherType weatherType) {
@@ -86,7 +92,7 @@ class UiUtils {
             case CLOUD_LIGHTNING:
                 return "icon_10"
         }
-        return CLOUD
+        return provideIconClassForecastDay(CLOUD)
     }
 
     public static String provideIconClassForecastNight(WeatherType weatherType) {
@@ -112,7 +118,7 @@ class UiUtils {
             case CLOUD_LIGHTNING:
                 return "icon_10"
         }
-        return CLOUD
+        return provideIconClassForecastNight(MOON_CLOUD)
     }
 
     // todo cache this
