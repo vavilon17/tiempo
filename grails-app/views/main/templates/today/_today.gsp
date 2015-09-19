@@ -6,10 +6,10 @@
             <div class="header-search__icon"></div>
             <div class="header-search">
                 <div class="header-search-form">
-                    <form>
+                    %{--<form>--}%
                         <input data-value="search..." type="text" name="" class="header-search-form__inp" />
-                        <button type="submit" class="header-search-form__btn"></button>
-                    </form>
+                        <button type="button" class="header-search-form__btn"></button>
+                    %{--</form>--}%
                     <div class="header-search-form-examples">
                         <g:each in="${topCities}" var="topCityItem">
                             <a href="${createLink(controller: 'main', action: 'weather')}?cityId=${topCityItem.value}" class="header-search-form-examples__link">${topCityItem.key}</a>

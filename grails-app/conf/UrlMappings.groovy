@@ -2,7 +2,9 @@ class UrlMappings {
 
 	static mappings = {
 
-//        "/main/weather/$cityId"(controller: "main", action: "weather")
+
+//        "/weather" controller: 'main', action: 'weather'
+//        "/weather/${cityId}" (controller: "main", action: "weather")
 
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
@@ -10,7 +12,9 @@ class UrlMappings {
             }
         }
 
-        "/"(controller: "main")
-        "500"(view:'/error')
+//        "/"(controller: "main")
+
+        "404"(view:'/custom404')
+        "500"(view:'/custom500')
 	}
 }
