@@ -99,6 +99,9 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
+        grails.assets.minifyJs = true
+        grails.assets.bundle = true
+        grails.assets.minifyOptions.optimizationLevel = 'ADVANCED'
         // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }
