@@ -6,7 +6,7 @@ package com.tiempo.last
 class WeatherImportJob {
 
     static triggers = {
-//        cron name: 'everyNight', cronExpression: '0 1 0 * * ?'
+        cron name: 'everyNight', cronExpression: '0 1 0 * * ?'
 //        simple name: 'runAfterStart', startDelay: 60000, repeatInterval: 86400000L
     }
 
