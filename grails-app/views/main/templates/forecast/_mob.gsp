@@ -6,7 +6,7 @@
                 <div class="tempoblockmob-element-title row">
                     <div class="tempoblockmob-element-column tempoblockmob-element-column_1">${i == 0 ? 'Manana' : UiUtils.dayOfWeekFullName(forecastDay.date)}</div>
                     <div class="tempoblockmob-element-column tempoblockmob-element-column_2">
-                        <div class="tempoblockmob-element-column_icon icon_1"></div>
+                        <div class="tempoblockmob-element-column_icon ${UiUtils.provideIconClassForecastDay(forecastDay.avgDayWeatherType)}"></div>
                     </div>
                     <div class="tempoblockmob-element-column tempoblockmob-element-column_3"><span>${forecastDay.minC}..${forecastDay.maxC}</span></div>
                 </div>
