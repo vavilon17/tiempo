@@ -509,43 +509,55 @@ header.bg-1 {
     }
 
     .header-bottom-circle-mob .icon_1 {
-        background-position: 0px 0px
+        background-position: -25px 0px
     }
 
     .header-bottom-circle-mob .icon_2 {
-        background-position: -119px 0px
+        background-position: -125px 0px
     }
 
     .header-bottom-circle-mob .icon_3 {
-        background-position: -235px 0px
+        background-position: -225px 0px
     }
 
     .header-bottom-circle-mob .icon_4 {
-        background-position: -348px 0px
+        background-position: -325px 0px
     }
 
     .header-bottom-circle-mob .icon_5 {
-        background-position: -463px 0px
+        background-position: -430px 0px
     }
 
     .header-bottom-circle-mob .icon_6 {
-        background-position: -578px 0px
+        background-position: -533px 0px
     }
 
     .header-bottom-circle-mob .icon_7 {
-        background-position: -691px 0px
+        background-position: -635px 0px
     }
 
     .header-bottom-circle-mob .icon_8 {
-        background-position: -807px 0px
+        background-position: -735px 0px
     }
 
     .header-bottom-circle-mob .icon_9 {
-        background-position: -925px 0px
+        background-position: -843px 0px
     }
 
     .header-bottom-circle-mob .icon_10 {
-        background-position: -1039px 15px
+        background-position: -950px 10px
+    }
+
+    .header-bottom-circle-mob .icon_11 {
+        background-position: -1050px 0px
+    }
+
+    .header-bottom-circle-mob .icon_12 {
+        background-position: -1160px 5px
+    }
+
+    .header-bottom-circle-mob .icon_13 {
+        background-position: -1270px 10px
     }
 
     .header-bottom-info {
@@ -675,7 +687,7 @@ header.bg-1 {
     height: 44px;
     border-radius: 50%;
     overflow: hidden;
-    background: #fff url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat;
+    background: #fff url('tl/icons/sprite_small_all.png') 0 0 no-repeat;
     margin: 7px auto
 }
 
@@ -866,7 +878,7 @@ overflow: hidden;
     border-radius: 50%;
     overflow: hidden;
     margin: 0 auto;
-    background: #fff url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat
+    background: #fff url('tl/icons/sprite_small_all.png') 0 0 no-repeat
 }
 
 .tempoblock-element__icon.icon_1 {
@@ -1207,7 +1219,7 @@ overflow: hidden;
     }
 
     .tempoblockmob-element-column_icon {
-        background: url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat;
+        background: url('tl/icons/sprite_small_all.png') 0 0 no-repeat;
         width: 30px;
         height: 30px
     }
@@ -1321,7 +1333,7 @@ overflow: hidden;
         width: 30px;
         height: 30px;
         margin: 0 auto;
-        background: url('tl/icons/new2/sprite_small_all_3.png') 0 0 no-repeat;
+        background: url('tl/icons/sprite_small_all.png') 0 0 no-repeat;
         width: 30px;
         height: 30px
     }
