@@ -3,7 +3,6 @@ target/*
 src/templates/*
 out/*
 classes/*
-data/*
 .classpath
 .idea/*
 .project
