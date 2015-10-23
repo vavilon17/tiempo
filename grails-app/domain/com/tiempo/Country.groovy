@@ -5,6 +5,7 @@ class Country {
     String nativeName
     String urlName
     String code
+    String primaryLangCode
     Integer tzOffset
 
     boolean isActive

@@ -8,24 +8,30 @@ class City {
     float lat
     float lon
     Region region
-    String code
     Integer population
-    boolean isActive
+    String adminCode
+
+    boolean isActive // meaning whether the city is available from UI to show local wether
+    boolean isWeatherImported // meaning whether the city is an import target while dealing with Weather API
+
+    Integer origId
 
     static transients = ['lookupTitle, fullRepresentation']
 
     static mapping = {
         id column: 'id', type: 'long'
         isActive defaultValue: true
-//        printName unique: true, index: 'printName_idx'
+        adminCode length: 20
+        isWeatherImported default: false
     }
 
     static constraints = {
         basic nullable: true
         urlName nullable: true
         region nullable: true
-        code nullable: true
         population nullable: true
+        origId nullable: true
+        adminCode nullable: true
     }
 
     String getLookupTitle() {

@@ -15,6 +15,7 @@ class ImportService {
 
     private static final log = Logger.getLogger(ImportService.class)
 
+    @Deprecated // use appropriate value from Config
     static final API_KEY = "ffde3b758c4d6b6747cab9780cbff"
 
     def essentialConverterService

@@ -68,6 +68,12 @@ meteoprog {
     }
 }
 
+geodata {
+    country_square_step = 5
+    weather_targets_max = 500
+    weather_region_radius_km = 15
+}
+
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
@@ -93,12 +99,17 @@ grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
 
+geonames.username = "vavilon"
+
 environments {
     development {
-        grails.logging.jul.usebridge = true
+        wwo.apiKey = "ffde3b758c4d6b6747cab9780cbff"
 
+        grails.logging.jul.usebridge = true
     }
     production {
+        wwo.apiKey = "ffde3b758c4d6b6747cab9780cbff"
+
         grails.logging.jul.usebridge = false
         grails.assets.minifyJs = true
         grails.assets.bundle = true
