@@ -11,6 +11,8 @@ class City {
     Integer population
     String adminCode
 
+    String countryCode
+
     boolean isActive // meaning whether the city is available from UI to show local wether
     boolean isWeatherImported // meaning whether the city is an import target while dealing with Weather API
 

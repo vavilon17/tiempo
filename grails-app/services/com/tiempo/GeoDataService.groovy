@@ -1,10 +1,5 @@
 package com.tiempo
 
-import com.dto.geonames.CitiesResult
-import com.dto.geonames.CityInfo
-import com.rest.RestBuilderFactory
-import grails.converters.JSON
-import grails.transaction.Transactional
 import org.apache.commons.lang.StringUtils
 import org.apache.log4j.Logger
 
@@ -14,47 +9,26 @@ class GeoDataService {
 
     static transactional = false
 
-    static Set<String> ALLOWED_ADMIN_CODES = ["PPL", "PPLA", "PPLA2", "PPLA3", "PPLA4", "PPLC", "PPLCH", "PPLH", "PPLL", "PPLR", "PPLS"]
+    static LinkedHashSet<String> ALLOWED_ADMIN_CODES = ["PPLC", "PPLA", "PPLA2", "PPLA3", "PPLA4", "PPL", "PPLS", "PPLL", "PPLCH", "PPLH", "PPLR"]
 
     def grailsApplication
 
-    def fillGeoData(String countryCode) {
-        logger.info("Start filling geodata for country with code = ${countryCode}")
+    def importAndSetupGeoData(String countryCode) {
         Country country = Country.findByCode(countryCode)
-        if (country) {
-            importCitiesFromGeonames(country)
-        } else {
-            logger.error("Cant find the country with code ${countryCode}")
-        }
+        importRegionsFromFile_Geodata(country)
+        importCitiesFromFile_Geodata(country)
     }
 
-    def importCitiesFromGeonames(Country country) {
-        /*float step = "${grailsApplication.config.geodata.country_square_step}".toFloat()
-
-        float startWest = country.west
-        float startNorth = country.north
-        float finishEast = country.east
-        float finishSouth = country.south
-        int portion = 0
-        for (float west = startWest; west < finishEast; west += step) {
-            for (float north = startNorth; north > finishSouth; north -= step) {
-                importCitiesFromGeonamesSquare(country, north, (float) north - step, west, (float) west + step, portion)
-                portion++
-            }
-        }*/
-    }
-
-    def importRegionsFromFile_Geodata(String filePath) {
+    private void importRegionsFromFile_Geodata(Country country) {
         logger.info("Start regions import")
-        File importFile = new File(filePath)
+        File importFile = new File("data/${country.code}/reg.csv")
         String[] data
         if (importFile.exists()) {
             importFile.eachLine { line ->
                 logger.info("Parsing following line: ${line}")
                 data = line.trim().split(";")
-                Region region = new Region(nativeName: data[1], urlName: data[2])
-                region.id = Long.parseLong(data[0])
-                region.country = Country.findByCode("AR")
+                Region region = new Region(importId: Integer.valueOf(data[0]), nativeName: data[1], urlName: data[2])
+                region.country = country
                 region.save(failOnError: true, flush: true)
             }
             logger.info("Regions import finished")
@@ -63,8 +37,8 @@ class GeoDataService {
         }
     }
 
-    def importCitiesFromFile_Geodata(String filePath) {
-        File importFile = new File(filePath)
+    private void importCitiesFromFile_Geodata(Country country) {
+        File importFile = new File("data/${country.code}/cities.csv")
         String[] data
         int count = 0
         if (importFile.exists()) {
@@ -76,8 +50,7 @@ class GeoDataService {
                     if (StringUtils.isEmpty(data[6])) {
                         logger.warn("Region is empty for current line! Please setup it manually")
                     } else {
-                        Region reg  = Region.findById(Long.parseLong(data[6]))
-                        city.region = reg
+                        city.region  = Region.findByImportIdAndCountry(Integer.valueOf(data[6]), country)
                     }
                     city.save(failOnError: true)
                     count++
@@ -90,38 +63,47 @@ class GeoDataService {
         }
     }
 
-    def setupCoreImportedCities() {
+    def setupCoreImportedCities(Country country) {
+        // first - clean all import setup
+        String countryFilterQueryPart = "region is not null and region.country.code = '" + country.code +  "'"
+        City.executeUpdate("update City set isActive = false where ${countryFilterQueryPart}")
+        City.executeUpdate("update City set isWeatherImported = false where ${countryFilterQueryPart}")
+
         int maxAllowed = "${grailsApplication.config.geodata.weather_targets_max}".toInteger()
-        Set<City> weatherTargets = new HashSet<>()
-        // first include capital
-        Collections.addAll(weatherTargets, City.findAllByAdminCode("PPLC"))
-        if (weatherTargets.size() < maxAllowed) {
-            // then include admin centers of 1 level
-            Collections.addAll(weatherTargets, City.findAll("from City where adminCode = 'PPLA'", ))
+        List<City> weatherTargets = []
+
+        weatherTargets.addAll(City.findAll("from City where adminCode in ('PPLC', 'PPLA') and ${countryFilterQueryPart}"))
+        weatherTargets.addAll(City.findAll("from City where adminCode not in ('PPLC', 'PPLA') and ${countryFilterQueryPart} order by population desc",
+                [max: maxAllowed - weatherTargets.size()]))
+
+        weatherTargets.each {
+            it.isWeatherImported = true
+            it.isActive = true
+            it.save()
         }
+        weatherTargets.first().save(flush: true)
     }
 
-    @Transactional
     def setCityRelationsInsideSameWeatherRegion() {
-        List<City> activeCities = City.findAll("from City order by population desc", [max:500])
-        List<Integer> activeIds = activeCities.collect {it.id}
-        List<City> passiveCities = City.findAllByIdNotInList(activeIds)
+        List<City> importCities = City.findAllByIsWeatherImported(true)
+        List<Integer> importIds = importCities.collect {it.id}
+        List<City> otherCities = City.findAllByIdNotInList(importIds)
         List<String> result = []
-        activeCities.each { activeCity ->
-            println("Looking for ${activeCity.printName}")
-            passiveCities.each { passiveCity ->
-                float dist = calcDistance(activeCity, passiveCity)
-                if (dist <= 13) {
-                    result << "${dist} km between ${activeCity.printName} and ${passiveCity.printName}"
+        importCities.each { importCity ->
+            println("Looking for ${importCity.printName}")
+            otherCities.each { otherCity ->
+                float dist = calcDistance(importCity, otherCity)
+                if (dist <= 12) {
+                    result << "${dist} km between ${importCity.printName} and ${otherCity.printName}"
+                    otherCity.isActive = true
+                    otherCity.basic = importCity
+                    otherCity.save()
                 }
             }
         }
         println "*** Closest cities items found: ${result.size()}"
         result.each {println it}
-    }
-
-    def setupRegionNameAndUrlPartForActualCities() {
-
+        importCities.first().save(flush: true)
     }
 
     private static double calcDistance(City city1, City city2) {

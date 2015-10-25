@@ -33,7 +33,7 @@ class MainService {
 
     WeatherView weatherView(Long cityId) {
         City city = City.findById(cityId)
-        WeatherForecast forecast = WeatherForecast.findByCity(city)
+        WeatherForecast forecast = WeatherForecast.findByCity(city.isWeatherImported ? city : city.basic)
         if (forecast) {
             DateTime currDateTime = new DateTime(DateTimeZone.forOffsetHours(city.region.country.tzOffset))
 //            currDateTime = currDateTime.plusHours(1)

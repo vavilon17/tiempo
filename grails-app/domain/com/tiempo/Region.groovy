@@ -6,10 +6,13 @@ class Region {
     String urlName
     Country country
 
+    Integer importId
+
     static mapping = {
-        id generator: 'assigned'
         version false
         urlName index: 'region_urlName_idx'
+        importId index: 'importId_country_idx'
+        country index: 'importId_country_idx'
     }
 
     static constraints = {

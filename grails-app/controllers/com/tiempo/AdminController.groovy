@@ -15,10 +15,10 @@ class AdminController {
         restBridgeService.fillCoordinates()
     }
 
-    def fillGeoData() {
-        //geoDataService.importRegionsFromFile_Geodata("d:\\download\\AR\\reg.csv")
-        geoDataService.importCitiesFromFile_Geodata("d:\\download\\AR\\AR_actual.csv")
-        //geoDataService.fillGeoData("AR")
+    def fillGeoData(String country) {
+        geoDataService.importRegionsFromFile_Geodata(country)
+        geoDataService.importCitiesFromFile_Geodata(country)
+        geoDataService.setupCoreImportedCities()
     }
 
     def dist() {
