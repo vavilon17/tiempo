@@ -17,6 +17,7 @@ class City {
     boolean isWeatherImported // meaning whether the city is an import target while dealing with Weather API
 
     Integer origId
+    Integer searchPriority
 
     static transients = ['lookupTitle, fullRepresentation']
 
@@ -25,6 +26,10 @@ class City {
         isActive defaultValue: true
         adminCode length: 20
         isWeatherImported default: false
+        searchPriority default: 5000, index: 'city_search_priority_idx'
+        printName unique: false, index: 'city_print_name_idx'
+        urlName index: 'city_country_url_name_idx'
+        country index: 'city_country_url_name_idx'
     }
 
     static constraints = {

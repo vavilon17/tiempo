@@ -23,12 +23,7 @@ environments {
             url = "jdbc:postgresql://localhost:5432/tiempo_latin_db"
             username = "postgres"
             password = "inflames"
-            logSql = false // true
-            /*url = "jdbc:mysql://localhost:3306/tiempo_db?autoreconnect=true"
-            driverClassName = "com.mysql.jdbc.Driver"
-            username = "root"
-            password = "root"
-            logSql = true*/
+            logSql = true // true
         }
     }
 
