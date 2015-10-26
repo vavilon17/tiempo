@@ -19,8 +19,8 @@ class ImportService {
     def importUrlProvider
 
     def runForecastImport() {
-//        City.findAllByIsWeatherImported(true).each {
-        City it = City.findByIsWeatherImported(true) //{
+        City.findAllByIsWeatherImported(true).each {
+//        City it = City.findByIsWeatherImported(true)
             log.info("Starting import for the city ${it.printName}")
             WeatherForecast forecast = WeatherForecast.findByCity(it)
             if (!forecast) {
@@ -28,9 +28,14 @@ class ImportService {
                 forecast = new WeatherForecast(city: it)
                 forecast.save()
             }
+            long start = System.currentTimeMillis()
             performCityForecast(forecast)
+            if (System.currentTimeMillis() - start < 200) {
+                log.warn("ATTENTION! The time spent to ${it.printName} is ${System.currentTimeMillis() - start} millisends. Consider wait a bit to avoid exceed the limit of 5 request per second set up by API provider")
+            }
+            log.info("Time per forecast item: ${}")
             log.info("End import for the city ${it.printName}")
-//        }
+        }
     }
 
     @Transactional
