@@ -19,7 +19,7 @@ class City {
     Integer origId
     Integer searchPriority
 
-    static transients = ['lookupTitle, fullRepresentation']
+    static transients = ['fullRepresentation']
 
     static mapping = {
         id column: 'id', type: 'long'
@@ -41,19 +41,7 @@ class City {
         adminCode nullable: true
     }
 
-    String getLookupTitle() {
-        StringBuilder sb = new StringBuilder(printName)
-        if (region) {
-            sb.append(", ").append(region.nativeName)
-        }
-        sb.toString()
-    }
-
     String getFullRepresentation() {
-        StringBuilder sb = new StringBuilder(printName)
-        if (region) {
-            sb.append(", ").append(region.country.nativeName).append(" (").append(region.nativeName).append(")")
-        }
-        sb.toString()
+        new StringBuilder(printName).append(", ").append(region.nativeName).append(", ").append(country.nativeName).toString()
     }
 }

@@ -36,7 +36,7 @@ class MainController {
     }
 
     def search() {
-        List<City> cities = City.findAllByIsActiveAndPrintNameIlike(true, "${params.cityName}%".toString(), [max: 20, order: ''])
+        List<City> cities = City.findAllByIsActiveAndPrintNameIlike(true, "${params.cityName}%".toString(), [max: 20])
         render(template: "/main/templates/city_search_results", model: [cities: cities])
     }
 
