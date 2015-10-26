@@ -15,8 +15,10 @@ class GeoDataService {
 
     def importAndSetupGeoData(String countryCode) {
         Country country = Country.findByCode(countryCode)
-        importRegionsFromFile_Geodata(country)
-        importCitiesFromFile_Geodata(country)
+//        importRegionsFromFile_Geodata(country)
+//        importCitiesFromFile_Geodata(country)
+//        setupCoreImportedCities(country)
+        setCityRelationsInsideSameWeatherRegion(country)
     }
 
     private void importRegionsFromFile_Geodata(Country country) {
@@ -40,6 +42,7 @@ class GeoDataService {
     private void importCitiesFromFile_Geodata(Country country) {
         File importFile = new File("data/${country.code}/cities.csv")
         String[] data
+        List<String> errors = []
         int count = 0
         if (importFile.exists()) {
             importFile.eachLine { line ->
@@ -47,8 +50,10 @@ class GeoDataService {
                 data = line.trim().split(";")
                 if (ALLOWED_ADMIN_CODES.contains(data[5])) {
                     City city = new City(origId: Integer.parseInt(data[0]), printName: data[1], urlName: data[2], isActive: false, lat: data[3], lon: data[4], adminCode: data[5], population: data[7])
+                    city.country = country
                     if (StringUtils.isEmpty(data[6])) {
                         logger.warn("Region is empty for current line! Please setup it manually")
+                        errors.add("Region is empty for current line! Please setup it manually. Import line: ${line}")
                     } else {
                         city.region  = Region.findByImportIdAndCountry(Integer.valueOf(data[6]), country)
                     }
@@ -56,24 +61,31 @@ class GeoDataService {
                     count++
                 }
             }
-            println "*********************"
-            println "Imported ${count} items"
+            println "****************** IMPORT RESULT ******************"
+            println "Imported ${count} items ${errors.size() > 0 ? '. Errors: ' : '. No errors occurred'}"
+            errors.each {
+                println("ERR: ${it}")
+            }
+            println("***************************************************")
         } else {
             logger.error("File doesnt exist")
         }
     }
 
-    def setupCoreImportedCities(Country country) {
+    private void setupCoreImportedCities(Country country) {
+        logger.info("Start calculation core import locations for country ${country.nativeName}. Limit = ${country.importLimit}")
         // first - clean all import setup
-        String countryFilterQueryPart = "region is not null and region.country.code = '" + country.code +  "'"
-        City.executeUpdate("update City set isActive = false where ${countryFilterQueryPart}")
-        City.executeUpdate("update City set isWeatherImported = false where ${countryFilterQueryPart}")
+        City.findAllByCountry(country).each {
+            it.isActive = false
+            it.isWeatherImported = false
+            it.save()
+        }
 
-        int maxAllowed = "${grailsApplication.config.geodata.weather_targets_max}".toInteger()
+        int maxAllowed = country.importLimit
         List<City> weatherTargets = []
 
-        weatherTargets.addAll(City.findAll("from City where adminCode in ('PPLC', 'PPLA') and ${countryFilterQueryPart}"))
-        weatherTargets.addAll(City.findAll("from City where adminCode not in ('PPLC', 'PPLA') and ${countryFilterQueryPart} order by population desc",
+        weatherTargets.addAll(City.findAll("from City where adminCode in ('PPLC', 'PPLA') and country.code = '" + country.code + "'"))
+        weatherTargets.addAll(City.findAll("from City where adminCode not in ('PPLC', 'PPLA') and country.code = '" + country.code + "' order by population desc",
                 [max: maxAllowed - weatherTargets.size()]))
 
         weatherTargets.each {
@@ -82,18 +94,21 @@ class GeoDataService {
             it.save()
         }
         weatherTargets.first().save(flush: true)
+        logger.info("Core import targets setup has finished")
     }
 
-    def setCityRelationsInsideSameWeatherRegion() {
-        List<City> importCities = City.findAllByIsWeatherImported(true)
-        List<Integer> importIds = importCities.collect {it.id}
-        List<City> otherCities = City.findAllByIdNotInList(importIds)
+    private void setCityRelationsInsideSameWeatherRegion(Country country) {
+        logger.info("**** Calculation closest cities from imported locations in ${country.nativeName} - started")
+        List<City> importCities = City.findAllByCountryAndIsWeatherImported(country, true)
+        List<Integer> importIds = importCities.collect {it.id.intValue()}
+        List<City> otherCities = City.findAllByCountryAndIdNotInList(country, importIds)
         List<String> result = []
+        double radius = "${grailsApplication.config.geodata.weather_region_radius_km}".toDouble()
         importCities.each { importCity ->
-            println("Looking for ${importCity.printName}")
+            logger.info("Looking for ${importCity.printName}")
             otherCities.each { otherCity ->
-                float dist = calcDistance(importCity, otherCity)
-                if (dist <= 12) {
+                double dist = calcDistance(importCity, otherCity)
+                if (dist <= radius) {
                     result << "${dist} km between ${importCity.printName} and ${otherCity.printName}"
                     otherCity.isActive = true
                     otherCity.basic = importCity
@@ -101,9 +116,10 @@ class GeoDataService {
                 }
             }
         }
-        println "*** Closest cities items found: ${result.size()}"
-        result.each {println it}
+        logger.info("*** Closest cities items found: ${result.size()}")
+        result.each {logger.info(it)}
         importCities.first().save(flush: true)
+        logger.info("**** Calculation closest cities from imported locations in ${country.nativeName} - finished")
     }
 
     private static double calcDistance(City city1, City city2) {
@@ -111,6 +127,4 @@ class GeoDataService {
         double lonDiff = city1.lon - city2.lon
         Math.sqrt(latDiff*latDiff + lonDiff*lonDiff) * 100
     }
-
-
 }

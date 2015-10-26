@@ -69,9 +69,7 @@ meteoprog {
 }
 
 geodata {
-    country_square_step = 5
-    weather_targets_max = 500
-    weather_region_radius_km = 15
+    weather_region_radius_km = 12
 }
 
 grails.converters.encoding = "UTF-8"

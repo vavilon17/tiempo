@@ -16,12 +16,6 @@ class AdminController {
     }
 
     def fillGeoData(String country) {
-        geoDataService.importRegionsFromFile_Geodata(country)
-        geoDataService.importCitiesFromFile_Geodata(country)
-        geoDataService.setupCoreImportedCities()
-    }
-
-    def dist() {
-        geoDataService.setCityRelationsInsideSameWeatherRegion()
+        geoDataService.importAndSetupGeoData(country)
     }
 }

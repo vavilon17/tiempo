@@ -5,8 +5,9 @@ class Country {
     String nativeName
     String urlName
     String code
-    String primaryLangCode
     Integer tzOffset
+
+    Integer importLimit
 
     boolean isActive
 
