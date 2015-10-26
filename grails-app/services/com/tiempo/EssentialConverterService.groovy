@@ -131,9 +131,9 @@ class EssentialConverterService {
         int tmpWindSpeed
 
         int sumCloudVover = 0
-        byte sumDayTempC = 0
+        int sumDayTempC = 0
         int dayCount = 0
-        byte sumNightTempC = 0
+        int sumNightTempC = 0
 
         for (HourlyDto h : dayWeather.hourly) {
             // temperature edges

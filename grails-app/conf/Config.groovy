@@ -101,12 +101,20 @@ geonames.username = "vavilon"
 
 environments {
     development {
-        wwo.apiKey = "ffde3b758c4d6b6747cab9780cbff"
+        wwo {
+            apiKey = "ffde3b758c4d6b6747cab9780cbff"
+            baseUrl = "https://api.worldweatheronline.com/free/v2/weather.ashx"
+            numOfDays = 5
+        }
 
         grails.logging.jul.usebridge = true
     }
     production {
-        wwo.apiKey = "ffde3b758c4d6b6747cab9780cbff"
+        wwo {
+            apiKey = "6b99820022d37ccd8b261a29aedbe"
+            baseUrl = "https://api.worldweatheronline.com/premium/v1/weather.ashx"
+            numOfDays = 7
+        }
 
         grails.logging.jul.usebridge = false
         grails.assets.minifyJs = true
