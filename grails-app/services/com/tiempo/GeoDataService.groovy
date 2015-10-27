@@ -27,10 +27,12 @@ class GeoDataService {
 
     def fillCachedData() {
         logger.info("Preparing city full representations to be cached")
-        Map<Long, String> data = City.findAllByIsActive(true).collectEntries {
-            [it.id, prepareCityFullRepresentation(it)]
+        Map<Long, String> data = new HashMap<Long, String>()
+        City.findAllByIsActive(true).each {
+            data.put(it.id, prepareCityFullRepresentation(it))
         }
         CachedDataStore.CITY_REPRESENTATIONS = data
+        logger.info("Finish filling city cache")
     }
 
     private void importRegionsFromFile_Geodata(Country country) {

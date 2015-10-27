@@ -37,7 +37,6 @@ class MainService {
         WeatherForecast forecast = WeatherForecast.findByCity(city.isWeatherImported ? city : city.basic)
         if (forecast) {
             DateTime currDateTime = new DateTime(DateTimeZone.forOffsetHours(city.region.country.tzOffset))
-//            currDateTime = currDateTime.plusHours(1)
             Hourly nearest
             List<Day> forecastToShow
             try {
@@ -46,7 +45,6 @@ class MainService {
                 forecastToShow = eliminateForecastToShow(day, forecast.forecast)
                 return new WeatherView(city: city, forecast: forecastToShow, current: nearest, todayHourlyList: day.hours,
                         halfDayPercent: calcHalfDayPercent(currDateTime), todayMaxDay: day.maxDayTempC, todayMinNight: day.minNightTempC, topCities: topCities())
-                //return new WeatherView(city: city, forecast: forecast.forecast, current: nearest, localDt: currDateTime)
             } catch (ForecastNotFoundException e) {
                 log.error(e)
                 return null

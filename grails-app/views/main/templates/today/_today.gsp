@@ -24,7 +24,7 @@
         <div class="header-bottom row">
             <div class="header-bottom-place">
                 <strong>Tiempo en ${city.printName}</strong>
-                ${city?.region?.country?.nativeName}
+                ${city.country.nativeName}, ${city.region.nativeName}
             </div>
             <g:set var="mainIco" value="${UiUtils.provideIconClassBig(current.getWeatherType())}"/>
             <div class="header-bottom-circle">

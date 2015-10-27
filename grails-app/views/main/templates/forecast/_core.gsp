@@ -42,7 +42,7 @@
                         </div>
                         <div class="tempoblock-footer-table">
                             <div class="tempoblock-footer-table__cell">Precipitation</div>
-                            <div class="tempoblock-footer-table__cell"><strong>${forecastDay.sumPrecipMm}</strong>mm</div>
+                            <div class="tempoblock-footer-table__cell"><strong>${Math.round(forecastDay.sumPrecipMm * 10)/10}</strong>mm</div>
                         </div>
                         <div class="tempoblock-footer-table">
                             <div class="tempoblock-footer-table__cell">Chance of the rain</div>

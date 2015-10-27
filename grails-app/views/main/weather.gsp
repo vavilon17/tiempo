@@ -12,7 +12,7 @@
     <g:render template="/main/templates/forecast/core" model="[forecast: weather_results.forecast, todayMaxDay: weather_results.todayMaxDay, todayMinNight: weather_results.todayMinNight]"/>
     <g:render template="/main/templates/forecast/mob" model="[forecast: weather_results.forecast]"/>
     <g:render template="/main/templates/footer_banner"/>
-    <g:render template="/main/templates/footer"/>
+    %{--<g:render template="/main/templates/footer"/>--}%
 </div>
 </body>
 </html>
