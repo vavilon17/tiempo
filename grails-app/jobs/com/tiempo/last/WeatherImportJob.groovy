@@ -19,7 +19,7 @@ class WeatherImportJob {
     def execute() {
         long start = System.currentTimeMillis()
         logger.info("*** IMPORT JOB STARTED")
-        int countItems = importService.runForecastImport()
-        logger.info("*** IMPORT JOB FINISHED. Items processed: ${countItems}. Duration: ${Math.round((System.currentTimeMillis() - start)/(1000 * 60))} mins.")
+        importService.runForecastImport()
+        logger.info("*** IMPORT JOB FINISHED. Duration: ${Math.round((System.currentTimeMillis() - start)/(1000 * 60))} mins.")
     }
 }

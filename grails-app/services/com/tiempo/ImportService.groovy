@@ -18,7 +18,7 @@ class ImportService {
     def essentialConverterService
     def importUrlProvider
 
-    public int runForecastImport() {
+    def runForecastImport() {
         int count = 0
         City.findAllByIsWeatherImported(true).each {
 //        City it = City.findByIsWeatherImported(true)
@@ -39,7 +39,7 @@ class ImportService {
             log.info("Time per forecast item: ${dur}")
             log.info("End import for the city ${it.printName}")
         }
-        return count
+        log.info("ImportService.runForecastImport finished. Items processed: ${count}")
     }
 
     @Transactional
