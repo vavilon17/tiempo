@@ -4,11 +4,14 @@ import com.tiempo.exception.ForecastNotFoundException
 import com.tiempo.wwo.Day
 import com.tiempo.wwo.Hourly
 import com.tiempo.wwo.WeatherForecast
+import com.util.UiUtils
 import org.apache.log4j.Logger
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
 class MainService {
+
+    static transactional = false
 
     private static final log = Logger.getLogger(MainService.class)
 
@@ -28,8 +31,6 @@ class MainService {
 
         Map<String, Long> topCities
     }
-
-    static transactional = false
 
     WeatherView weatherView(Long cityId) {
         City city = City.findById(cityId)
@@ -53,6 +54,12 @@ class MainService {
         } else {
             return null
         }
+    }
+
+    public List<Long> citySearch(String key) {
+        String cKey = UiUtils.capitalizeFirstLetter(key)
+        City.executeQuery("select id from City where isActive = true and (printName like '" + cKey
+                 + "%' or engName like '" + cKey + "%') order by searchPriority")
     }
 
     private static List<Day> eliminateForecastToShow(Day dayToEliminate, List<Day> forecast) {

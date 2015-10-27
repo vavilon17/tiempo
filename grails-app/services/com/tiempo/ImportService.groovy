@@ -18,7 +18,8 @@ class ImportService {
     def essentialConverterService
     def importUrlProvider
 
-    def runForecastImport() {
+    public int runForecastImport() {
+        int count = 0
         City.findAllByIsWeatherImported(true).each {
 //        City it = City.findByIsWeatherImported(true)
             log.info("Starting import for the city ${it.printName}")
@@ -30,12 +31,15 @@ class ImportService {
             }
             long start = System.currentTimeMillis()
             performCityForecast(forecast)
-            if (System.currentTimeMillis() - start < 200) {
-                log.warn("ATTENTION! The time spent to ${it.printName} is ${System.currentTimeMillis() - start} millisends. Consider wait a bit to avoid exceed the limit of 5 request per second set up by API provider")
+            count++
+            long dur = System.currentTimeMillis() - start
+            if (dur < 200) {
+                log.warn("ATTENTION! The time spent to ${it.printName} is ${dur} millisends. Consider wait a bit to avoid exceed the limit of 5 request per second set up by API provider")
             }
-            log.info("Time per forecast item: ${}")
+            log.info("Time per forecast item: ${dur}")
             log.info("End import for the city ${it.printName}")
         }
+        return count
     }
 
     @Transactional

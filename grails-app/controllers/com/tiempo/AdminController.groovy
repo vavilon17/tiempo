@@ -2,20 +2,21 @@ package com.tiempo
 
 class AdminController {
 
-    def restBridgeService
     def geoDataService
+    def importService
 
     def index() {}
 
-    def fillData() {
-        restBridgeService.syncData()
-    }
-
-    def fillCoord() {
-        restBridgeService.fillCoordinates()
-    }
-
     def fillGeoData(String country) {
         geoDataService.importAndSetupGeoData(country)
+    }
+
+    def fillCache() {
+        geoDataService.fillCachedData()
+    }
+
+    def runImport() {
+        log.info("Run import")
+        importService.runForecastImport()
     }
 }

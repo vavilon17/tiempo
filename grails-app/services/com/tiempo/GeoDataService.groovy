@@ -1,5 +1,6 @@
 package com.tiempo
 
+import com.data.CachedDataStore
 import org.apache.commons.lang.StringUtils
 import org.apache.log4j.Logger
 
@@ -15,10 +16,21 @@ class GeoDataService {
 
     def importAndSetupGeoData(String countryCode) {
         Country country = Country.findByCode(countryCode)
-//        importRegionsFromFile_Geodata(country)
-//        importCitiesFromFile_Geodata(country)
-//        setupCoreImportedCities(country)
+        logger.info("*** Start filling geodata for ${country.nativeName}")
+        importRegionsFromFile_Geodata(country)
+        importCitiesFromFile_Geodata(country)
+        setupCoreImportedCities(country)
         setCityRelationsInsideSameWeatherRegion(country)
+        setupSearchPriority(country)
+        logger.info("*** Finish filling geodata for ${country.nativeName}")
+    }
+
+    def fillCachedData() {
+        logger.info("Preparing city full representations to be cached")
+        Map<Long, String> data = City.findAllByIsActive(true).collectEntries {
+            [it.id, prepareCityFullRepresentation(it)]
+        }
+        CachedDataStore.CITY_REPRESENTATIONS = data
     }
 
     private void importRegionsFromFile_Geodata(Country country) {
@@ -49,7 +61,8 @@ class GeoDataService {
                 logger.info("Parsing following line: ${line}...")
                 data = line.trim().split(";")
                 if (ALLOWED_ADMIN_CODES.contains(data[5])) {
-                    City city = new City(origId: Integer.parseInt(data[0]), printName: data[1], urlName: data[2], isActive: false, lat: data[3], lon: data[4], adminCode: data[5], population: data[7])
+                    City city = new City(origId: Integer.parseInt(data[0]), printName: data[1], engName: data[2], isActive: false, lat: data[3],
+                            lon: data[4], adminCode: data[5], population: data[7], searchPriority: 10000)
                     city.country = country
                     if (StringUtils.isEmpty(data[6])) {
                         logger.warn("Region is empty for current line! Please setup it manually")
@@ -97,6 +110,33 @@ class GeoDataService {
         logger.info("Core import targets setup has finished")
     }
 
+    private void setupSearchPriority(Country country) {
+        List<Long> ids = []
+        log.info("1. Capital and main cities")
+        City capital = City.findByCountryAndAdminCode(country, "PPLC")
+        capital.searchPriority = 1
+        capital.save()
+        ids << capital.id
+        int searchPriority = 2
+        City.findAll("from City where country.code = '" + country.code + "' and adminCode = 'PPLA' order by population desc").each {
+            it.searchPriority = searchPriority++
+            it.save()
+            ids << it.id
+        }
+        log.info("2. Other cities with filled population")
+        City.findAll("from City where id not in " + prepareListRepresentation(ids) + " and country.code = '" +
+                country.code + "' and population > 0 order by population desc").each {
+            it.searchPriority = searchPriority++
+            it.save()
+        }
+        log.info("3. The rest cities")
+        City.findAllByCountryAndPopulation(country, 0, [sort: 'printName']).each {
+            it.searchPriority = searchPriority++
+            it.save()
+        }
+        capital.save(flush: true)
+    }
+
     private void setCityRelationsInsideSameWeatherRegion(Country country) {
         logger.info("**** Calculation closest cities from imported locations in ${country.nativeName} - started")
         List<City> importCities = City.findAllByCountryAndIsWeatherImported(country, true)
@@ -126,5 +166,19 @@ class GeoDataService {
         double latDiff = city1.lat - city2.lat
         double lonDiff = city1.lon - city2.lon
         Math.sqrt(latDiff*latDiff + lonDiff*lonDiff) * 100
+    }
+
+    private static String prepareListRepresentation(List<Long> list) {
+        StringBuilder listStr = new StringBuilder("(")
+        list.each {
+            listStr.append(it).append(", ")
+        }
+        listStr.replace(listStr.lastIndexOf(","), listStr.length(), ")")
+        listStr.toString()
+    }
+
+    private static String prepareCityFullRepresentation(City city) {
+        new StringBuilder(city.printName).append(", ").append(city.region.nativeName).append(", ")
+                .append(city.country.nativeName).toString()
     }
 }
