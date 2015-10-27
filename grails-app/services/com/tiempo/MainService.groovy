@@ -36,7 +36,7 @@ class MainService {
         City city = City.findById(cityId)
         WeatherForecast forecast = WeatherForecast.findByCity(city.isWeatherImported ? city : city.basic)
         if (forecast) {
-            DateTime currDateTime = new DateTime(DateTimeZone.forOffsetHours(city.region.country.tzOffset))
+            DateTime currDateTime = new DateTime(DateTimeZone.forOffsetHours(city.country.tzOffset))
             Hourly nearest
             List<Day> forecastToShow
             try {
@@ -50,6 +50,7 @@ class MainService {
                 return null
             }
         } else {
+            log.error("Forecast is not found for city ${city?.printName}!")
             return null
         }
     }
@@ -81,7 +82,7 @@ class MainService {
 
     private static Map<String, Long> topCities() {
         if (TOP_SEARCHED_CITIES.size() == 0) {
-            City.findAllByPopulationIsNotNull([max: 3, sort: "population", order: "desc"]).each {
+            City.findAllByIsActiveAndPopulationIsNotNull(true, [max: 3, sort: "population", order: "desc"]).each {
                 TOP_SEARCHED_CITIES.put(it.printName, it.id)
             }
         }

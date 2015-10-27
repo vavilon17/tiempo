@@ -19,6 +19,7 @@ class WeatherForecast {
 
     static mapping = {
         forecast cascade: 'all-delete-orphan'
+        city index: 'weather_forecast_city_idx'
     }
 
     static constraints = {

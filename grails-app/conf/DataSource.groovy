@@ -23,7 +23,7 @@ environments {
             url = "jdbc:postgresql://localhost:5432/tiempo_latin_db"
             username = "postgres"
             password = "inflames"
-            logSql = false // true
+            logSql = true // true
         }
     }
 
