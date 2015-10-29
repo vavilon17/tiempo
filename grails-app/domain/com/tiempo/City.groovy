@@ -19,7 +19,7 @@ class City {
     Integer origId
     Integer searchPriority
 
-    static transients = ['fullRepresentation']
+    String urlPart
 
     static mapping = {
         id column: 'id', type: 'long'
@@ -29,6 +29,8 @@ class City {
         searchPriority defaultValue: 5000, index: 'city_search_priority_idx'
         printName unique: false, index: 'city_print_name_idx'
         engName unique: false, index: 'city_eng_name_idx'
+        urlPart index: 'city_urlPart_country_idx'
+        country index: 'city_urlPart_country_idx'
     }
 
     static constraints = {
@@ -38,10 +40,6 @@ class City {
         population nullable: true
         origId nullable: true
         adminCode nullable: true
-    }
-
-    @Deprecated
-    String getFullRepresentation() {
-        new StringBuilder(printName).append(", ").append(region.nativeName).append(", ").append(country.nativeName).toString()
+        urlPart nullable: true
     }
 }

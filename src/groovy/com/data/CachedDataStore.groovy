@@ -5,6 +5,6 @@ package com.data
  */
 class CachedDataStore {
 
-    public static Map<Long, String> CITY_REPRESENTATIONS
+    public static Map<String, String> CITY_REPRESENTATIONS
 
 }

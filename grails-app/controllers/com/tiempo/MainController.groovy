@@ -8,7 +8,7 @@ class MainController {
         redirect(action: 'weather')
     }
 
-    def weather() {
+    def weatherOld() {
         Long cityId
         if (params.cityId) {
             cityId = Long.valueOf(params.cityId)
@@ -19,7 +19,16 @@ class MainController {
         render(view: "/main/weather",  model: [weather_results: weatherView])
     }
 
+    def weather() {
+        MainService.WeatherView weatherView = mainService.weatherView(params.cityUrl, "AR")
+        if (weatherView) {
+            render(view: "/main/weather",  model: [weather_results: weatherView])
+        } else {
+            response.status = 404
+        }
+    }
+
     def search() {
-        render(template: "/main/templates/city_search_results", model: [cityIds: mainService.citySearch(params.cityName)])
+        render(template: "/main/templates/city_search_results", model: [cityUrlParts: mainService.citySearch(params.cityName)])
     }
 }

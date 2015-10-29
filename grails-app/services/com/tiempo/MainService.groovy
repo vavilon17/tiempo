@@ -17,7 +17,7 @@ class MainService {
 
     static final int HALF_DAY_MINS = 24 * 60 / 2
 
-    static final Map<String, Long> TOP_SEARCHED_CITIES = new LinkedHashMap<>()
+    static final Map<String, String> TOP_SEARCHED_CITIES = new LinkedHashMap<>()
 
     static class WeatherView {
         City city
@@ -32,8 +32,18 @@ class MainService {
         Map<String, Long> topCities
     }
 
-    WeatherView weatherView(Long cityId) {
+    public WeatherView weatherView(Long cityId) {
         City city = City.findById(cityId)
+        weatherView(city)
+    }
+
+    public WeatherView weatherView(String urlPart, String countryCode) {
+        Country country = Country.findByCode(countryCode)
+        City city = City.findByCountryAndUrlPart(country, urlPart)
+        weatherView(city)
+    }
+
+    public WeatherView weatherView(City city) {
         WeatherForecast forecast = WeatherForecast.findByCity(city.isWeatherImported ? city : city.basic)
         if (forecast) {
             DateTime currDateTime = new DateTime(DateTimeZone.forOffsetHours(city.country.tzOffset))
@@ -55,9 +65,9 @@ class MainService {
         }
     }
 
-    public List<Long> citySearch(String key) {
+    public List<String> citySearch(String key) {
         String cKey = UiUtils.capitalizeFirstLetter(key)
-        City.executeQuery("select id from City where isActive = true and (printName like '" + cKey
+        City.executeQuery("select urlPart from City where isActive = true and (printName like '" + cKey
                  + "%' or engName like '" + cKey + "%') order by searchPriority")
     }
 
@@ -83,7 +93,7 @@ class MainService {
     private static Map<String, Long> topCities() {
         if (TOP_SEARCHED_CITIES.size() == 0) {
             City.findAllByIsActiveAndPopulationIsNotNull(true, [max: 3, sort: "population", order: "desc"]).each {
-                TOP_SEARCHED_CITIES.put(it.printName, it.id)
+                TOP_SEARCHED_CITIES.put(it.printName, it.urlPart)
             }
         }
         TOP_SEARCHED_CITIES

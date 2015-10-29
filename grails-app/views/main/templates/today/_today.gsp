@@ -12,7 +12,7 @@
                     %{--</form>--}%
                     <div class="header-search-form-examples">
                         <g:each in="${topCities}" var="topCityItem">
-                            <a href="${createLink(controller: 'main', action: 'weather')}?cityId=${topCityItem.value}" class="header-search-form-examples__link">${topCityItem.key}</a>
+                            <a href="${createLink(controller: 'main', action: 'weather')}/${topCityItem.value}" class="header-search-form-examples__link">${topCityItem.key}</a>
                         </g:each>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 package com.tiempo
 
 import com.data.CachedDataStore
+import com.util.UiUtils
 import org.apache.commons.lang.StringUtils
 import org.apache.log4j.Logger
 
@@ -17,19 +18,20 @@ class GeoDataService {
     def importAndSetupGeoData(String countryCode) {
         Country country = Country.findByCode(countryCode)
         logger.info("*** Start filling geodata for ${country.nativeName}")
-        importRegionsFromFile_Geodata(country)
+        /*importRegionsFromFile_Geodata(country)
         importCitiesFromFile_Geodata(country)
         setupCoreImportedCities(country)
         setCityRelationsInsideSameWeatherRegion(country)
-        setupSearchPriority(country)
+        setupSearchPriority(country)*/
+        setUrlPartForCities(country)
         logger.info("*** Finish filling geodata for ${country.nativeName}")
     }
 
     def fillCachedData() {
         logger.info("Preparing city full representations to be cached")
-        Map<Long, String> data = new HashMap<Long, String>()
+        Map<String, String> data = new HashMap<>()
         City.findAllByIsActive(true).each {
-            data.put(it.id, prepareCityFullRepresentation(it))
+            data.put(it.urlPart, prepareCityFullRepresentation(it))
         }
         CachedDataStore.CITY_REPRESENTATIONS = data
         logger.info("Finish filling city cache")
@@ -162,6 +164,42 @@ class GeoDataService {
         result.each {logger.info(it)}
         importCities.first().save(flush: true)
         logger.info("**** Calculation closest cities from imported locations in ${country.nativeName} - finished")
+    }
+
+    private void setUrlPartForCities(Country country) {
+        Set<String> alreadyUsedUrlParts = new HashSet<>()
+        Set<Long> idsWithUniqueEngName = new HashSet<>()
+        City.executeQuery("select max(id) from City where country.code = '" + country.code + "' group by engName having count(id) = 1").collect{
+            idsWithUniqueEngName.add(it)
+        }
+        City.findAllByCountry(country, [sort: 'searchPriority']).each { city ->
+            String urlPart
+            if (idsWithUniqueEngName.contains(city.id)) {
+                urlPart = convertToUrlView(city.engName)
+            } else {
+                urlPart = convertToUrlView(city.engName) + "-" + convertToUrlView(city.region.urlName)
+                if (alreadyUsedUrlParts.contains(urlPart)) {
+                    int i = 1
+                    while (alreadyUsedUrlParts.contains(urlPart + "-" + i)) {
+                        i++
+                    }
+                    urlPart = urlPart + "-" + i
+                }
+            }
+            city.urlPart = urlPart
+            city.save(failOnError: true)
+            alreadyUsedUrlParts.add(urlPart)
+        }
+        City.findById(idsWithUniqueEngName.first()).save(flush: true)
+    }
+
+    private String convertToUrlView(String orig) {
+        StringBuilder stringBuilder = new StringBuilder()
+        String withoutSpecChars = orig.replace('\'', '').replace('.', '').replace('-', ' ')
+        for (String part : withoutSpecChars.split("\\W")) {
+            stringBuilder.append(UiUtils.capitalizeFirstLetter(part))
+        }
+        stringBuilder.toString()
     }
 
     private static double calcDistance(City city1, City city2) {

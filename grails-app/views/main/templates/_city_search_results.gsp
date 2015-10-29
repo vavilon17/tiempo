@@ -4,8 +4,8 @@
     %{--</div>--}%
 %{--</g:each>--}%
 
-<g:each in="${cityIds}" var="cityId">
+<g:each in="${cityUrlParts}" var="cityUrlPart">
     <div class="header-search-rezults__value">
-        <a href="${createLink(controller: 'main', action: 'weather')}?cityId=${cityId}">${com.data.CachedDataStore.CITY_REPRESENTATIONS.get(cityId)}</a>
+        <a href="${createLink(controller: 'main', action: 'weather')}/${cityUrlPart}">${com.data.CachedDataStore.CITY_REPRESENTATIONS.get(cityUrlPart)}</a>
     </div>
 </g:each>
