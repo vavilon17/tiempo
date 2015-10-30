@@ -19,6 +19,7 @@ class MainService {
 
     static final int HALF_DAY_MINS = 24 * 60 / 2
     static final String DEF_COUNTRY_CODE = "AR"
+    static final String COUNTRY_CODE_HEADER = "COUNTRY_CODE"
     static final Map<String, String> TOP_SEARCHED_CITIES = new LinkedHashMap<>()
 
     public WeatherView weatherView(String urlPart) {
@@ -26,7 +27,7 @@ class MainService {
         if (urlPart) {
             city = City.findByUrlPart(urlPart)
         } else {
-            String countryCode = lookupCountryCodeFromSession()
+            String countryCode = lookupCountryCodeFromHeader()
             city = City.findById(CacheService.COUNTRY_CAPITAL_IDS.get(countryCode))
         }
         weatherViewForCity(city)
@@ -38,9 +39,14 @@ class MainService {
                 + "%' or engName like '" + cKey + "%') order by searchPriority")
     }
 
-    private String lookupCountryCodeFromSession() {
-        RequestContextHolder.currentRequestAttributes()
-        DEF_COUNTRY_CODE
+    private String lookupCountryCodeFromHeader() {
+        log.info("lookup contry code from header")
+        String countryCode = RequestContextHolder.currentRequestAttributes().getHeader(COUNTRY_CODE_HEADER)
+        if (!countryCode) {
+            log.warn("No header found. Will be used default value - ${DEF_COUNTRY_CODE}")
+            countryCode = DEF_COUNTRY_CODE
+        }
+        countryCode
     }
 
     private WeatherView weatherViewForCity(City city) {
