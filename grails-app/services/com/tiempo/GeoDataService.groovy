@@ -1,6 +1,5 @@
 package com.tiempo
 
-import com.data.CachedDataStore
 import com.util.UiUtils
 import org.apache.commons.lang.StringUtils
 import org.apache.log4j.Logger
@@ -22,19 +21,9 @@ class GeoDataService {
         importCitiesFromFile_Geodata(country)
         setupCoreImportedCities(country)
         setCityRelationsInsideSameWeatherRegion(country)
-        setupSearchPriority(country)*/
-        setUrlPartForCities(country)
+        setupSearchPriority(country)
+        setUrlPartForCities(country)*/
         logger.info("*** Finish filling geodata for ${country.nativeName}")
-    }
-
-    def fillCachedData() {
-        logger.info("Preparing city full representations to be cached")
-        Map<String, String> data = new HashMap<>()
-        City.findAllByIsActive(true).each {
-            data.put(it.urlPart, prepareCityFullRepresentation(it))
-        }
-        CachedDataStore.CITY_REPRESENTATIONS = data
-        logger.info("Finish filling city cache")
     }
 
     private void importRegionsFromFile_Geodata(Country country) {
@@ -186,7 +175,7 @@ class GeoDataService {
                     urlPart = urlPart + "-" + i
                 }
             }
-            city.urlPart = urlPart
+            city.urlPart = urlPart + "-" + country.code
             city.save(failOnError: true)
             alreadyUsedUrlParts.add(urlPart)
         }
@@ -215,10 +204,5 @@ class GeoDataService {
         }
         listStr.replace(listStr.lastIndexOf(","), listStr.length(), ")")
         listStr.toString()
-    }
-
-    private static String prepareCityFullRepresentation(City city) {
-        new StringBuilder(city.printName).append(", ").append(city.region.nativeName).append(", ")
-                .append(city.country.nativeName).toString()
     }
 }

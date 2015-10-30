@@ -13,7 +13,7 @@ class City {
 
     Country country
 
-    boolean isActive // meaning whether the city is available from UI to show local wether
+    boolean isActive // meaning whether the city is available from UI to show local weather
     boolean isWeatherImported // meaning whether the city is an import target while dealing with Weather API
 
     Integer origId
@@ -29,8 +29,7 @@ class City {
         searchPriority defaultValue: 5000, index: 'city_search_priority_idx'
         printName unique: false, index: 'city_print_name_idx'
         engName unique: false, index: 'city_eng_name_idx'
-        urlPart index: 'city_urlPart_country_idx'
-        country index: 'city_urlPart_country_idx'
+        urlPart index: 'city_urlPart_idx'
     }
 
     static constraints = {

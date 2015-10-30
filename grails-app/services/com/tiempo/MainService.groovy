@@ -1,5 +1,6 @@
 package com.tiempo
 
+import com.dto.ui.WeatherView
 import com.tiempo.exception.ForecastNotFoundException
 import com.tiempo.wwo.Day
 import com.tiempo.wwo.Hourly
@@ -8,6 +9,7 @@ import com.util.UiUtils
 import org.apache.log4j.Logger
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
+import org.springframework.web.context.request.RequestContextHolder
 
 class MainService {
 
@@ -16,34 +18,32 @@ class MainService {
     private static final log = Logger.getLogger(MainService.class)
 
     static final int HALF_DAY_MINS = 24 * 60 / 2
-
+    static final String DEF_COUNTRY_CODE = "AR"
     static final Map<String, String> TOP_SEARCHED_CITIES = new LinkedHashMap<>()
 
-    static class WeatherView {
+    public WeatherView weatherView(String urlPart) {
         City city
-        Hourly current
-        List<Hourly> todayHourlyList
-        List<Day> forecast
-        int halfDayPercent
-
-        byte todayMaxDay
-        byte todayMinNight
-
-        Map<String, Long> topCities
+        if (urlPart) {
+            city = City.findByUrlPart(urlPart)
+        } else {
+            String countryCode = lookupCountryCodeFromSession()
+            city = City.findById(CacheService.COUNTRY_CAPITAL_IDS.get(countryCode))
+        }
+        weatherViewForCity(city)
     }
 
-    public WeatherView weatherView(Long cityId) {
-        City city = City.findById(cityId)
-        weatherView(city)
+    public List<String> citySearch(String key) {
+        String cKey = UiUtils.capitalizeFirstLetter(key)
+        City.executeQuery("select urlPart from City where isActive = true and (printName like '" + cKey
+                + "%' or engName like '" + cKey + "%') order by searchPriority")
     }
 
-    public WeatherView weatherView(String urlPart, String countryCode) {
-        Country country = Country.findByCode(countryCode)
-        City city = City.findByCountryAndUrlPart(country, urlPart)
-        weatherView(city)
+    private String lookupCountryCodeFromSession() {
+        RequestContextHolder.currentRequestAttributes()
+        DEF_COUNTRY_CODE
     }
 
-    public WeatherView weatherView(City city) {
+    private WeatherView weatherViewForCity(City city) {
         WeatherForecast forecast = WeatherForecast.findByCity(city.isWeatherImported ? city : city.basic)
         if (forecast) {
             DateTime currDateTime = new DateTime(DateTimeZone.forOffsetHours(city.country.tzOffset))
@@ -65,12 +65,6 @@ class MainService {
         }
     }
 
-    public List<String> citySearch(String key) {
-        String cKey = UiUtils.capitalizeFirstLetter(key)
-        City.executeQuery("select urlPart from City where isActive = true and (printName like '" + cKey
-                 + "%' or engName like '" + cKey + "%') order by searchPriority")
-    }
-
     private static List<Day> eliminateForecastToShow(Day dayToEliminate, List<Day> forecast) {
         List<Day> forecastToShow = new ArrayList<>(forecast.size())
         for (Day forecastDay : forecast) {
@@ -90,7 +84,7 @@ class MainService {
         }
     }
 
-    private static Map<String, Long> topCities() {
+    private static Map<String, String> topCities() {
         if (TOP_SEARCHED_CITIES.size() == 0) {
             City.findAllByIsActiveAndPopulationIsNotNull(true, [max: 3, sort: "population", order: "desc"]).each {
                 TOP_SEARCHED_CITIES.put(it.printName, it.urlPart)

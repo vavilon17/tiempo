@@ -1,5 +1,7 @@
 package com.tiempo
 
+import com.dto.ui.WeatherView
+
 class MainController {
 
     def mainService
@@ -8,19 +10,8 @@ class MainController {
         redirect(action: 'weather')
     }
 
-    def weatherOld() {
-        Long cityId
-        if (params.cityId) {
-            cityId = Long.valueOf(params.cityId)
-        } else {
-            cityId = City.findByAdminCode("PPLC").id
-        }
-        MainService.WeatherView weatherView = mainService.weatherView(cityId)
-        render(view: "/main/weather",  model: [weather_results: weatherView])
-    }
-
     def weather() {
-        MainService.WeatherView weatherView = mainService.weatherView(params.cityUrl, "AR")
+        WeatherView weatherView = mainService.weatherView(params.cityUrl)
         if (weatherView) {
             render(view: "/main/weather",  model: [weather_results: weatherView])
         } else {

@@ -4,6 +4,7 @@ class AdminController {
 
     def geoDataService
     def importService
+    def cacheService
 
     def index() {}
 
@@ -12,7 +13,7 @@ class AdminController {
     }
 
     def fillCache() {
-        geoDataService.fillCachedData()
+        cacheService.fillCache()
     }
 
     def runImport() {

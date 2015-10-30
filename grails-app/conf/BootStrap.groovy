@@ -1,9 +1,9 @@
 class BootStrap {
 
-    def geoDataService
+    def cacheService
 
     def init = { servletContext ->
-        geoDataService.fillCachedData()
+        cacheService.fillCache()
     }
 
     def destroy = {
