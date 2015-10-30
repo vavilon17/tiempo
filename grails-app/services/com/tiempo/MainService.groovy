@@ -67,7 +67,7 @@ class MainService {
             }
         } else {
             log.error("Forecast is not found for city ${city?.printName}!")
-            return null
+            throw new ForecastNotFoundException("Forecast is not found for city ${city?.printName}!")
         }
     }
 

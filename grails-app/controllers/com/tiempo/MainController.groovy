@@ -1,21 +1,22 @@
 package com.tiempo
 
 import com.dto.ui.WeatherView
+import com.tiempo.exception.ForecastNotFoundException
 
 class MainController {
 
     def mainService
 
-    def index() {
-        redirect(action: 'weather')
-    }
+    static defaultAction = "weather"
 
     def weather() {
-        WeatherView weatherView = mainService.weatherView(params.cityUrl)
-        if (weatherView) {
+        try {
+            WeatherView weatherView = mainService.weatherView(params.cityUrl)
             render(view: "/main/weather",  model: [weather_results: weatherView])
-        } else {
+        } catch (ForecastNotFoundException e) {
             response.status = 404
+        } catch (Exception e) {
+            response.status = 500
         }
     }
 

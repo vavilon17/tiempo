@@ -9,6 +9,7 @@ class UrlMappings {
         }
 
         "/"                 (controller: "main", action: "weather")
+        "/weather"          (controller: "main", action: "weather")
         "/weather/$cityUrl" (controller: "main", action: "weather")
 
         "404"(view:'/custom404')
