@@ -5,6 +5,7 @@ class Region {
     String nativeName
     String urlName
     Country country
+    String timezone
 
     Integer importId
 

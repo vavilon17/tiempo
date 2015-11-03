@@ -52,7 +52,7 @@ class MainService {
     private WeatherView weatherViewForCity(City city) {
         WeatherForecast forecast = WeatherForecast.findByCity(city.isWeatherImported ? city : city.basic)
         if (forecast) {
-            DateTime currDateTime = new DateTime(DateTimeZone.forOffsetHours(city.country.tzOffset))
+            DateTime currDateTime = new DateTime(DateTimeZone.forTimeZone(TimeZone.getTimeZone(city.region.timezone)))
             Hourly nearest
             List<Day> forecastToShow
             try {

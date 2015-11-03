@@ -34,7 +34,7 @@ class GeoDataService {
             importFile.eachLine { line ->
                 logger.info("Parsing following line: ${line}")
                 data = line.trim().split(";")
-                Region region = new Region(importId: Integer.valueOf(data[0]), nativeName: data[1], urlName: data[2])
+                Region region = new Region(importId: Integer.valueOf(data[0]), nativeName: data[1], urlName: data[2], timezone: data[3])
                 region.country = country
                 region.save(failOnError: true, flush: true)
             }

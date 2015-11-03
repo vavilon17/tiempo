@@ -1,24 +1,24 @@
-14;Misiones;Misiones
-9;Formosa;Formosa
-7;Buenos Aires F.D.;Buenos Aires F.D.
-8;Entre Rios;Entre Rios
-6;Corrientes;Corrientes
-1;Buenos Aires;Buenos Aires
-24;Tucumán;Tucuman
-23;Tierra del Fuego;Tierra del Fuego
-22;Santiago del Estero;Santiago del Estero
-21;Santa Fe;Santa Fe
-20;Santa Cruz;Santa Cruz
-19;San Luis;San Luis
-18;San Juan;San Juan
-17;Salta;Salta
-16;Rio Negro;Rio Negro
-15;Neuquen;Neuquen
-13;Mendoza;Mendoza
-12;La Rioja;La Rioja
-11;La Pampa;La Pampa
-10;Jujuy;Jujuy
-5;Cordoba;Cordoba
-4;Chubut;Chubut
-3;Chaco;Chaco
-2;Catamarca;Catamarca
+14;Misiones;Misiones;America/Argentina/Cordoba
+9;Formosa;Formosa;America/Argentina/Cordoba
+7;Buenos Aires F.D.;Buenos Aires F.D.;America/Argentina/Buenos_Aires
+8;Entre Rios;Entre Rios;America/Argentina/Cordoba
+6;Corrientes;Corrientes;America/Argentina/Cordoba
+1;Buenos Aires;Buenos Aires;America/Argentina/Buenos_Aires
+24;Tucumán;Tucuman;America/Argentina/Tucuman
+23;Tierra del Fuego;Tierra del Fuego;America/Argentina/Ushuaia
+22;Santiago del Estero;Santiago del Estero;America/Argentina/Cordoba
+21;Santa Fe;Santa Fe;America/Argentina/Cordoba
+20;Santa Cruz;Santa Cruz;America/Argentina/Rio_Gallegos
+19;San Luis;San Luis;America/Argentina/San_Luis
+18;San Juan;San Juan;America/Argentina/San_Juan
+17;Salta;Salta;America/Argentina/Salta
+16;Río Negro;Rio Negro;America/Argentina/Salta
+15;Neuquén;Neuquen;America/Argentina/Salta
+13;Mendoza;Mendoza;America/Argentina/Mendoza
+12;La Rioja;La Rioja;America/Argentina/La_Rioja
+11;La Pampa;La Pampa;America/Argentina/Salta
+10;Jujuy;Jujuy;America/Argentina/Jujuy
+5;Córdoba;Cordoba;America/Argentina/Cordoba
+4;Chubut;Chubut;America/Argentina/Catamarca
+3;Chaco;Chaco;America/Argentina/Cordoba
+2;Catamarca;Catamarca;America/Argentina/Catamarca

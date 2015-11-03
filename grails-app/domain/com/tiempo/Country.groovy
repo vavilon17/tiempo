@@ -5,8 +5,6 @@ class Country {
     String nativeName
     String urlName
     String code
-    Integer tzOffset
-
     Integer importLimit
 
     boolean isActive
@@ -16,10 +14,9 @@ class Country {
         urlName index: 'country_urlName_idx'
         code index: 'country_code_idx'
         isActive defaultValue: true
-        tzOffset defaultValue: 0
     }
 
     static constraints = {
-        tzOffset nullable: true
+
     }
 }
