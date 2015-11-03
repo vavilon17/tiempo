@@ -10,11 +10,13 @@ class CacheService {
 
     public static final Map<String, String> CITY_REPRESENTATIONS = new HashMap<>()
     public static final Map<String, Long> COUNTRY_CAPITAL_IDS = new HashMap<>()
+    public static final List<String> ACTIVE_COUNTRY_CODES = new ArrayList<>()
 
     def fillCache() {
         logger.info("Fill cache...")
         fillCityRepresentations()
         fillCapitals()
+        fillActiveCountryCodes()
         logger.info("Finish filling cache")
     }
 
@@ -31,6 +33,13 @@ class CacheService {
         COUNTRY_CAPITAL_IDS.clear()
         Country.findAll().each { country ->
             COUNTRY_CAPITAL_IDS.put(country.code, City.findByCountryAndAdminCode(country, "PPLC").id)
+        }
+    }
+
+    private void fillActiveCountryCodes() {
+        ACTIVE_COUNTRY_CODES.clear()
+        Country.findAll("from Country where isActive = true order by code").each {
+            ACTIVE_COUNTRY_CODES.add(it.code)
         }
     }
 

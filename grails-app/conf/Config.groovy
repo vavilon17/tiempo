@@ -104,8 +104,9 @@ environments {
             baseUrl = "https://api.worldweatheronline.com/free/v2/weather.ashx"
             numOfDays = 5
         }
-
         grails.logging.jul.usebridge = true
+
+        baseDomain = "http://localhost:8080/tiempo"
     }
     production {
         wwo {
@@ -119,6 +120,8 @@ environments {
         grails.assets.bundle = true
         grails.assets.minifyOptions.optimizationLevel = 'ADVANCED'
         // TODO: grails.serverURL = "http://www.changeme.com"
+
+        baseDomain = "http://tiempolatin.com"
     }
 }
 
