@@ -2,7 +2,7 @@
     <div class="container">
         <div class="tempotittle-block">
             <div class="tempotittle-cell">
-                <span>Pronostico del tiempo <strong>para ${count} dias</strong></span>
+                <span>Pronóstico del tiempo <strong>en ${cityName} para ${count} dias</strong></span>
             </div>
         </div>
     </div>

@@ -23,7 +23,7 @@
                                 <div class="tempoblockmob-element-block-element-left__value"><span>${hour.tempC}</span></div>
                             </div>
                             <div class="tempoblockmob-element-block-element-right">
-                                <p>Presion <strong>${hour.pres}</strong>mmHg</p>
+                                <p>Presión <strong>${hour.pres}</strong>mmHg</p>
                                 <p>Humedad <strong>${hour.hum}%</strong></p>
                                 <p>Viento <strong>${hour.windMs}</strong>m/s</p>
                             </div>

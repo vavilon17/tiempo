@@ -221,7 +221,7 @@ header.bg-1 {
     font-size: 18px
 }
 
-.header-bottom-place strong {
+.header-bottom-place strong, .header-bottom-place h1 {
     display: block;
     font-size: 20px;
     font-weight: 700;

@@ -29,7 +29,7 @@
                     </div>
                     <div class="tempoblock-footer">
                         <div class="tempoblock-footer-table">
-                            <div class="tempoblock-footer-table__cell">Presion</div>
+                            <div class="tempoblock-footer-table__cell">Presión</div>
                             <div class="tempoblock-footer-table__cell"><strong>${forecastDay.maxPressure}</strong>mmHg</div>
                         </div>
                         <div class="tempoblock-footer-table">
@@ -41,11 +41,11 @@
                             <div class="tempoblock-footer-table__cell"><strong>${forecastDay.maxWindMs}</strong>m/s</div>
                         </div>
                         <div class="tempoblock-footer-table">
-                            <div class="tempoblock-footer-table__cell">Precipitation</div>
+                            <div class="tempoblock-footer-table__cell">Precipitación</div>
                             <div class="tempoblock-footer-table__cell"><strong>${Math.round(forecastDay.sumPrecipMm * 10)/10}</strong>mm</div>
                         </div>
                         <div class="tempoblock-footer-table">
-                            <div class="tempoblock-footer-table__cell">Chance of the rain</div>
+                            <div class="tempoblock-footer-table__cell">Probab. de lluvia</div>
                             <div class="tempoblock-footer-table__cell"><strong>${forecastDay.maxRainChance}%</strong></div>
                         </div>
                     </div>

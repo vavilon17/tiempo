@@ -1,4 +1,4 @@
-<%@ page import="com.util.UiUtils" %>
+<%@ page import="com.util.UiUtils"%>
 <header class="bg-1">
     <div class="container">
         <div class="header-top row">
@@ -7,7 +7,7 @@
             <div class="header-search">
                 <div class="header-search-form">
                     %{--<form>--}%
-                        <input data-value="search..." type="text" name="" class="header-search-form__inp" />
+                        <input data-value="buscar..." type="text" name="" class="header-search-form__inp" />
                         <button type="button" class="header-search-form__btn"></button>
                     %{--</form>--}%
                     <div class="header-search-form-examples">
@@ -23,7 +23,7 @@
         </div>
         <div class="header-bottom row">
             <div class="header-bottom-place">
-                <strong>Tiempo en ${city.printName}</strong>
+                <h1>Tiempo en ${city.printName}</h1>
                 ${city.country.nativeName}, ${city.region.nativeName}
             </div>
             <g:set var="mainIco" value="${UiUtils.provideIconClassBig(current.getWeatherType())}"/>
@@ -38,14 +38,14 @@
                 <span class="value"><span>${current.tempC}</span></span>
             </div>
             <div class="header-bottom-info">
-                <div class="header-bottom-info__title">CHANCE OF THE RAIN <strong>${current.rainChance}%</strong></div>
+                <div class="header-bottom-info__title">PROBABILIDAD Precipitación <strong>${current.rainChance}%</strong></div>
                 <div class="header-bottom-table">
                     <div class="header-bottom-table__cell">Humedad</div>
                     <div class="header-bottom-table__cell header-bottom-table__cell_dotts"></div>
                     <div class="header-bottom-table__cell">${current.hum}%</div>
                 </div>
                 <div class="header-bottom-table">
-                    <div class="header-bottom-table__cell">Presion %{--<strong>753</strong>mmHg--}%</div>
+                    <div class="header-bottom-table__cell">Presión</div>
                     <div class="header-bottom-table__cell header-bottom-table__cell_dotts"></div>
                     <div class="header-bottom-table__cell">${current.pres}mmHg</div>
                 </div>
