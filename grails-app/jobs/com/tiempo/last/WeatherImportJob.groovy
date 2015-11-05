@@ -10,7 +10,7 @@ class WeatherImportJob {
     private static final Logger logger = Logger.getLogger(WeatherImportJob.class)
 
     static triggers = {
-        cron name: 'everyNight', cronExpression: '0 1 0 * * ?'
+        cron name: 'everyNight', cronExpression: '0 0 1 * * ?'
 //        simple name: 'runAfterStart', startDelay: 60000, repeatInterval: 86400000L
     }
 

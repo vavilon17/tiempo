@@ -8,7 +8,7 @@
     <meta name="keywords" content="tiempo en ${cityName}, pronóstico del tiempo en ${cityName}, tiempo ${cityName} hoy, tiempo ${cityName} mañana, tiempo en ${cityName} fin de semana, tiempo ${cityName} para 5 Días, clima ${cityName}, pronóstico ${cityName}"/>
 </head>
 <body>
-%{--<g:render template="/main/templates/seo/ga"/>--}%
+<g:render template="/main/templates/seo/ga"/>
 <div class="wrapper">
     <g:render template="/main/templates/today/today" model="[current: weather_results.current, hourlies: weather_results.todayHourlyList, city: weather_results.city,
                                                              percent: weather_results.halfDayPercent, topCities: weather_results.topCities]"/>

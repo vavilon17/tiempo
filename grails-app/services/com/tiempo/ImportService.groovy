@@ -44,11 +44,16 @@ class ImportService {
 
     @Transactional
     def performCityForecast(WeatherForecast forecast) {
-        String url = prepareUrl(forecast)
-        String content = url.toURL().getText("UTF-8")
-        Root root = new Gson().fromJson(content, Root.class)
-        essentialConverterService.refillForecast(forecast, root.data)
-        forecast.save(failOnError: true)
+        try {
+            String url = prepareUrl(forecast)
+            String content = url.toURL().getText("UTF-8")
+            Root root = new Gson().fromJson(content, Root.class)
+            essentialConverterService.refillForecast(forecast, root.data)
+            forecast.save(failOnError: true)
+        } catch (Exception e) {
+            log.error("An error occurred while importing for city ${forecast.city.engName}: ${e.message}")
+        }
+
     }
 
     private String prepareUrl(WeatherForecast forecast) {
