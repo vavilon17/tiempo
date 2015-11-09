@@ -39,6 +39,6 @@ class MainController {
     }
 
     def googleVer() {
-        render(template: '/main/templates/seo/google_verification')
+        render(text: "google-site-verification: googleb092fb8796bb7e18.html")
     }
 }
