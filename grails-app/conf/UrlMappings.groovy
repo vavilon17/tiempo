@@ -5,6 +5,7 @@ class UrlMappings {
         "/robots.txt"                           (controller: 'main', action: 'showRobots')
         "/sitemap.xml"                          (controller: 'main', action: 'showMainSitemap')
         "/sitemap-$countryCode-weather.xml"     (controller: 'main', action: 'showCountrySitemap')
+        "/googleb092fb8796bb7e18.html"          (controller: 'main', action: 'googleVer')
 
         "/"                 (controller: "main", action: "weather")
         "/weather"          (controller: "main", action: "weather")

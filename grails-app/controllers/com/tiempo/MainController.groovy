@@ -37,4 +37,8 @@ class MainController {
         List<String> cityUrls = City.findAllByCountryAndIsActive(country, true, [sort: 'searchPriority']).collect { it.urlPart }
         render(template: '/main/templates/seo/country_sitemap', model: [cityUrls: cityUrls])
     }
+
+    def googleVer() {
+        render(template: '/main/templates/seo/google_verification')
+    }
 }
