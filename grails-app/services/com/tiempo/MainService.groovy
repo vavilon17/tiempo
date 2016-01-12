@@ -40,13 +40,13 @@ class MainService {
     }
 
     private String lookupCountryCodeFromHeader() {
-        log.info("lookup contry code from header")
+        log.info("lookup country code from header")
         String countryCode = RequestContextHolder.currentRequestAttributes().getHeader(COUNTRY_CODE_HEADER)
         if (!countryCode) {
             log.warn("No header found. Will be used default value - ${DEF_COUNTRY_CODE}")
             countryCode = DEF_COUNTRY_CODE
         }
-        countryCode
+        countryCode.toUpperCase()
     }
 
     private WeatherView weatherViewForCity(City city) {

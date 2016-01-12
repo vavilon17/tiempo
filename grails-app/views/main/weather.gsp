@@ -4,8 +4,8 @@
 <head>
     <title>Tiempo en ${cityName} - Pronóstico del tiempo en ${weather_results.city.country.nativeName}</title>
     <meta name="layout" content="main_tl"/>
-    <meta name="description" content="Tiempo en ${cityName} - Pronóstico meteorológico del tiempo. Temperatura, velocidad del viento, presión, la humedad"/>
-    <meta name="keywords" content="tiempo en ${cityName}, pronóstico del tiempo en ${cityName}, tiempo ${cityName} hoy, tiempo ${cityName} mañana, tiempo en ${cityName} fin de semana, tiempo ${cityName} para 5 Días, clima ${cityName}, pronóstico ${cityName}"/>
+    <meta name="description" content="Clima en ${cityName} - Pronóstico meteorológico del tiempo. Temperatura, velocidad del viento, presión, la humedad"/>
+    <meta name="keywords" content="clima en ${cityName}, pronóstico del clima en ${cityName}, clima ${cityName} hoy, clima ${cityName} mañana, clima en ${cityName} fin de semana, clima ${cityName} para 5 Días, tiempo en ${cityName}, pronóstico del tiempo en ${cityName}, tiempo ${cityName} hoy, tiempo ${cityName} mañana, tiempo en ${cityName} fin de semana, tiempo ${cityName} para 5 Días, clima ${cityName}, pronóstico ${cityName}"/>
 </head>
 <body>
 <g:render template="/main/templates/seo/ga"/>

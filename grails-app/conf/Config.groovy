@@ -107,6 +107,9 @@ environments {
         grails.logging.jul.usebridge = true
 
         baseDomain = "http://localhost:8080/tiempo"
+        sitemapUrls = [
+                "AR" : "http://localhost:8080/tiempo"
+        ]
     }
     production {
         wwo {
@@ -122,6 +125,9 @@ environments {
         // TODO: grails.serverURL = "http://www.changeme.com"
 
         baseDomain = "http://tiempolatin.com"
+        sitemapUrls = [
+                "AR" : "http://ar.tiempolatin.com"
+        ]
     }
 }
 

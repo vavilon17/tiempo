@@ -1,5 +1,4 @@
 <%@ page contentType="text/xml;charset=UTF-8" %>
-<g:set var="baseUrl" value="${grailsApplication.config.baseDomain}"/>
 <g:set var="step" value="${1/cityUrls.size()}"/>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>

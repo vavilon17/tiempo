@@ -6,6 +6,7 @@ import com.tiempo.exception.ForecastNotFoundException
 class MainController {
 
     def mainService
+    def grailsApplication
 
     static defaultAction = "weather"
 
@@ -25,17 +26,22 @@ class MainController {
     }
 
     def showRobots() {
-        render(template: '/main/templates/seo/robots')
+        String countryCode = request.getHeader("COUNTRY_CODE")
+        println "header COUNTRY_CODE = " + countryCode
+        boolean isSubDomain = countryCode ? true : false
+        render(template: '/main/templates/seo/robots', model: [isSubDomain: isSubDomain])
     }
 
     def showMainSitemap() {
-        render(template: '/main/templates/seo/sitemap')
-    }
-
-    def showCountrySitemap(String countryCode) {
-        Country country = Country.findByCode(countryCode)
-        List<String> cityUrls = City.findAllByCountryAndIsActive(country, true, [sort: 'searchPriority']).collect { it.urlPart }
-        render(template: '/main/templates/seo/country_sitemap', model: [cityUrls: cityUrls])
+        String countryCode = request.getHeader("COUNTRY_CODE")
+        if (countryCode) {
+            Country country = Country.findByCode(countryCode.toUpperCase())
+            List<String> cityUrls = City.findAllByCountryAndIsActive(country, true, [sort: 'searchPriority']).collect { it.urlPart }
+            String baseUrl = grailsApplication.config.sitemapUrls["${countryCode.toUpperCase()}"].toString()
+            render(template: '/main/templates/seo/country_sitemap', model: [cityUrls: cityUrls, baseUrl: baseUrl])
+        } else {
+            response.status = 404
+        }
     }
 
     def googleVer() {
