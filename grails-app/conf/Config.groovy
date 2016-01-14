@@ -70,6 +70,7 @@ meteoprog {
 
 geodata {
     weather_region_radius_km = 12
+    max_overall_quota        = 3500
 }
 
 grails.converters.encoding = "UTF-8"
@@ -108,7 +109,10 @@ environments {
 
         baseDomain = "http://localhost:8080/tiempo"
         sitemapUrls = [
-                "AR" : "http://localhost:8080/tiempo"
+                "AR" : "http://localhost:8080/tiempo",
+                "UY" : "http://localhost:8080/tiempo",
+                "PY" : "http://localhost:8080/tiempo",
+                "CL" : "http://localhost:8080/tiempo"
         ]
     }
     production {
@@ -126,7 +130,10 @@ environments {
 
         baseDomain = "http://tiempolatin.com"
         sitemapUrls = [
-                "AR" : "http://ar.tiempolatin.com"
+                "AR" : "http://ar.tiempolatin.com",
+                "UY" : "http://uy.tiempolatin.com",
+                "PY" : "http://py.tiempolatin.com",
+                "CL" : "http://cl.tiempolatin.com"
         ]
     }
 }

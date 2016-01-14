@@ -1,6 +1,8 @@
 package com.tiempo
 
 import com.util.UiUtils
+import grails.plugin.cache.ConfigBuilder
+import grails.transaction.Transactional
 import org.apache.commons.lang.StringUtils
 import org.apache.log4j.Logger
 
@@ -14,12 +16,33 @@ class GeoDataService {
 
     def grailsApplication
 
+    @Transactional
+    def setupCountryImportLimits() {
+        double sum = 0
+        Country.list().each {
+            sum += it.quotaCoef
+        }
+        double max = Double.parseDouble("${grailsApplication.config.geodata.max_overall_quota}".toString())
+        double coef = max / sum
+        int limitsSumToCheck = 0
+        Country.list().each {
+            int importLimit = (int) Math.floor(coef * it.quotaCoef)
+            limitsSumToCheck += importLimit
+            it.importLimit = importLimit
+            it.save()
+        }
+        if (limitsSumToCheck > (int) max) {
+            throw new IllegalStateException("Wrong limit calculation! Check the quotas")
+        }
+        City.first().save(flush: true)
+    }
+
     def importAndSetupGeoData(String countryCode) {
         Country country = Country.findByCode(countryCode)
         logger.info("*** Start filling geodata for ${country.nativeName}")
-        /*importRegionsFromFile_Geodata(country)
-        importCitiesFromFile_Geodata(country)
-        setupCoreImportedCities(country)
+//        importRegionsFromFile_Geodata(country)
+//        importCitiesFromFile_Geodata(country)
+        /*setupCoreImportedCities(country)
         setCityRelationsInsideSameWeatherRegion(country)
         setupSearchPriority(country)
         setUrlPartForCities(country)*/

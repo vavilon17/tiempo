@@ -31,7 +31,7 @@ class CacheService {
 
     private void fillCapitals() {
         COUNTRY_CAPITAL_IDS.clear()
-        Country.findAll().each { country ->
+        Country.findAllByIsActive(true).each { country ->
             COUNTRY_CAPITAL_IDS.put(country.code, City.findByCountryAndAdminCode(country, "PPLC").id)
         }
     }

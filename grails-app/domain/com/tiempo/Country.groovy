@@ -6,6 +6,7 @@ class Country {
     String urlName
     String code
     Integer importLimit
+    double quotaCoef
 
     boolean isActive
 
@@ -14,9 +15,6 @@ class Country {
         urlName index: 'country_urlName_idx'
         code index: 'country_code_idx'
         isActive defaultValue: true
-    }
-
-    static constraints = {
-
+        quotaCoef defaultValue: 0
     }
 }

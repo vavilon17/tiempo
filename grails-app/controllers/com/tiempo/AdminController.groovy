@@ -20,4 +20,8 @@ class AdminController {
         log.info("Run import")
         importService.runForecastImport()
     }
+
+    def calcLimits() {
+        geoDataService.setupCountryImportLimits()
+    }
 }
