@@ -21,7 +21,7 @@ Add country:
 - get data from geonames
 - create country in DB, set the limit
 - import into BD cities and regions
-- add subdomain on imena
+- add subdomain record on digital ocean domain setting
 - add appropriate section in nginx settings
 - check robots.txt/sitemap.xml (do not forget to change Config.groovy)
 
