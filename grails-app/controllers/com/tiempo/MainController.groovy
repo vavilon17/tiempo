@@ -32,11 +32,10 @@ class MainController {
         render(template: '/main/templates/seo/robots', model: [isSubDomain: isSubDomain])
     }
 
-    def showMainSitemap() {
+    def showSitemap() {
         String countryCode = request.getHeader("COUNTRY_CODE")
-        if (countryCode) {
-            Country country = Country.findByCode(countryCode.toUpperCase())
-            List<String> cityUrls = City.findAllByCountryAndIsActive(country, true, [sort: 'searchPriority']).collect { it.urlPart }
+        if (countryCode && grailsApplication.config.sitemapUrls.get(countryCode.toUpperCase())) {
+            List<String> cityUrls = City.findAllByIsActive(true, [sort: 'searchPriority']).collect { it.urlPart }
             String baseUrl = grailsApplication.config.sitemapUrls["${countryCode.toUpperCase()}"].toString()
             render(template: '/main/templates/seo/country_sitemap', model: [cityUrls: cityUrls, baseUrl: baseUrl])
         } else {
@@ -44,7 +43,23 @@ class MainController {
         }
     }
 
+    // AR
     def googleVer() {
-        render(text: "google-site-verification: googleb092fb8796bb7e18.html")
+        String countryCode = request.getHeader("COUNTRY_CODE")
+        if (countryCode && "AR".equals(countryCode.toUpperCase())) {
+            render(text: "google-site-verification: googleb092fb8796bb7e18.html")
+        } else {
+            response.status = 404
+        }
+    }
+
+    // CL, UY, PY
+    def googleVer2() {
+        String countryCode = request.getHeader("COUNTRY_CODE")
+        if (countryCode && ["CL", "UY", "PY"].contains(countryCode.toUpperCase())) {
+            render(text: "google-site-verification: googlec4ec2d182d1725b9.html")
+        } else {
+            response.status = 404
+        }
     }
 }

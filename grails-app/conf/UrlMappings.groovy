@@ -3,8 +3,10 @@ class UrlMappings {
 	static mappings = {
 
         "/robots.txt"                           (controller: 'main', action: 'showRobots')
-        "/sitemap.xml"                          (controller: 'main', action: 'showMainSitemap')
-        "/googleb092fb8796bb7e18.html"          (controller: 'main', action: 'googleVer')
+        "/sitemap.xml"                          (controller: 'main', action: 'showSitemap')
+
+        "/googleb092fb8796bb7e18.html"          (controller: 'main', action: 'googleVer') // ar
+        "/googlec4ec2d182d1725b9.html"          (controller: 'main', action: 'googleVer2') // uy, py, cl
 
         "/"                 (controller: "main", action: "weather")
         "/weather"          (controller: "main", action: "weather")
