@@ -53,10 +53,10 @@ class MainController {
         }
     }
 
-    // CL, UY, PY
+    // CL, UY, PY, CO, VE, PE, EC, BO
     def googleVer2() {
         String countryCode = request.getHeader("COUNTRY_CODE")
-        if (countryCode && ["CL", "UY", "PY"].contains(countryCode.toUpperCase())) {
+        if (countryCode && ["CL", "UY", "PY", "CO", "VE", "PE", "EC", "BO"].contains(countryCode.toUpperCase())) {
             render(text: "google-site-verification: googlec4ec2d182d1725b9.html")
         } else {
             response.status = 404

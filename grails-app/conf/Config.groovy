@@ -112,7 +112,12 @@ environments {
                 "AR" : "http://localhost:8080/tiempo",
                 "UY" : "http://localhost:8080/tiempo",
                 "PY" : "http://localhost:8080/tiempo",
-                "CL" : "http://localhost:8080/tiempo"
+                "CL" : "http://localhost:8080/tiempo",
+                "CO" : "http://localhost:8080/tiempo",
+                "VE" : "http://localhost:8080/tiempo",
+                "PE" : "http://localhost:8080/tiempo",
+                "EC" : "http://localhost:8080/tiempo",
+                "BO" : "http://localhost:8080/tiempo"
         ]
     }
     production {
@@ -133,7 +138,12 @@ environments {
                 "AR" : "http://ar.tiempolatin.com",
                 "UY" : "http://uy.tiempolatin.com",
                 "PY" : "http://py.tiempolatin.com",
-                "CL" : "http://cl.tiempolatin.com"
+                "CL" : "http://cl.tiempolatin.com",
+                "CO" : "http://co.tiempolatin.com",
+                "VE" : "http://ve.tiempolatin.com",
+                "PE" : "http://pe.tiempolatin.com",
+                "EC" : "http://ec.tiempolatin.com",
+                "BO" : "http://bo.tiempolatin.com"
         ]
     }
 }
