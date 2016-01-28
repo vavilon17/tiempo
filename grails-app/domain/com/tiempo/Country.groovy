@@ -7,6 +7,7 @@ class Country {
     String code
     Integer importLimit
     double quotaCoef
+    Integer radius
 
     boolean isActive
 

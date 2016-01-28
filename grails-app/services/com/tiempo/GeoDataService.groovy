@@ -40,9 +40,9 @@ class GeoDataService {
     def importAndSetupGeoData(String countryCode) {
         Country country = Country.findByCode(countryCode)
         logger.info("*** Start filling geodata for ${country.nativeName}")
-//        importRegionsFromFile_Geodata(country)
-//        importCitiesFromFile_Geodata(country)
-        /*setupCoreImportedCities(country)
+        /*importRegionsFromFile_Geodata(country)
+        importCitiesFromFile_Geodata(country)
+        setupCoreImportedCities(country)
         setCityRelationsInsideSameWeatherRegion(country)
         setupSearchPriority(country)
         setUrlPartForCities(country)*/
@@ -128,7 +128,7 @@ class GeoDataService {
 
     private void setupSearchPriority(Country country) {
         List<Long> ids = []
-        log.info("1. Capital and main cities")
+        logger.info("1. Capital and main cities")
         City capital = City.findByCountryAndAdminCode(country, "PPLC")
         capital.searchPriority = 1
         capital.save()
@@ -139,13 +139,13 @@ class GeoDataService {
             it.save()
             ids << it.id
         }
-        log.info("2. Other cities with filled population")
+        logger.info("2. Other cities with filled population")
         City.findAll("from City where id not in " + prepareListRepresentation(ids) + " and country.code = '" +
                 country.code + "' and population > 0 order by population desc").each {
             it.searchPriority = searchPriority++
             it.save()
         }
-        log.info("3. The rest cities")
+        logger.info("3. The rest cities")
         City.findAllByCountryAndPopulation(country, 0, [sort: 'printName']).each {
             it.searchPriority = searchPriority++
             it.save()
@@ -155,11 +155,12 @@ class GeoDataService {
 
     private void setCityRelationsInsideSameWeatherRegion(Country country) {
         logger.info("**** Calculation closest cities from imported locations in ${country.nativeName} - started")
+        refreshActiveCities(country)
         List<City> importCities = City.findAllByCountryAndIsWeatherImported(country, true)
         List<Integer> importIds = importCities.collect {it.id.intValue()}
         List<City> otherCities = City.findAllByCountryAndIdNotInList(country, importIds)
         List<String> result = []
-        double radius = "${grailsApplication.config.geodata.weather_region_radius_km}".toDouble()
+        double radius = country.radius ?: "${grailsApplication.config.geodata.weather_region_radius_km}".toDouble()
         importCities.each { importCity ->
             logger.info("Looking for ${importCity.printName}")
             otherCities.each { otherCity ->
@@ -228,4 +229,12 @@ class GeoDataService {
         listStr.replace(listStr.lastIndexOf(","), listStr.length(), ")")
         listStr.toString()
     }
+
+    private void refreshActiveCities(Country country) {
+        logger.info("Refresh active cities for ${country.urlName} - Set active to FALSE and basic city to NULL for those which are not imported...")
+        City.executeUpdate("update City set isActive = false, basic = null where isWeatherImported = false and country.id = ${country.id}")
+        City.first().save(flush: true)
+        logger.info("...done")
+    }
+
 }

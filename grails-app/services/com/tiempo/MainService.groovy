@@ -36,7 +36,7 @@ class MainService {
     public List<String> citySearch(String key) {
         String cKey = UiUtils.capitalizeFirstLetter(key)
         City.executeQuery("select urlPart from City where isActive = true and (printName like '" + cKey
-                + "%' or engName like '" + cKey + "%') order by searchPriority")
+                + "%' or engName like '" + cKey + "%') order by searchPriority", [max: 20])
     }
 
     private String lookupCountryCodeFromHeader() {
