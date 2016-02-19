@@ -15,14 +15,24 @@ class ImportService {
 
     private static final log = Logger.getLogger(ImportService.class)
 
+    private final Gson gson = new Gson();
+
     def essentialConverterService
     def importUrlProvider
 
     def runForecastImport() {
+        runForecastImport(0, 0)
+    }
+
+    def runForecastImport(int offset, int limit) {
+        List<City> cities = City.findAll("from City where isWeatherImported = true order by searchPriority, engName",
+                [offset: offset, max: limit])
+        performImportForCities(cities)
+    }
+
+    private void performImportForCities(List<City> cities) {
         int count = 0
-        City.findAllByIsWeatherImported(true).each {
-//        City it = City.findByIsWeatherImported(true)
-            log.info("Starting import for the city ${it.printName}")
+        cities.each {
             WeatherForecast forecast = WeatherForecast.findByCity(it)
             if (!forecast) {
                 log.info("Have not found forecast for ${it.printName}. Will be creating new")
@@ -32,13 +42,13 @@ class ImportService {
             long start = System.currentTimeMillis()
             performCityForecast(forecast)
             count++
-            long dur = System.currentTimeMillis() - start
-            if (dur < 200) {
-                log.warn("ATTENTION! The time spent to ${it.printName} is ${dur} millisends. Consider wait a bit to avoid exceed the limit of 5 request per second set up by API provider")
+            log.info("City: ${it.printName}(${count}. Import duration: ${System.currentTimeMillis() - start}")
+            if (count % 500 == 0) {
+                log.info("Going to flush session. Items processed so far: ${count}")
+                flushSession()
             }
-            log.info("Time per forecast item: ${dur}")
-            log.info("End import for the city ${it.printName}")
         }
+        flushSession()
         log.info("ImportService.runForecastImport finished. Items processed: ${count}")
     }
 
@@ -47,7 +57,7 @@ class ImportService {
         try {
             String url = prepareUrl(forecast)
             String content = url.toURL().getText("UTF-8")
-            Root root = new Gson().fromJson(content, Root.class)
+            Root root = gson.fromJson(content, Root.class)
             essentialConverterService.refillForecast(forecast, root.data)
             forecast.save(failOnError: true)
         } catch (Exception e) {
@@ -60,5 +70,9 @@ class ImportService {
         String url = importUrlProvider.provideUrlBase()
         String locStr = "&q=${forecast.city.lat}".replaceAll(",", ".") + "," + "${forecast.city.lon}".replaceAll(",", ".")
         url + locStr
+    }
+
+    private void flushSession() {
+        Country.first().save(flush: true)
     }
 }

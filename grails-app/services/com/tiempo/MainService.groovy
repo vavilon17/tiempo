@@ -23,6 +23,7 @@ class MainService {
     static final Map<String, String> TOP_SEARCHED_CITIES = new LinkedHashMap<>()
 
     public WeatherView weatherView(String urlPart) {
+        log.info("Request forecast for URL: ${urlPart}")
         City city
         if (urlPart) {
             city = City.findByUrlPart(urlPart)
@@ -40,7 +41,6 @@ class MainService {
     }
 
     private String lookupCountryCodeFromHeader() {
-        log.info("lookup country code from header")
         String countryCode = RequestContextHolder.currentRequestAttributes().getHeader(COUNTRY_CODE_HEADER)
         if (!countryCode) {
             log.warn("No header found. Will be used default value - ${DEF_COUNTRY_CODE}")
