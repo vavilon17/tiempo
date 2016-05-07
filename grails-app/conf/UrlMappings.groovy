@@ -4,9 +4,9 @@ class UrlMappings {
 
         "/robots.txt"                           (controller: 'main', action: 'showRobots')
         "/sitemap.xml"                          (controller: 'main', action: 'showSitemap')
+        "/sitemap-$countryCode?.xml"            (controller: 'main', action: 'showCountrySitemap')
 
-        "/googleb092fb8796bb7e18.html"          (controller: 'main', action: 'googleVer') // ar
-        "/googlec4ec2d182d1725b9.html"          (controller: 'main', action: 'googleVer2') // uy, py, cl
+        "/googlea0c97031d7b7720d.html"          (controller: 'main', action: 'googleVer') // ar
 
         "/"                 (controller: "main", action: "weather")
         "/weather"          (controller: "main", action: "weather")

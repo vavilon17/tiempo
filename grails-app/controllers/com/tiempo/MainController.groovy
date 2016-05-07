@@ -3,6 +3,8 @@ package com.tiempo
 import com.dto.ui.WeatherView
 import com.tiempo.exception.ForecastNotFoundException
 
+import javax.servlet.http.HttpServletResponse
+
 class MainController {
 
     def mainService
@@ -17,6 +19,7 @@ class MainController {
         } catch (ForecastNotFoundException e) {
             response.status = 404
         } catch (Exception e) {
+            // todo logging
             response.status = 500
         }
     }
@@ -26,40 +29,55 @@ class MainController {
     }
 
     def showRobots() {
-        String countryCode = request.getHeader("COUNTRY_CODE")
-        println "header COUNTRY_CODE = " + countryCode
-        boolean isSubDomain = countryCode ? true : false
-        render(template: '/main/templates/seo/robots', model: [isSubDomain: isSubDomain])
+        try {
+            String sitemapRoot = grailsApplication.config.sitemapRoot.toString()
+            byte[] data = new File("${sitemapRoot}/robots.txt").getBytes()
+            response.setHeader('Content-length', String.valueOf(data.length))
+            response.setHeader('Cache-Control', "public, must-revalidate")
+            response.contentType = "text/plain"
+            response.outputStream << data
+            response.outputStream.flush()
+        } catch (Exception ioEx) {
+            response.status = 404
+        }
+//        render(template: '/main/templates/seo/robots')
     }
 
     def showSitemap() {
-        String countryCode = request.getHeader("COUNTRY_CODE")
-        if (countryCode && grailsApplication.config.sitemapUrls.get(countryCode.toUpperCase())) {
-            List<String> cityUrls = City.findAllByIsActive(true, [sort: 'searchPriority']).collect { it.urlPart }
-            String baseUrl = grailsApplication.config.sitemapUrls["${countryCode.toUpperCase()}"].toString()
+        try {
+            lookupSitemapFile("sitemap.xml", response)
+        } catch (Exception ioEx) {
+            response.status = 404
+        }
+    }
+
+    def showCountrySitemap(String countryCode) {
+        /*if (countryCode) {
+            Country country = Country.findByCode(countryCode)
+            List<String> cityUrls = City.findAllByCountryAndIsActive(country, true, [sort: 'searchPriority']).collect { it.urlPart }
+            String baseUrl = grailsApplication.config.baseDomain.toString()
             render(template: '/main/templates/seo/country_sitemap', model: [cityUrls: cityUrls, baseUrl: baseUrl])
         } else {
             response.status = 404
+        }*/
+        try {
+            lookupSitemapFile("sitemap-${countryCode}.xml", response)
+        } catch (Exception ioEx) {
+            response.status = 404
         }
     }
 
-    // AR
+    private void lookupSitemapFile(String fileName, HttpServletResponse resp) throws IOException {
+        String sitemapRoot = grailsApplication.config.sitemapRoot.toString()
+        byte[] data = new File("${sitemapRoot}/${fileName}").getBytes()
+        resp.setHeader('Content-length', String.valueOf(data.length))
+        resp.setHeader('Cache-Control', "public, must-revalidate")
+        resp.contentType = "text/xml"
+        resp.outputStream << data
+        resp.outputStream.flush()
+    }
+
     def googleVer() {
-        String countryCode = request.getHeader("COUNTRY_CODE")
-        if (countryCode && "AR".equals(countryCode.toUpperCase())) {
-            render(text: "google-site-verification: googleb092fb8796bb7e18.html")
-        } else {
-            response.status = 404
-        }
-    }
-
-    // CL, UY, PY, CO, VE, PE, EC, BO
-    def googleVer2() {
-        String countryCode = request.getHeader("COUNTRY_CODE")
-        if (countryCode && ["CL", "UY", "PY", "CO", "VE", "PE", "EC", "BO"].contains(countryCode.toUpperCase())) {
-            render(text: "google-site-verification: googlec4ec2d182d1725b9.html")
-        } else {
-            response.status = 404
-        }
+        render(text: "google-site-verification: googlea0c97031d7b7720d.html")
     }
 }
